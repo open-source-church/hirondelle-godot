@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmpvvn1io6hex"]
+
+[ext_resource type="Script" path="res://scenes/controls/add_node_button.gd" id="1_fp4c6"]
+
+[node name="AddNodeButton" type="MenuButton"]
+text = "Add node"
+script = ExtResource("1_fp4c6")
