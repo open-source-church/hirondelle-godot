@@ -12,6 +12,8 @@ extends HBoxContainer
 @onready var option_button: OptionButton = $OptionButton
 @onready var check_button: CheckButton = $CheckButton
 @onready var label: Label = $Label
+@onready var label_flow: Label = $LabelFlow
+@onready var label_flow_2: Label = $LabelFlow2
 
 enum SIDE { INPUT, OUTPUT, BOTH, NONE }
 @export var side : SIDE:
@@ -31,6 +33,9 @@ enum SIDE { INPUT, OUTPUT, BOTH, NONE }
 		color_picker_button.visible = type == HGraphEdit.TYPES.COLOR
 		option_button.visible = type == HGraphEdit.TYPES.TEXT_LIST
 		check_button.visible = type == HGraphEdit.TYPES.BOOL
+		label.visible = type != HGraphEdit.TYPES.FLOW
+		label_flow.visible = type == HGraphEdit.TYPES.FLOW
+		label_flow_2.visible = type == HGraphEdit.TYPES.FLOW
 
 var description : String:
 	set(val):
@@ -41,6 +46,8 @@ var description : String:
 		color_picker_button.tooltip_text = description
 		option_button.tooltip_text = description
 		check_button.tooltip_text = description
+		label.tooltip_text = description
+		label_flow.tooltip_text = description
 
 signal value_changed
 
@@ -57,6 +64,7 @@ func _ready() -> void:
 	, CONNECT_DEFERRED)
 	
 	label.text = "%s:" % name
+	label_flow.text = "%s" % name
 	
 
 var value: get=_get_value, set=_set_value

@@ -9,15 +9,20 @@ func _init() -> void:
 	title = _title
 	type = _type
 	COMPONENTS = {
+		"rand": Port.new({
+			"type": G.graph.TYPES.FLOW,
+			"side": INPUT,
+			"description": "Generate random number"
+		}),
 		"min": Port.new({
-			"type": G.graph.TYPES.INT,
-			"default": 0,
+			"type": G.graph.TYPES.FLOAT,
+			"default": 0.0,
 			"side": INPUT,
 			"description": "Minimum value"
 		}),
 		"max": Port.new({
-			"type": G.graph.TYPES.INT,
-			"default": 100,
+			"type": G.graph.TYPES.FLOAT,
+			"default": 100.0,
 			"side": INPUT,
 			"description": "Maximum value"
 		}),
@@ -34,8 +39,11 @@ func _init() -> void:
 		})
 	}
 
+func run(name:String):
+	if name == "rand":
+		var r = randf_range(VALS.min.value, VALS.max.value)
+		if not VALS.float.value: r = floor(r)
+		VALS.r.value = r
+
 func update() -> void:
-	var r = randf_range(VALS.min.value, VALS.max.value)
-	if not VALS.float.value: r = floor(r)
-	VALS.r.value = r
-	
+	pass

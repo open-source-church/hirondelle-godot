@@ -21,10 +21,22 @@ type = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="LabelFlow" type="Label" parent="."]
+layout_mode = 2
+text = "Flow"
+
+[node name="LabelFlow2" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.568973, 0.568973, 0.568973, 1)
+text = "()"
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.762404, 0.762404, 0.762404, 1)
+text = "BasePort:"
 
 [node name="SpinBoxInt" type="SpinBox" parent="."]
+visible = false
 layout_mode = 2
 theme_override_icons/updown = SubResource("PlaceholderTexture2D_x4fnf")
 allow_greater = true
@@ -32,6 +44,7 @@ allow_lesser = true
 alignment = 1
 
 [node name="SpinBoxFloat" type="SpinBox" parent="."]
+visible = false
 layout_mode = 2
 theme_override_icons/updown = SubResource("PlaceholderTexture2D_8wxco")
 step = -1.0
@@ -43,15 +56,18 @@ alignment = 1
 layout_mode = 2
 
 [node name="CheckButton" type="CheckButton" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+visible = false
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 flat = true
 color = Color(0.501961, 0, 0.501961, 1)
 
 [node name="LineEdit" type="LineEdit" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="RightMargin" type="Control" parent="."]

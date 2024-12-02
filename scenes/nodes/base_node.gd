@@ -1,6 +1,13 @@
 extends GraphNode
 class_name HBaseNode
 
+## Base class for Hirondelle Nodes.
+## HBaseNodes have:
+## * type
+## * ...
+## * func update: called when on of the input vars change
+## * fun run: called with "flow" node, for main actions
+
 enum { INPUT, OUTPUT, BOTH, NONE }
 
 class Port:
@@ -25,7 +32,6 @@ var type = ""
 #var id : String
 # Use name instead
 
-
 var description := ""
 
 var COMPONENTS := {}
@@ -36,11 +42,12 @@ var error : Label
 
 const BASE_PORT = preload("res://scenes/nodes/ports/base_port.tscn")
 
-# Called when the node enters the scene tree for the first time.
+signal port_clicked(name:String)
+
 func _ready() -> void:
 	setup()
 
-
+## Generate internal nodes and stuff based on COMPONENTS instructions.
 func setup():
 	clear_all_slots()
 	
@@ -60,6 +67,8 @@ func setup():
 		VALS[_name] = slot
 		if c.side in [INPUT, BOTH, NONE]:
 			slot.value_changed.connect(_update, CONNECT_DEFERRED)
+		if c.side in [OUTPUT, BOTH]:
+			slot.value_changed.connect(propagate_value.bind(_name), CONNECT_DEFERRED)
 	
 	warning = Label.new()
 	warning.add_theme_color_override("font_color", Color.ORANGE)
@@ -71,9 +80,19 @@ func setup():
 	add_child(error)
 	error.visible = false
 	
+	port_clicked.connect(on_port_clicked)
+	
 	update()
 	update_slots()
 
+func on_port_clicked(port_name : String) -> void:
+	var val = VALS[port_name]
+	if val.type == G.graph.TYPES.FLOW and val.side == INPUT:
+		run(port_name)
+	if val.type == G.graph.TYPES.FLOW and val.side == OUTPUT:
+		print("FIXME: run graph from here")
+
+## Turn on and off slots and give them the proper color
 func update_slots() -> void:
 	clear_all_slots()
 	var slot_index := 0
@@ -91,18 +110,27 @@ func update_slots() -> void:
 
 func _update() -> void:
 	#await get_tree().process_frame
+	#print(Time.get_ticks_msec(), " _UPDATE")
+	
 	# Process node values
 	update()
 	
 	# If necessary
 	#update_slots()
-	
-	# Refresh connections
-	update_connections()
 
-func update_connections() -> void:
-	for c in G.graph.get_full_connections_from_node(name):
-		c.to_port.value = c.from_port.value
+## Subclass
+func update() -> void:
+	pass
+
+
+func propagate_value(_name : String) -> void:
+	var port = get_port_number(_name)
+	for c in G.graph.get_connections_from_node_and_port(name, port):
+		var _c = G.graph.full_connection(c)
+		_c.to_port.value = _c.from_port.value
+
+func run(routine : String) -> void:
+	pass
 
 ## Adapts get_output_port_slot to take into account invisible slots
 func get_output_port(idx : int) -> Node:
@@ -121,6 +149,8 @@ func get_input_port(idx : int) -> Node:
 			k += 1
 	return null
 
+## Return the port number with given name. Useful to create connections.
+## FIXME: might not work on "BOTH" side.
 func get_port_number(name : String) -> int:
 	var _input = 0
 	var _output = 0
@@ -132,13 +162,31 @@ func get_port_number(name : String) -> int:
 		if v.side in [OUTPUT, BOTH]: _output += 1
 	return -1
 
-func update() -> void:
-	pass
+## Return the name of the given port.
+## FIXME: might not work on "BOTH" side.
+func get_port_name(side, index : int) -> String:
+	var _input = 0
+	var _output = 0
+	for _name in VALS:
+		var v = VALS[_name]
+		if v.side in [INPUT, BOTH] and side == INPUT and index == _input: return _name
+		if v.side in [OUTPUT, BOTH] and side == OUTPUT and index == _output: return _name
+		if v.side in [INPUT, BOTH]: _input += 1
+		if v.side in [OUTPUT, BOTH]: _output += 1
+	return ""
+
+# Helper functions
+func get_port_position(side, index : int):
+	if side == INPUT: return get_input_port_position(index)
+	if side == OUTPUT: return get_output_port_position(index)
+func get_port_type(side, index : int):
+	if side == INPUT: return get_input_port_type(index)
+	if side == OUTPUT: return get_output_port_type(index)
 
 func _process(_delta: float) -> void:
 	error.visible = error.text != ""
 	warning.visible = warning.text != ""
-	
+
 func save() -> Dictionary:
 	var s = {
 		"type": type,
@@ -150,3 +198,5 @@ func save() -> Dictionary:
 		s.vals[v] = VALS[v].value
 	
 	return s
+
+	

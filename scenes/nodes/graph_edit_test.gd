@@ -25,6 +25,7 @@ const colors = {
 }
 
 @export var add_node_button : MenuButton
+@onready var selection_rect: TextureRect = $SelectionRect
 
 func _ready() -> void:
 	G.graph = self
@@ -41,6 +42,7 @@ func get_unique_name(node : HBaseNode) -> String:
 	var n = get_nodes().filter(func (_n): return _n.type == node.type).size()
 	return "%s-%d" % [node.type, n]
 
+## Returns all nodes in this graph
 func get_nodes() -> Array[HBaseNode]:
 	var r : Array[HBaseNode] = []
 	for c in get_children().filter(func (n): return n is HBaseNode):
@@ -112,6 +114,7 @@ func full_connection(connection : Dictionary) -> Dictionary:
 
 func _on_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print("Disconnection request FROM %s at %d TO %s at %d" % [from_node, from_port, to_node, to_port])
+	disconnect_node(from_node, from_port, to_node, to_port)
 
 
 ## Removes all nodes and connections.
@@ -175,3 +178,32 @@ func load():
 	if content.has("settings") and content.settings.has("scroll_offset_x"):
 		scroll_offset.x = content.settings.scroll_offset_x
 		scroll_offset.y = content.settings.scroll_offset_y
+
+## Clickable ports
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		var hover_port = get_hover_port(event.position)
+		if hover_port:
+			selection_rect.scale = Vector2.ONE * zoom
+			selection_rect.position = -scroll_offset + hover_port.node.position_offset * zoom + hover_port.node.get_port_position(hover_port.side, hover_port.index) * zoom - selection_rect.size / 2 * zoom
+			mouse_default_cursor_shape = Control.CURSOR_CROSS
+		else:
+			mouse_default_cursor_shape = Control.CURSOR_ARROW
+		selection_rect.visible = hover_port != {}
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			var hover_port = get_hover_port(event.position)
+			if hover_port:
+				hover_port.node.port_clicked.emit(hover_port.node.get_port_name(hover_port.side, hover_port.index))
+
+## Return a node's port that is hovered by `pos` (global).
+func get_hover_port(pos : Vector2) -> Dictionary:
+	var _pos = (pos + scroll_offset) / zoom
+	for node in get_nodes():
+		for i in node.get_input_port_count():
+			if (node.position_offset + node.get_input_port_position(i) - _pos).length() < 10:
+				return { "node": node, "side": HBaseNode.INPUT, "index": i }
+		for i in node.get_output_port_count():
+			if (node.position_offset + node.get_output_port_position(i) - _pos).length() < 10:
+				return { "node": node, "side": HBaseNode.OUTPUT, "index": i }
+	return {}
