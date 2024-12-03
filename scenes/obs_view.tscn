@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2ohh7hvqfpk5"]
+
+[ext_resource type="Script" path="res://scenes/obs_view.gd" id="1_c070f"]
+[ext_resource type="Script" path="res://addons/obs-websocket/obs-websocket.gd" id="2_kuvym"]
+
+[node name="OBS" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c070f")
+metadata/_tab_index = 0
+
+[node name="OBSWebSocket" type="Node" parent="."]
+script = ExtResource("2_kuvym")
+
+[node name="LoginContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="LoginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TxtHost" type="LineEdit" parent="LoginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "localhost"
+placeholder_text = "IP"
+
+[node name="TxtPort" type="LineEdit" parent="LoginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4455"
+placeholder_text = "Port"
+
+[node name="TxtPassword" type="LineEdit" parent="LoginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Password"
+secret = true
+
+[node name="BtnConnect" type="Button" parent="LoginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Connect"
+
+[node name="Control" type="Control" parent="LoginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnTest" type="Button" parent="LoginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Test CMD"
+
+[node name="Control3" type="Control" parent="LoginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgramTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
