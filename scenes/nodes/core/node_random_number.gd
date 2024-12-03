@@ -39,8 +39,8 @@ func _init() -> void:
 		})
 	}
 
-func run(name:String):
-	if name == "rand":
+func run(routine:String):
+	if routine == "rand":
 		var r = randf_range(VALS.min.value, VALS.max.value)
 		if not VALS.float.value: r = floor(r)
 		VALS.r.value = r

@@ -10,3 +10,5 @@ func _ready() -> void:
 	btn_save.pressed.connect(graph_edit.save)
 	btn_load.pressed.connect(graph_edit.load)
 	btn_clear.pressed.connect(graph_edit.clear)
+	
+	

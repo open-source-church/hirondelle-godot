@@ -27,15 +27,7 @@ enum SIDE { INPUT, OUTPUT, BOTH, NONE }
 	set(val):
 		type = val
 		if not is_node_ready(): await ready
-		spin_box_int.visible = type == HGraphEdit.TYPES.INT
-		spin_box_float.visible = type == HGraphEdit.TYPES.FLOAT
-		line_edit.visible = type == HGraphEdit.TYPES.TEXT
-		color_picker_button.visible = type == HGraphEdit.TYPES.COLOR
-		option_button.visible = type == HGraphEdit.TYPES.TEXT_LIST
-		check_button.visible = type == HGraphEdit.TYPES.BOOL
-		label.visible = type != HGraphEdit.TYPES.FLOW
-		label_flow.visible = type == HGraphEdit.TYPES.FLOW
-		label_flow_2.visible = type == HGraphEdit.TYPES.FLOW
+		update_view()
 
 var description : String:
 	set(val):
@@ -65,7 +57,19 @@ func _ready() -> void:
 	
 	label.text = "%s:" % name
 	label_flow.text = "%s" % name
+
+func update_view():
 	
+	option_button.visible = options.size()
+	spin_box_int.visible = type == HGraphEdit.TYPES.INT
+	spin_box_float.visible = type == HGraphEdit.TYPES.FLOAT
+	line_edit.visible = not options.size() and type == HGraphEdit.TYPES.TEXT
+	color_picker_button.visible = type == HGraphEdit.TYPES.COLOR
+	check_button.visible = type == HGraphEdit.TYPES.BOOL
+	label.visible = type != HGraphEdit.TYPES.FLOW
+	label_flow.visible = type == HGraphEdit.TYPES.FLOW
+	label_flow_2.visible = type == HGraphEdit.TYPES.FLOW
+
 
 var value: get=_get_value, set=_set_value
 
@@ -75,7 +79,10 @@ func _get_value() -> Variant:
 	if type == HGraphEdit.TYPES.FLOAT:
 		return spin_box_float.value
 	if type == HGraphEdit.TYPES.TEXT:
-		return line_edit.text
+		if not options:
+			return line_edit.text
+		else:
+			return option_button.get_item_text(option_button.selected)
 	if type == HGraphEdit.TYPES.COLOR:
 		return color_picker_button.color
 	if type == HGraphEdit.TYPES.TEXT_LIST:
@@ -85,27 +92,34 @@ func _get_value() -> Variant:
 	return null
 
 func _set_value(val):
+	var changed = val != value
+	if not changed: return
 	if type == HGraphEdit.TYPES.INT:
 		spin_box_int.value = val
 	if type == HGraphEdit.TYPES.FLOAT:
 		spin_box_float.value = val
 	if type == HGraphEdit.TYPES.TEXT:
-		line_edit.text = val
+		if options: set_option(val)
+		else: line_edit.text = val
 	if type == HGraphEdit.TYPES.COLOR:
 		color_picker_button.color = val
 	if type == HGraphEdit.TYPES.TEXT_LIST:
-		for i in option_button.item_count:
-			if option_button.get_item_text(i) == val:
-				option_button.select(i)
-				return
+		set_option(val)
 	if type == HGraphEdit.TYPES.BOOL:
 		check_button.button_pressed = val
-	return null
+	value_changed.emit()
 
-var options : set=_set_options
+func set_option(val):
+	for i in option_button.item_count:
+		if option_button.get_item_text(i) == val:
+			option_button.select(i)
+			return
+
+var options:Array : set=_set_options
 
 func _set_options(_options):
-	if type == HGraphEdit.TYPES.TEXT_LIST:
-		option_button.clear()
-		for o in _options:
-			option_button.add_item(o)
+	options = _options
+	option_button.clear()
+	for o in _options:
+		option_button.add_item(o)
+	update_view()

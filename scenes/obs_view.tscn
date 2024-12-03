@@ -27,7 +27,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "localhost"
-placeholder_text = "IP"
+placeholder_text = "Host"
 
 [node name="TxtPort" type="LineEdit" parent="LoginContainer"]
 unique_name_in_owner = true
@@ -48,6 +48,12 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Connect"
 
+[node name="BtnDisconnect" type="Button" parent="LoginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Disconnect"
+
 [node name="Control" type="Control" parent="LoginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -60,8 +66,3 @@ text = "Test CMD"
 [node name="Control3" type="Control" parent="LoginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="ProgramTexture" type="TextureRect" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3

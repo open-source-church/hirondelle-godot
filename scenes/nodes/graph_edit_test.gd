@@ -50,7 +50,7 @@ func get_nodes() -> Array[HBaseNode]:
 	return r
 
 func add_node(node_type: String) -> HBaseNode:
-	var resource = G.NODES_CORES.filter(func (r): return r._type == node_type)
+	var resource = G.NODES.filter(func (r): return r._type == node_type)
 	if not resource: 
 		print("Node_type invalid")
 		return
@@ -86,7 +86,9 @@ func _on_connection_request(from_node: StringName, from_port: int, to_node: Stri
 	# Clear existing connections
 	# FIXME: allow to keep multiple FLOW connections
 	for c in get_connections_to_node_and_port(to_node, to_port):
-		disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+		var _c = full_connection(c)
+		if not _c.to_port.type == TYPES.FLOW:
+			disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
 	# Make connection
 	connect_node(from_node, from_port, to_node, to_port)
 	update_values_from_connection({"from_node": from_node, "from_port": from_port, "to_node": to_node, "to_port": to_port})

@@ -90,7 +90,7 @@ func on_port_clicked(port_name : String) -> void:
 	if val.type == G.graph.TYPES.FLOW and val.side == INPUT:
 		run(port_name)
 	if val.type == G.graph.TYPES.FLOW and val.side == OUTPUT:
-		print("FIXME: run graph from here")
+		emit(port_name)
 
 ## Turn on and off slots and give them the proper color
 func update_slots() -> void:
@@ -118,19 +118,26 @@ func _update() -> void:
 	# If necessary
 	#update_slots()
 
-## Subclass
-func update() -> void:
-	pass
-
-
 func propagate_value(_name : String) -> void:
+	print("Propagating value: ", _name)
 	var port = get_port_number(_name)
 	for c in G.graph.get_connections_from_node_and_port(name, port):
 		var _c = G.graph.full_connection(c)
 		_c.to_port.value = _c.from_port.value
 
-func run(routine : String) -> void:
+## Virtual. Called when input value changed.
+func update() -> void:
 	pass
+
+## Virtual. Called when a subroutine (input FLOW port) is activated.
+func run(_routine : String) -> void:
+	pass
+
+func emit(routine : String) -> void:
+	var connections = G.graph.get_connections_from_node_and_port(name, get_port_number(routine))
+	for c in connections:
+		var _c = G.graph.full_connection(c)
+		_c.to_node.run.call_deferred(_c.to_port.name)
 
 ## Adapts get_output_port_slot to take into account invisible slots
 func get_output_port(idx : int) -> Node:
@@ -151,12 +158,12 @@ func get_input_port(idx : int) -> Node:
 
 ## Return the port number with given name. Useful to create connections.
 ## FIXME: might not work on "BOTH" side.
-func get_port_number(name : String) -> int:
+func get_port_number(port_name : String) -> int:
 	var _input = 0
 	var _output = 0
 	for _name in VALS:
 		var v = VALS[_name]
-		if _name == name:
+		if _name == port_name:
 			return _input if v.side == INPUT else _output
 		if v.side in [INPUT, BOTH]: _input += 1
 		if v.side in [OUTPUT, BOTH]: _output += 1
