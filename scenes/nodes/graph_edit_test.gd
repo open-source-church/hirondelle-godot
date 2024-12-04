@@ -21,7 +21,8 @@ const colors = {
 	TYPES.INT: Color.YELLOW,
 	TYPES.COLOR: Color.BLUE,
 	TYPES.FLOAT: Color.ORANGE,
-	TYPES.BOOL: Color.PURPLE
+	TYPES.BOOL: Color.CYAN,
+	TYPES.VEC2: Color.BROWN
 }
 
 @export var add_node_button : MenuButton

@@ -33,14 +33,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 2
+current_tab = 1
 
 [node name="OBS" parent="TabContainer" instance=ExtResource("2_v0q7l")]
 visible = false
 layout_mode = 2
 
 [node name="Nodes" type="VBoxContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -89,6 +88,7 @@ offset_bottom = 232.0
 texture = SubResource("GradientTexture2D_xb823")
 
 [node name="Window" parent="TabContainer" instance=ExtResource("5_65jdw")]
+visible = false
 layout_mode = 2
 
 [connection signal="child_entered_tree" from="TabContainer/Nodes/GraphEdit" to="TabContainer/Nodes/GraphEdit" method="on_child_enter_tree"]

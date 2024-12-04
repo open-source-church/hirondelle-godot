@@ -8,7 +8,7 @@ func _init() -> void:
 	type = _type
 	COMPONENTS = {
 		"operator": Port.new({ 
-			"type": G.graph.TYPES.TEXT_LIST,
+			"type": G.graph.TYPES.TEXT,
 			"default": "Add", 
 			"side": NONE, 
 			"options": ["Add", "Substract", "Multiply", "Divide", "Power"]

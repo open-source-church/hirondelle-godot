@@ -30,6 +30,7 @@ func _init() -> void:
 	_update_scene_list(r.scenes)
 
 func _update_scene_list(scenes : Array):
+	scenes.reverse()
 	VALS.program.options = scenes.map(func (s): return s.sceneName)
 	VALS.preview.options = scenes.map(func (s): return s.sceneName)
 

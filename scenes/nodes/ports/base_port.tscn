@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://clrxesv0w4k2o"]
+[gd_scene load_steps=5 format=3 uid="uid://clrxesv0w4k2o"]
 
 [ext_resource type="Script" path="res://scenes/nodes/ports/base_port.gd" id="1_df8d5"]
+[ext_resource type="PackedScene" uid="uid://iiti84pr4epa" path="res://scenes/nodes/ports/vec_2.tscn" id="2_8l5bd"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_x4fnf"]
 size = Vector2(0, 0)
@@ -59,6 +60,10 @@ visible = false
 layout_mode = 2
 
 [node name="CheckButton" type="CheckButton" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Vec2" parent="." instance=ExtResource("2_8l5bd")]
 visible = false
 layout_mode = 2
 

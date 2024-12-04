@@ -66,7 +66,7 @@ func setup():
 			slot.value = c.default
 		VALS[_name] = slot
 		if c.side in [INPUT, BOTH, NONE]:
-			slot.value_changed.connect(_update, CONNECT_DEFERRED)
+			slot.value_changed.connect(_update.bind(_name), CONNECT_DEFERRED)
 		if c.side in [OUTPUT, BOTH]:
 			slot.value_changed.connect(propagate_value.bind(_name), CONNECT_DEFERRED)
 	
@@ -84,6 +84,8 @@ func setup():
 	
 	update()
 	update_slots()
+	
+	print("Finished setup")
 
 func on_port_clicked(port_name : String) -> void:
 	var val = VALS[port_name]
@@ -108,11 +110,13 @@ func update_slots() -> void:
 			set_slot_color_right(slot_index, G.graph.colors[c.type])
 			slot_index += 1
 
-func _update() -> void:
+var _last_port_changed := ""
+func _update(_last_changed := "") -> void:
 	#await get_tree().process_frame
 	#print(Time.get_ticks_msec(), " _UPDATE")
 	
 	# Process node values
+	_last_port_changed = _last_changed
 	update()
 	
 	# If necessary
