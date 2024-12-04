@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://0kw6fnk07v5x"]
+
+[ext_resource type="Script" path="res://scenes/window/h_window.gd" id="1_3lpn5"]
+[ext_resource type="PackedScene" uid="uid://bconrh2va6eu2" path="res://particles/fireworks_particles.tscn" id="2_tp4p8"]
+
+[node name="HWindow" type="Window"]
+transparent_bg = true
+title = "Hirondelle"
+initial_position = 2
+size = Vector2i(1280, 720)
+script = ExtResource("1_3lpn5")
+
+[node name="Fireworks" parent="." instance=ExtResource("2_tp4p8")]

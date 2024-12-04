@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=8 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/test.gd" id="1_6p6jm"]
 [ext_resource type="Script" path="res://scenes/nodes/graph_edit_test.gd" id="1_s4m1c"]
 [ext_resource type="PackedScene" uid="uid://dmpvvn1io6hex" path="res://scenes/controls/add_node_button.tscn" id="2_jbatr"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="2_v0q7l"]
+[ext_resource type="PackedScene" uid="uid://bfi1b0q6loi78" path="res://scenes/window/window_view.tscn" id="5_65jdw"]
 
 [sub_resource type="Gradient" id="Gradient_qfcjl"]
 colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 0)
@@ -32,13 +33,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 2
 
 [node name="OBS" parent="TabContainer" instance=ExtResource("2_v0q7l")]
 visible = false
 layout_mode = 2
 
 [node name="Nodes" type="VBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -85,6 +87,9 @@ offset_top = 200.0
 offset_right = 232.0
 offset_bottom = 232.0
 texture = SubResource("GradientTexture2D_xb823")
+
+[node name="Window" parent="TabContainer" instance=ExtResource("5_65jdw")]
+layout_mode = 2
 
 [connection signal="child_entered_tree" from="TabContainer/Nodes/GraphEdit" to="TabContainer/Nodes/GraphEdit" method="on_child_enter_tree"]
 [connection signal="connection_request" from="TabContainer/Nodes/GraphEdit" to="TabContainer/Nodes/GraphEdit" method="_on_connection_request"]

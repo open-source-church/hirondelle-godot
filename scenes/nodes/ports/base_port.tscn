@@ -55,6 +55,7 @@ allow_lesser = true
 alignment = 1
 
 [node name="OptionButton" type="OptionButton" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="CheckButton" type="CheckButton" parent="."]

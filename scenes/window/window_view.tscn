@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfi1b0q6loi78"]
+
+[ext_resource type="Script" path="res://scenes/window/window_view.gd" id="1_8tiw4"]
+[ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="2_qdpip"]
+
+[node name="Window" type="VBoxContainer"]
+script = ExtResource("1_8tiw4")
+metadata/_tab_index = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="BtnOpen" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Open"
+
+[node name="BtnClose" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Close"
+
+[node name="HWindow" parent="." instance=ExtResource("2_qdpip")]
+unique_name_in_owner = true
+visible = false

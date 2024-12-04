@@ -31,7 +31,7 @@ func _ready() -> void:
 	G.graph = self
 	add_valid_connection_type(TYPES.INT, TYPES.FLOAT)
 	add_node_button.add_node.connect(add_node)
-	popup_request.connect(show_popup)
+	#popup_request.connect(show_popup) # FIXME: see comment in show_popup
 
 func on_child_enter_tree(node : Node):
 	if node is HBaseNode:
@@ -56,7 +56,10 @@ func add_node(node_type: String) -> HBaseNode:
 		return
 	var node = resource.front().new()
 	add_child(node)
-	node.position_offset = (get_local_mouse_position() + scroll_offset) / zoom
+	# At mouse position
+	#node.position_offset = (get_local_mouse_position() + scroll_offset) / zoom
+	# At center
+	node.position_offset = (size / 2 + scroll_offset) / zoom
 	return node
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -64,9 +67,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_RIGHT and not event.pressed:
 			print("Popup Menu")
 
+## FIXME: doesn't work with multiple windows: some components lose ability to focus ..?
 func show_popup(at_position: Vector2) -> void:
 	var popup = add_node_button.get_popup()
-	popup.position = at_position
+	#popup.position = at_position
+	popup.position = Vector2(get_window().position) + at_position
 	popup.show()
 
 func get_connections_from_node_and_port(from_node: String, from_port: int) -> Array:
