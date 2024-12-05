@@ -5,6 +5,7 @@ var graph : HGraphEdit
 var OBS : OBSWebSocket
 
 const NODES = [
+	preload("res://scenes/nodes/core/node_test.gd"),
 	# Core
 	preload("res://scenes/nodes/core/node_operator_float.gd"),
 	preload("res://scenes/nodes/core/node_operator_int.gd"),

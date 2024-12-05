@@ -1,13 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://clrxesv0w4k2o"]
+[gd_scene load_steps=2 format=3 uid="uid://clrxesv0w4k2o"]
 
 [ext_resource type="Script" path="res://scenes/nodes/ports/base_port.gd" id="1_df8d5"]
-[ext_resource type="PackedScene" uid="uid://iiti84pr4epa" path="res://scenes/nodes/ports/vec_2.tscn" id="2_8l5bd"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_x4fnf"]
-size = Vector2(0, 0)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8wxco"]
-size = Vector2(0, 0)
 
 [node name="BasePort" type="HBoxContainer"]
 anchors_preset = 15
@@ -17,67 +10,3 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource("1_df8d5")
-
-[node name="LeftMargin" type="Control" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="LabelFlow" type="Label" parent="."]
-layout_mode = 2
-text = "BasePort"
-
-[node name="LabelFlow2" type="Label" parent="."]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.568973, 0.568973, 0.568973, 1)
-text = "()"
-
-[node name="Label" type="Label" parent="."]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(0.762404, 0.762404, 0.762404, 1)
-text = "BasePort:"
-
-[node name="SpinBoxInt" type="SpinBox" parent="."]
-visible = false
-layout_mode = 2
-theme_override_icons/updown = SubResource("PlaceholderTexture2D_x4fnf")
-allow_greater = true
-allow_lesser = true
-alignment = 1
-
-[node name="SpinBoxFloat" type="SpinBox" parent="."]
-visible = false
-layout_mode = 2
-theme_override_icons/updown = SubResource("PlaceholderTexture2D_8wxco")
-step = -1.0
-allow_greater = true
-allow_lesser = true
-alignment = 1
-
-[node name="OptionButton" type="OptionButton" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="CheckButton" type="CheckButton" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="Vec2" parent="." instance=ExtResource("2_8l5bd")]
-visible = false
-layout_mode = 2
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
-visible = false
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-flat = true
-color = Color(0.501961, 0, 0.501961, 1)
-
-[node name="LineEdit" type="LineEdit" parent="."]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RightMargin" type="Control" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3

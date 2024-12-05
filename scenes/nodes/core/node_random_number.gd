@@ -8,33 +8,32 @@ static var _type = "core/random/number"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"rand": Port.new({
+	VALS = {
+		"rand": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW,
 			"side": INPUT,
 			"description": "Generate random number"
 		}),
-		"min": Port.new({
+		"min": HPortFloat.new({
 			"type": G.graph.TYPES.FLOAT,
 			"default": 0.0,
 			"side": INPUT,
 			"description": "Minimum value"
 		}),
-		"max": Port.new({
+		"max": HPortFloat.new({
 			"type": G.graph.TYPES.FLOAT,
 			"default": 100.0,
 			"side": INPUT,
 			"description": "Maximum value"
 		}),
-		"float": Port.new({
+		"float": HPortBool.new({
 			"type": G.graph.TYPES.BOOL,
 			"default": false,
 			"side": INPUT,
 			"description": "Retourne un nombre à virgule"
 		}),
-		"r": Port.new({
+		"r": HPortFloat.new({
 			"type": G.graph.TYPES.FLOAT,
-			"default": null,
 			"side": OUTPUT
 		})
 	}
@@ -50,5 +49,4 @@ func run(routine:String):
 func update() -> void:
 	if _last_port_changed == "float":
 		VALS.r.type = HGraphEdit.TYPES.INT if not VALS.float.value else HGraphEdit.TYPES.FLOAT
-		print(VALS.r.type)
 		update_slots()

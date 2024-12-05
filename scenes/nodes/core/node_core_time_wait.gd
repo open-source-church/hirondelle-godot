@@ -8,34 +8,35 @@ var timer : Timer
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"start": Port.new({
+	VALS = {
+		"start": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"stop": Port.new({
+		"stop": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"started": Port.new({
+		"started": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"finished": Port.new({
+		"finished": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"time": Port.new({
+		"time": HPortIntSpin.new({
 			"type": G.graph.TYPES.INT,
 			"default": 1000, 
 			"side": INPUT, 
 			"description": "Time in milisecond"
 		}),
-		"elapsed": Port.new({
+		"elapsed": HPortIntSlider.new({
 			"type": G.graph.TYPES.INT, 
-			"side": OUTPUT
+			"side": OUTPUT,
+			"params": { "min": 0, "max": 1000 }
 		}),
-		"running": Port.new({
+		"running": HPortBool.new({
 			"type": G.graph.TYPES.BOOL, 
 			"side": OUTPUT
 		})
@@ -54,7 +55,7 @@ func run(routine:String):
 		timer.stop()
 
 func update() -> void:
-	pass
+	VALS.elapsed.params = { "min": 0, "max": VALS.time.value }
 
 func _process(delta: float) -> void:
 	VALS.elapsed.value = int(VALS.time.value - timer.time_left * 1000)

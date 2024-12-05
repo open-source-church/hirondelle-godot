@@ -7,24 +7,24 @@ static var _type = "core/op/int"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"operator": Port.new({
+	VALS = {
+		"operator": HPortText.new({
 			"type": G.graph.TYPES.TEXT,
 			"default": "Add",
 			"side": NONE, 
 			"options": ["Add", "Substract", "Multiply", "Divide", "Modulo", "Power"]
 		}),
-		"a": Port.new({
+		"a": HPortIntSpin.new({
 			"type": G.graph.TYPES.INT,
 			"default": 0,
 			"side": INPUT
 		}),
-		"b": Port.new({
+		"b": HPortIntSpin.new({
 			"type": G.graph.TYPES.INT,
 			"default": 0,
 			"side": INPUT
 		}),
-		"r": Port.new({
+		"r": HPortIntSpin.new({
 			"type": G.graph.TYPES.INT,
 			"default": 0,
 			"side": OUTPUT

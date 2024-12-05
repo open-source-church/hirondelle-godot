@@ -6,24 +6,24 @@ static var _type = "obs/streaming_status"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"start": Port.new({
+	VALS = {
+		"start": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"stop": Port.new({
+		"stop": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"started": Port.new({
+		"started": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"stopped": Port.new({
+		"stopped": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"streaming": Port.new({
+		"streaming": HPortBool.new({
 			"type": G.graph.TYPES.BOOL, 
 			"side": OUTPUT
 		})

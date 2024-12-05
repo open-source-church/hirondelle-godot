@@ -6,24 +6,24 @@ static var _type = "core/op/float"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"operator": Port.new({ 
+	VALS = {
+		"operator": HPortText.new({ 
 			"type": G.graph.TYPES.TEXT,
 			"default": "Add", 
 			"side": NONE, 
 			"options": ["Add", "Substract", "Multiply", "Divide", "Power"]
 		} ),
-		"a": Port.new({
+		"a": HPortFloat.new({
 			"type": G.graph.TYPES.FLOAT, 
 			"default": 0,
 			"side": INPUT
 		}),
-		"b": Port.new({
+		"b": HPortFloat.new({
 			"type": G.graph.TYPES.FLOAT, 
 			"default": 0,
 			"side": INPUT
 		}),
-		"r": Port.new({
+		"r": HPortFloat.new({
 			"type": G.graph.TYPES.FLOAT, 
 			"default": 0, 
 			"side": OUTPUT

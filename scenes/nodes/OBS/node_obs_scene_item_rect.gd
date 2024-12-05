@@ -6,28 +6,28 @@ static var _type = "obs/scene_item_rect"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"scene": Port.new({
+	VALS = {
+		"scene": HPortText.new({
 			"type": G.graph.TYPES.TEXT, 
 			"side": INPUT
 		}),
-		"source": Port.new({
+		"source": HPortText.new({
 			"type": G.graph.TYPES.TEXT, 
 			"side": INPUT
 		}),
-		"itemId": Port.new({
+		"itemId": HPortIntSpin.new({
 			"type": G.graph.TYPES.INT, 
 			"side": INPUT
 		}),
-		"pos": Port.new({
+		"pos": HPortVec2.new({
 			"type": G.graph.TYPES.VEC2, 
 			"side": OUTPUT,
 		}),
-		"size": Port.new({
+		"size": HPortVec2.new({
 			"type": G.graph.TYPES.VEC2, 
 			"side": OUTPUT
 		}),
-		"bounds": Port.new({
+		"bounds": HPortVec2.new({
 			"type": G.graph.TYPES.VEC2, 
 			"side": OUTPUT
 		}),

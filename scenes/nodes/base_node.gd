@@ -10,21 +10,6 @@ class_name HBaseNode
 
 enum { INPUT, OUTPUT, BOTH, NONE }
 
-class Port:
-	var side := INPUT
-	var type : HGraphEdit.TYPES
-	var visible := true
-	var options : Array
-	var default
-	var description
-	func _init(opt : Dictionary) -> void:
-		side = opt.get("side", INPUT)
-		type = opt.type
-		visible = opt.get("visible", true)
-		options = opt.get("options", [])
-		default = opt.get("default", null)
-		description = opt.get("description", "")
-
 ## Unique identifier for node type
 var type = ""
 
@@ -34,7 +19,7 @@ var type = ""
 
 var description := ""
 
-var COMPONENTS := {}
+#var COMPONENTS := {}
 var VALS := {}
 
 var warning : Label
@@ -51,24 +36,15 @@ func _ready() -> void:
 func setup():
 	clear_all_slots()
 	
-	for _name in COMPONENTS:
-		var c = COMPONENTS[_name]
+	for _name in VALS:
+		var p = VALS[_name]
+		p.name = _name
+		add_child(p)
 		
-		var slot := BASE_PORT.instantiate()
-		slot.side = c.side
-		slot.type = c.type
-		slot.name = _name
-		add_child(slot)
-		slot.options = c.options
-		slot.visible = c.visible
-		slot.description = c.description
-		if c.default:
-			slot.value = c.default
-		VALS[_name] = slot
-		if c.side in [INPUT, BOTH, NONE]:
-			slot.value_changed.connect(_update.bind(_name), CONNECT_DEFERRED)
-		if c.side in [OUTPUT, BOTH]:
-			slot.value_changed.connect(propagate_value.bind(_name), CONNECT_DEFERRED)
+		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
+			p.value_changed.connect(_update.bind(_name), CONNECT_DEFERRED)
+		if p.side in [E.Side.OUTPUT, E.Side.BOTH]:
+			p.value_changed.connect(propagate_value.bind(_name), CONNECT_DEFERRED)
 	
 	warning = Label.new()
 	warning.add_theme_color_override("font_color", Color.ORANGE)
@@ -89,9 +65,9 @@ func setup():
 
 func on_port_clicked(port_name : String) -> void:
 	var val = VALS[port_name]
-	if val.type == G.graph.TYPES.FLOW and val.side == INPUT:
+	if val.type == G.graph.TYPES.FLOW and val.side == E.Side.INPUT:
 		run(port_name)
-	if val.type == G.graph.TYPES.FLOW and val.side == OUTPUT:
+	if val.type == G.graph.TYPES.FLOW and val.side == E.Side.OUTPUT:
 		emit(port_name)
 
 ## Turn on and off slots and give them the proper color
@@ -102,8 +78,8 @@ func update_slots() -> void:
 		var c = VALS[_name]
 		#VALS[_name].visible = c.visible
 		if c.visible:
-			set_slot_enabled_left(slot_index, c.side in [INPUT, BOTH])
-			set_slot_enabled_right(slot_index, c.side in [OUTPUT, BOTH])
+			set_slot_enabled_left(slot_index, c.side in [E.Side.INPUT, E.Side.BOTH])
+			set_slot_enabled_right(slot_index, c.side in [E.Side.OUTPUT, E.Side.BOTH])
 			set_slot_type_left(slot_index, c.type)
 			set_slot_type_right(slot_index, c.type)
 			set_slot_color_left(slot_index, G.graph.colors[c.type])
@@ -146,7 +122,7 @@ func emit(routine : String) -> void:
 func get_output_port(idx : int) -> Node:
 	var k := 0
 	for c in VALS.values():
-		if c.visible and c.side in [OUTPUT, BOTH]:
+		if c.visible and c.side in [E.Side.OUTPUT, E.Side.BOTH]:
 			if k == idx: return c
 			k += 1
 	return null
@@ -154,7 +130,7 @@ func get_output_port(idx : int) -> Node:
 func get_input_port(idx : int) -> Node:
 	var k := 0
 	for c in VALS.values():
-		if c.visible and c.side in [INPUT, BOTH]:
+		if c.visible and c.side in [E.Side.INPUT, E.Side.BOTH]:
 			if k == idx: return c
 			k += 1
 	return null
@@ -167,9 +143,9 @@ func get_port_number(port_name : String) -> int:
 	for _name in VALS:
 		var v = VALS[_name]
 		if _name == port_name:
-			return _input if v.side == INPUT else _output
-		if v.side in [INPUT, BOTH]: _input += 1
-		if v.side in [OUTPUT, BOTH]: _output += 1
+			return _input if v.side == E.Side.INPUT else _output
+		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
+		if v.side in [E.Side.OUTPUT, E.Side.BOTH]: _output += 1
 	return -1
 
 ## Return the name of the given port.
@@ -179,19 +155,19 @@ func get_port_name(side, index : int) -> String:
 	var _output = 0
 	for _name in VALS:
 		var v = VALS[_name]
-		if v.side in [INPUT, BOTH] and side == INPUT and index == _input: return _name
-		if v.side in [OUTPUT, BOTH] and side == OUTPUT and index == _output: return _name
-		if v.side in [INPUT, BOTH]: _input += 1
-		if v.side in [OUTPUT, BOTH]: _output += 1
+		if v.side in [E.Side.INPUT, E.Side.BOTH] and side == E.Side.INPUT and index == _input: return _name
+		if v.side in [E.Side.OUTPUT, E.Side.BOTH] and side == E.Side.OUTPUT and index == _output: return _name
+		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
+		if v.side in [E.Side.OUTPUT, E.Side.BOTH]: _output += 1
 	return ""
 
 # Helper functions
 func get_port_position(side, index : int):
-	if side == INPUT: return get_input_port_position(index)
-	if side == OUTPUT: return get_output_port_position(index)
+	if side == E.Side.INPUT: return get_input_port_position(index)
+	if side == E.Side.OUTPUT: return get_output_port_position(index)
 func get_port_type(side, index : int):
-	if side == INPUT: return get_input_port_type(index)
-	if side == OUTPUT: return get_output_port_type(index)
+	if side == E.Side.INPUT: return get_input_port_type(index)
+	if side == E.Side.OUTPUT: return get_output_port_type(index)
 
 func _process(_delta: float) -> void:
 	error.visible = error.text != ""

@@ -8,26 +8,26 @@ var timer : Timer
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"start": Port.new({
+	VALS = {
+		"start": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"stop": Port.new({
+		"stop": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"ping": Port.new({
+		"ping": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"time": Port.new({
+		"time": HPortIntSpin.new({
 			"type": G.graph.TYPES.INT,
 			"default": 1000, 
 			"side": INPUT, 
 			"description": "Time in milisecond"
 		}),
-		"active": Port.new({
+		"active": HPortBool.new({
 			"type": G.graph.TYPES.BOOL, 
 			"side": BOTH,
 			"default": false

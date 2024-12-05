@@ -13,7 +13,6 @@ func _ready() -> void:
 	trails.process_material.sub_emitter_amount_at_end = 100
 	trails.finished.connect(func (): emitting = false)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass

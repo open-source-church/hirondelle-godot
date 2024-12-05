@@ -6,20 +6,20 @@ static var _type = "obs/studio_mode"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"activate": Port.new({
+	VALS = {
+		"activate": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"deactivate": Port.new({
+		"deactivate": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"changed": Port.new({
+		"changed": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"enabled": Port.new({
+		"enabled": HPortBool.new({
 			"type": G.graph.TYPES.BOOL, 
 			"side": BOTH
 		})

@@ -6,12 +6,12 @@ static var _type = "core/utility_value_changed"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"changed": Port.new({
+	VALS = {
+		"changed": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": OUTPUT
 		}),
-		"watch": Port.new({
+		"watch": HBasePort.new({
 			"type": G.graph.TYPES.VARIANT, 
 			"side": INPUT
 		}),

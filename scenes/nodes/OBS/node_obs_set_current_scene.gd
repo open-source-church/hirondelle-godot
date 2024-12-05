@@ -6,20 +6,20 @@ static var _type = "obs/set_current_scene"
 func _init() -> void:
 	title = _title
 	type = _type
-	COMPONENTS = {
-		"set_program": Port.new({
+	VALS = {
+		"set_program": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"set_preview": Port.new({
+		"set_preview": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
 			"side": INPUT
 		}),
-		"program": Port.new({
+		"program": HPortText.new({
 			"type": G.graph.TYPES.TEXT, 
 			"side": INPUT,
 		}),
-		"preview": Port.new({
+		"preview": HPortText.new({
 			"type": G.graph.TYPES.TEXT, 
 			"side": INPUT
 		}),
