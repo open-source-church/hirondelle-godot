@@ -29,8 +29,31 @@ const BASE_PORT = preload("res://scenes/nodes/ports/base_port.tscn")
 
 signal port_clicked(name:String)
 
+signal collapsed_changed(bool)
+var btn_collapse : CheckButton
+
 func _ready() -> void:
+	
+	var hbox = get_titlebar_hbox()
+	btn_collapse = CheckButton.new()
+	btn_collapse.flat = true
+	btn_collapse.toggled.connect(collapsed_changed.emit)
+	hbox.add_child(btn_collapse)
+	
+	add_theme_constant_override("separation", 0)
+	resizable = true
+	
 	setup()
+
+# FIXME: _draw_port seems buggy ..?
+#func _draw_port(slot_index: int, position: Vector2i, left: bool, color: Color) -> void:
+	#var port = get_children().filter(func (c): return c is HBasePort)[slot_index]
+	#if port:
+		#print(" * ", left, ": ", slot_index, " ", G.graph.TYPES.keys()[port.type], " at ", position)
+		#if port.type == G.graph.TYPES.FLOW:
+			#draw_circle(position, 7, color)
+		#else:
+			#draw_circle(position, 5, color)
 
 ## Generate internal nodes and stuff based on COMPONENTS instructions.
 func setup():
@@ -40,6 +63,7 @@ func setup():
 		var p = VALS[_name]
 		p.name = _name
 		add_child(p)
+		collapsed_changed.connect(p.set_collapsed)
 		
 		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
 			p.value_changed.connect(_update.bind(_name), CONNECT_DEFERRED)

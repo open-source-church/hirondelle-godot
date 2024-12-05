@@ -6,7 +6,7 @@ var spinbox : SpinBox
 func get_component(_params) -> Control:
 	spinbox = SpinBox.new()
 	spinbox.allow_greater = true
-	spinbox.allow_lesser = false
+	spinbox.allow_lesser = true
 	return spinbox
 
 func _get_value():

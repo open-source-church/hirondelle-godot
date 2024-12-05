@@ -183,6 +183,7 @@ icon = SubResource("AtlasTexture_lnt1c")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+scroll_offset = Vector2(-388, -120)
 right_disconnects = true
 minimap_enabled = false
 script = ExtResource("1_s4m1c")

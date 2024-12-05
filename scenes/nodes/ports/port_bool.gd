@@ -5,6 +5,7 @@ var toggle : CheckButton
 
 func get_component(_params) -> Control:
 	toggle = CheckButton.new()
+	toggle.flat = true
 	return toggle
 
 func _get_value():

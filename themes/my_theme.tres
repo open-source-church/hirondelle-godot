@@ -111,6 +111,7 @@ Button/styles/focus = SubResource("StyleBoxFlat_ru3g6")
 Button/styles/hover = SubResource("StyleBoxFlat_d6q5n")
 Button/styles/normal = SubResource("StyleBoxFlat_s5ami")
 Button/styles/pressed = SubResource("StyleBoxFlat_8oufp")
+CheckButton/constants/icon_max_width = 0
 LineEdit/styles/focus = SubResource("StyleBoxFlat_n5g8u")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_4rlqk")
 TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_4f88t")

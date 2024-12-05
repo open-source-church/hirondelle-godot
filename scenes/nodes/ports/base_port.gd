@@ -19,6 +19,17 @@ var hide_label := false
 var option_button : OptionButton
 var custom_component : Control
 
+var collapsed := false:
+	set(val):
+		collapsed = val
+		update_view()
+		await get_tree().process_frame
+		reset_size()
+		get_parent().reset_size()
+
+func set_collapsed(val: bool):
+	collapsed = val
+
 func _init(opt : Dictionary) -> void:
 	side = opt.get("side", E.Side.INPUT)
 	type = opt.type
@@ -28,6 +39,7 @@ func _init(opt : Dictionary) -> void:
 	default = opt.get("default", null)
 	params = opt.get("params", {})
 	hide_label = opt.get("hide_label", false)
+	custom_minimum_size = Vector2(0, 0)
 
 func _ready() -> void:
 	update_view()
@@ -140,6 +152,7 @@ func update_view():
 	if side in [E.Side.OUTPUT, E.Side.BOTH]:
 		var left_margin = Control.new()
 		left_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		left_margin.visible = not collapsed
 		add_child(left_margin)
 	
 	
@@ -147,7 +160,9 @@ func update_view():
 	add_child(vbox)
 	if not hide_label:
 		var lbl = Label.new()
-		lbl.text = "%s:" % name
+		lbl.text = "%s" % name
+		lbl.add_theme_font_size_override("font_size", 12)
+		lbl.add_theme_color_override("font_color", Color.GRAY)
 		lbl.tooltip_text = description
 		lbl.mouse_filter = Control.MOUSE_FILTER_PASS
 		vbox.add_child(lbl)
@@ -157,6 +172,7 @@ func update_view():
 	option_button = OptionButton.new()
 	option_button.visible = false
 	vbox.add_child(option_button)
+	vbox.visible = not collapsed
 	
 	if _last_value:
 		value = _last_value
@@ -166,6 +182,8 @@ func update_view():
 		var right_margin = Control.new()
 		right_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		add_child(right_margin)
+		right_margin.visible = not collapsed
+	
 
 ## Subclass that
 func get_component(_params : Dictionary) -> Control:
