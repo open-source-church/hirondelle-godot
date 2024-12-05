@@ -5,8 +5,11 @@ extends Node2D
 @onready var explosion: GPUParticles2D = %Explosion
 
 @export var emitting := false:
-	set(val): trails.emitting = val
-	get(): return trails.emitting
+	set(val): 
+		if not is_node_ready(): await ready
+		trails.emitting = val
+	get(): 
+		return trails.emitting
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

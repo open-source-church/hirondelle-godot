@@ -11,3 +11,4 @@ size = Vector2i(1280, 720)
 script = ExtResource("1_3lpn5")
 
 [node name="Fireworks" parent="." instance=ExtResource("2_tp4p8")]
+emitting = true

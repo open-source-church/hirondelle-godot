@@ -61,9 +61,9 @@ var description : String:
 		description = val
 		update_view()
 
-func _set(prop : StringName, value: Variant) -> bool:
+func _set(prop : StringName, val: Variant) -> bool:
 	if prop == "name": 
-		name = value
+		name = val
 		update_view()
 		return true
 	return false
@@ -84,7 +84,7 @@ func _get_options_value() -> Variant:
 func _base_set_value(val):
 	if not custom_component.is_node_ready(): return
 	_set_value(val)
-func _set_value(val):
+func _set_value(_val):
 	pass
 
 
@@ -110,11 +110,11 @@ func _set_options(_options):
 	
 	_on_options_changed(_value)
 
-func _on_options_changed(_last_value) -> void:
+func _on_options_changed(_last_val) -> void:
 	custom_component.visible = options.size() == 0
 	option_button.visible = options.size() > 0
 	populate_option_button(option_button)
-	set_option_button_val(_last_value, option_button)
+	set_option_button_val(_last_val, option_button)
 
 ## Helper function to populate an option button
 func populate_option_button(btn : OptionButton):

@@ -32,18 +32,24 @@ signal port_clicked(name:String)
 signal collapsed_changed(bool)
 var btn_collapse : CheckButton
 
+func _update_separation():
+	var h = 0 if btn_collapse.button_pressed else 6
+	add_theme_constant_override("separation", h)
+
 func _ready() -> void:
 	
 	var hbox = get_titlebar_hbox()
 	btn_collapse = CheckButton.new()
 	btn_collapse.flat = true
-	btn_collapse.toggled.connect(collapsed_changed.emit)
+	btn_collapse.toggled.connect(_update_separation.unbind(1))
+	btn_collapse.toggled.connect(collapsed_changed.emit, CONNECT_DEFERRED)
 	hbox.add_child(btn_collapse)
 	
-	add_theme_constant_override("separation", 0)
+	add_theme_constant_override("separation", 6)
 	resizable = true
 	
 	setup()
+
 
 # FIXME: _draw_port seems buggy ..?
 #func _draw_port(slot_index: int, position: Vector2i, left: bool, color: Color) -> void:

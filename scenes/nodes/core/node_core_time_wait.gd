@@ -55,8 +55,9 @@ func run(routine:String):
 		timer.stop()
 
 func update() -> void:
+	print("UPDATING TIME WAIT: ", VALS.time.value)
 	VALS.elapsed.params = { "min": 0, "max": VALS.time.value }
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	VALS.elapsed.value = int(VALS.time.value - timer.time_left * 1000)
 	VALS.running.value = not timer.is_stopped()
