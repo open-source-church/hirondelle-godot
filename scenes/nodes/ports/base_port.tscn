@@ -15,25 +15,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
 script = ExtResource("1_df8d5")
-type = 2
 
 [node name="LeftMargin" type="Control" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="LabelFlow" type="Label" parent="."]
-visible = false
 layout_mode = 2
 text = "BasePort"
 
 [node name="LabelFlow2" type="Label" parent="."]
-visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.568973, 0.568973, 0.568973, 1)
 text = "()"
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.762404, 0.762404, 0.762404, 1)
 text = "BasePort:"
@@ -77,6 +76,7 @@ color = Color(0.501961, 0, 0.501961, 1)
 [node name="LineEdit" type="LineEdit" parent="."]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RightMargin" type="Control" parent="."]
 layout_mode = 2

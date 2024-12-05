@@ -42,8 +42,13 @@ func _init() -> void:
 func run(routine:String):
 	if routine == "rand":
 		var r = randf_range(VALS.min.value, VALS.max.value)
-		if not VALS.float.value: r = floor(r)
+		if not VALS.float.value: 
+			r = floor(r)
+		
 		VALS.r.value = r
 
 func update() -> void:
-	pass
+	if _last_port_changed == "float":
+		VALS.r.type = HGraphEdit.TYPES.INT if not VALS.float.value else HGraphEdit.TYPES.FLOAT
+		print(VALS.r.type)
+		update_slots()

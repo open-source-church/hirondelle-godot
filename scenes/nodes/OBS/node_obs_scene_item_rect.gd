@@ -42,19 +42,21 @@ func _update_scene_list(scenes : Array):
 	scenes.reverse()
 	VALS.scene.options = scenes.map(func (s): return s.sceneName)
 
-var _last_sceneItemId
 func update() -> void:
+	#if not G.OBS.is_connected: 
+		#return
+	
 	# Update scene items
 	var r = await G.OBS.send_request("GetSceneItemList", { "sceneName": VALS.scene.value })
 	
-	if r and _last_port_changed == "scene":
+	if r and (_last_port_changed == "scene" or not VALS.source.options):
 		VALS.source.options = r.sceneItems.map(func (s): return s.sourceName )
 		VALS.itemId.options = r.sceneItems.map(func (s): return s.sceneItemId )
 	
 	# Sync sourceName and sceneItemId
 	if r and _last_port_changed == "source":
 		VALS.itemId.value = r.sceneItems.filter(func (i): return i.sourceName == VALS.source.value).front().sceneItemId
-	elif r and _last_port_changed == "itemId":
+	elif r and r.sceneItems and _last_port_changed == "itemId":
 		VALS.source.value = r.sceneItems.filter(func (i): return i.sceneItemId == VALS.itemId.value).front().sourceName
 	
 	if _last_port_changed in ["pos", "size"]:

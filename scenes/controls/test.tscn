@@ -1,10 +1,38 @@
-[gd_scene load_steps=8 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=16 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/test.gd" id="1_6p6jm"]
 [ext_resource type="Script" path="res://scenes/nodes/graph_edit_test.gd" id="1_s4m1c"]
 [ext_resource type="PackedScene" uid="uid://dmpvvn1io6hex" path="res://scenes/controls/add_node_button.tscn" id="2_jbatr"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="2_v0q7l"]
-[ext_resource type="PackedScene" uid="uid://bfi1b0q6loi78" path="res://scenes/window/window_view.tscn" id="5_65jdw"]
+[ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="3_5tveq"]
+[ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="7_vwegq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3ub5v"]
+load_path = "res://.godot/imported/vector_whiteIcons.svg-fa4c64466445416748be9807d00a7e2b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr2k0"]
+atlas = SubResource("CompressedTexture2D_3ub5v")
+region = Rect2(608.659, 0, 39.068, 36.063)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eakjk"]
+atlas = SubResource("CompressedTexture2D_3ub5v")
+region = Rect2(203, 100, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o36h"]
+atlas = ExtResource("3_5tveq")
+region = Rect2(254, 254, 36, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar7wv"]
+atlas = ExtResource("3_5tveq")
+region = Rect2(156, 103, 35, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_miyoq"]
+atlas = ExtResource("3_5tveq")
+region = Rect2(356.223, 50.7847, 38.5543, 36.3239)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnt1c"]
+atlas = SubResource("CompressedTexture2D_3ub5v")
+region = Rect2(710.838, 100.506, 36.8143, 37.5658)
 
 [sub_resource type="Gradient" id="Gradient_qfcjl"]
 colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 0)
@@ -26,58 +54,141 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6p6jm")
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="Nodes" type="HSplitContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+theme_override_constants/separation = 0
 
-[node name="OBS" parent="TabContainer" instance=ExtResource("2_v0q7l")]
-visible = false
+[node name="MenuPanel" type="PanelContainer" parent="Nodes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="Nodes" type="VBoxContainer" parent="TabContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Nodes/MenuPanel"]
 layout_mode = 2
-metadata/_tab_index = 1
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Nodes"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Nodes/MenuPanel/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="BtnSave" type="Button" parent="TabContainer/Nodes/HBoxContainer"]
+[node name="Label" type="Label" parent="Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Hirondelle"
+
+[node name="BtnMenuNodes" type="Button" parent="Nodes/MenuPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Save"
+toggle_mode = true
+text = "Nodes"
 
-[node name="BtnLoad" type="Button" parent="TabContainer/Nodes/HBoxContainer"]
+[node name="BtnMenuOBS" type="Button" parent="Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+text = "OBS"
+
+[node name="BtnMenuTwitch" type="Button" parent="Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Twitch"
+
+[node name="Label2" type="Label" parent="Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Nodes
+"
+
+[node name="ItemList" type="ItemList" parent="Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Tabs" type="TabContainer" parent="Nodes"]
+layout_mode = 2
+tab_alignment = 1
+current_tab = 0
+tabs_visible = false
+
+[node name="Nodes" type="VBoxContainer" parent="Nodes/Tabs"]
+unique_name_in_owner = true
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Nodes/Tabs/Nodes"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Nodes/Tabs/Nodes/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="BtnMenu" type="Button" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+toggle_mode = true
+button_pressed = true
+icon = SubResource("AtlasTexture_dr2k0")
+
+[node name="BtnSave" type="Button" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+text = "Save"
+icon = SubResource("AtlasTexture_eakjk")
+
+[node name="BtnLoad" type="Button" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Load"
+icon = SubResource("AtlasTexture_0o36h")
 
-[node name="BtnClear" type="Button" parent="TabContainer/Nodes/HBoxContainer"]
+[node name="BtnClear" type="Button" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+toggle_mode = true
 text = "Clear"
+icon = SubResource("AtlasTexture_ar7wv")
 
-[node name="Control" type="Control" parent="TabContainer/Nodes/HBoxContainer"]
+[node name="Control" type="Control" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AddNodeButton" parent="TabContainer/Nodes/HBoxContainer" instance=ExtResource("2_jbatr")]
+[node name="AddNodeButton" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer" instance=ExtResource("2_jbatr")]
 layout_mode = 2
+icon = SubResource("AtlasTexture_miyoq")
 
-[node name="GraphEdit" type="GraphEdit" parent="TabContainer/Nodes" node_paths=PackedStringArray("add_node_button")]
+[node name="Control2" type="Control" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnWindow" type="Button" parent="Nodes/Tabs/Nodes/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+toggle_mode = true
+text = "Show window"
+icon = SubResource("AtlasTexture_lnt1c")
+
+[node name="GraphEdit" type="GraphEdit" parent="Nodes/Tabs/Nodes" node_paths=PackedStringArray("add_node_button")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 right_disconnects = true
 minimap_enabled = false
 script = ExtResource("1_s4m1c")
-add_node_button = NodePath("../HBoxContainer/AddNodeButton")
+add_node_button = NodePath("../MarginContainer/HBoxContainer/AddNodeButton")
 
-[node name="SelectionRect" type="TextureRect" parent="TabContainer/Nodes/GraphEdit"]
+[node name="SelectionRect" type="TextureRect" parent="Nodes/Tabs/Nodes/GraphEdit"]
 visible = false
 z_index = -1
 layout_mode = 0
@@ -87,10 +198,26 @@ offset_right = 232.0
 offset_bottom = 232.0
 texture = SubResource("GradientTexture2D_xb823")
 
-[node name="Window" parent="TabContainer" instance=ExtResource("5_65jdw")]
+[node name="OBS" type="MarginContainer" parent="Nodes/Tabs"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+metadata/_tab_index = 1
 
-[connection signal="child_entered_tree" from="TabContainer/Nodes/GraphEdit" to="TabContainer/Nodes/GraphEdit" method="on_child_enter_tree"]
-[connection signal="connection_request" from="TabContainer/Nodes/GraphEdit" to="TabContainer/Nodes/GraphEdit" method="_on_connection_request"]
-[connection signal="disconnection_request" from="TabContainer/Nodes/GraphEdit" to="TabContainer/Nodes/GraphEdit" method="_on_disconnection_request"]
+[node name="OBS" parent="Nodes/Tabs/OBS" instance=ExtResource("2_v0q7l")]
+layout_mode = 2
+
+[node name="HWindow" parent="." instance=ExtResource("7_vwegq")]
+unique_name_in_owner = true
+auto_translate_mode = 1
+visible = false
+transient = true
+transparent = true
+
+[connection signal="child_entered_tree" from="Nodes/Tabs/Nodes/GraphEdit" to="Nodes/Tabs/Nodes/GraphEdit" method="on_child_enter_tree"]
+[connection signal="connection_request" from="Nodes/Tabs/Nodes/GraphEdit" to="Nodes/Tabs/Nodes/GraphEdit" method="_on_connection_request"]
+[connection signal="disconnection_request" from="Nodes/Tabs/Nodes/GraphEdit" to="Nodes/Tabs/Nodes/GraphEdit" method="_on_disconnection_request"]

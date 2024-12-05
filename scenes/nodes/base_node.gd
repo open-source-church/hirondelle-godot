@@ -98,10 +98,10 @@ func on_port_clicked(port_name : String) -> void:
 func update_slots() -> void:
 	clear_all_slots()
 	var slot_index := 0
-	for _name in COMPONENTS:
-		var c = COMPONENTS[_name]
-		VALS[_name].visible = c.visible
-		if c is Port and c.visible:
+	for _name in VALS:
+		var c = VALS[_name]
+		#VALS[_name].visible = c.visible
+		if c.visible:
 			set_slot_enabled_left(slot_index, c.side in [INPUT, BOTH])
 			set_slot_enabled_right(slot_index, c.side in [OUTPUT, BOTH])
 			set_slot_type_left(slot_index, c.type)
@@ -123,7 +123,6 @@ func _update(_last_changed := "") -> void:
 	#update_slots()
 
 func propagate_value(_name : String) -> void:
-	print("Propagating value: ", _name)
 	var port = get_port_number(_name)
 	for c in G.graph.get_connections_from_node_and_port(name, port):
 		var _c = G.graph.full_connection(c)
@@ -206,7 +205,10 @@ func save() -> Dictionary:
 		"name": name
 	}
 	for v in VALS:
-		s.vals[v] = VALS[v].value
+		if VALS[v].type == HGraphEdit.TYPES.VEC2:
+			s.vals[v] = { "x": VALS[v].value.x, "y": VALS[v].value.y }
+		else:
+			s.vals[v] = VALS[v].value
 	
 	return s
 

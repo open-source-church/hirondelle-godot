@@ -11,7 +11,8 @@ enum TYPES {
 	COLOR,
 	VEC2,
 	RECT,
-	BOOL
+	BOOL,
+	VARIANT
 }
 
 const colors = {
@@ -22,7 +23,8 @@ const colors = {
 	TYPES.COLOR: Color.BLUE,
 	TYPES.FLOAT: Color.ORANGE,
 	TYPES.BOOL: Color.CYAN,
-	TYPES.VEC2: Color.BROWN
+	TYPES.VEC2: Color.BROWN,
+	TYPES.VARIANT: Color.GRAY
 }
 
 @export var add_node_button : MenuButton
@@ -31,6 +33,12 @@ const colors = {
 func _ready() -> void:
 	G.graph = self
 	add_valid_connection_type(TYPES.INT, TYPES.FLOAT)
+	add_valid_connection_type(TYPES.INT, TYPES.VARIANT)
+	add_valid_connection_type(TYPES.FLOAT, TYPES.VARIANT)
+	add_valid_connection_type(TYPES.BOOL, TYPES.VARIANT)
+	add_valid_connection_type(TYPES.VEC2, TYPES.VARIANT)
+	add_valid_connection_type(TYPES.TEXT, TYPES.VARIANT)
+	add_valid_connection_type(TYPES.COLOR, TYPES.VARIANT)
 	add_node_button.add_node.connect(add_node)
 	#popup_request.connect(show_popup) # FIXME: see comment in show_popup
 
@@ -174,7 +182,10 @@ func load():
 		node.position_offset = Vector2(n.pos.x, n.pos.y)
 		node.name = n.name
 		for _name in n.vals:
-			node.VALS[_name].value = n.vals[_name]
+			if node.VALS[_name].type == TYPES.VEC2:
+				node.VALS[_name].value = Vector2(n.vals[_name].x, n.vals[_name].y)
+			else:
+				node.VALS[_name].value = n.vals[_name]
 	
 	for c in content.connections:
 		var from = get_node_by_id(c.from_node)

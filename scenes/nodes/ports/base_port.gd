@@ -99,6 +99,9 @@ func _get_value() -> Variant:
 		return check_button.button_pressed
 	if type == HGraphEdit.TYPES.VEC2:
 		return vec_2.value
+	if type == HGraphEdit.TYPES.VARIANT:
+		return value
+	
 	return null
 
 func _set_value(val):
@@ -122,6 +125,8 @@ func _set_value(val):
 		check_button.button_pressed = val
 	if type == HGraphEdit.TYPES.VEC2:
 		vec_2.value = val
+	if type == HGraphEdit.TYPES.VARIANT:
+		value = val
 	#value_changed.emit()
 
 func set_option(val):
@@ -138,16 +143,22 @@ var options:Array : set=_set_options
 
 ## _options is either an Array of value, or an Array of Dictionary { "label": lbl, "value": val }
 func _set_options(_options):
+	var _value = value
+	
 	if _options and _options[0] is Dictionary:
 		pass
 	elif _options and _options[0]:
 		_options = _options.map(func (o): return { "label": o, "value": o })
 	else:
 		_options = []
+	
 	if _options == options:
 		return
+	
 	options = _options
 	option_button.clear()
 	for o in options:
 		option_button.add_item(str(o.label))
+	
 	update_view()
+	set_option(_value)

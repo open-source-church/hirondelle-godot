@@ -5,7 +5,6 @@ extends VBoxContainer
 @onready var txt_password: LineEdit = %TxtPassword
 @onready var btn_connect: Button = %BtnConnect
 @onready var btn_disconnect: Button = %BtnDisconnect
-@onready var btn_test: Button = %BtnTest
 
 @onready var WS: OBSWebSocket = $OBSWebSocket
 
@@ -17,7 +16,6 @@ func _ready() -> void:
 	
 	btn_connect.pressed.connect(obs_connect)
 	btn_disconnect.pressed.connect(WS.disconnect_obs)
-	btn_test.pressed.connect(test_cmd)
 	WS.authenticated.connect(get_info)
 	
 	WS.connected.connect(_on_connected)
@@ -77,7 +75,3 @@ func get_screenshot():
 	var img = Image.new()
 	img.load_jpg_from_buffer(image_data.to_ascii_buffer())
 	#program_texture.texture = ImageTexture.create_from_image(img)
-
-func test_cmd():
-	var r = await WS.send_request("GetSceneList")
-	print(r)

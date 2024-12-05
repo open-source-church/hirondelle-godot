@@ -57,12 +57,3 @@ text = "Disconnect"
 [node name="Control" type="Control" parent="LoginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="BtnTest" type="Button" parent="LoginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Test CMD"
-
-[node name="Control3" type="Control" parent="LoginContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
