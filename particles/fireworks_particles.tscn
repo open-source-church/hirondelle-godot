@@ -85,7 +85,7 @@ script = ExtResource("1_rgkjd")
 [node name="Trails" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("CanvasItemMaterial_gnc2e")
-position = Vector2(580, 698)
+position = Vector2(640, 730)
 emitting = false
 amount = 25
 sub_emitter = NodePath("Explosion")
@@ -107,3 +107,4 @@ texture = SubResource("GradientTexture2D_6e2y3")
 lifetime = 3.0
 local_coords = true
 trail_enabled = true
+metadata/_edit_lock_ = true

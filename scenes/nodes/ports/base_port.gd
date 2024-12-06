@@ -90,7 +90,8 @@ func _get_options_value() -> Variant:
 
 func _base_set_value(val):
 	if not custom_component.is_node_ready(): return
-	_set_value(val)
+	if options: set_option_button_val(val, option_button)
+	else: _set_value(val)
 func _set_value(_val):
 	pass
 

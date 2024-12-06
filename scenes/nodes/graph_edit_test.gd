@@ -203,6 +203,8 @@ func load():
 				continue
 			if node.VALS[_name].type == TYPES.VEC2:
 				node.VALS[_name].value = Vector2(n.vals[_name].x, n.vals[_name].y)
+			elif node.VALS[_name].type == TYPES.COLOR:
+				node.VALS[_name].value = Color(n.vals[_name])
 			else:
 				node.VALS[_name].value = n.vals[_name]
 			# Update the node with each value set to be sure it's properly displayed

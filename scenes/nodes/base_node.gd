@@ -252,6 +252,8 @@ func save() -> Dictionary:
 	for v in VALS:
 		if VALS[v].type == HGraphEdit.TYPES.VEC2:
 			s.vals[v] = { "x": VALS[v].value.x, "y": VALS[v].value.y }
+		elif VALS[v].type == HGraphEdit.TYPES.COLOR:
+			s.vals[v] = VALS[v].value.to_html()
 		else:
 			s.vals[v] = VALS[v].value
 	

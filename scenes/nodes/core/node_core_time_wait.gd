@@ -56,7 +56,6 @@ func run(routine:String):
 		timer.stop()
 
 func update() -> void:
-	print("UPDATING TIME WAIT: ", VALS.time.value)
 	VALS.elapsed.params = { "min": 0, "max": VALS.time.value }
 
 func _process(_delta: float) -> void:

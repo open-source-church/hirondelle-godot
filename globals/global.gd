@@ -1,7 +1,7 @@
 extends Node
 
 var graph : HGraphEdit
-
+var window : HWindow
 var OBS : OBSWebSocket
 
 const NODES = [
@@ -20,5 +20,7 @@ const NODES = [
 	preload("res://scenes/nodes/OBS/node_obs_studio_mode.gd"),
 	preload("res://scenes/nodes/OBS/node_obs_streaming.gd"),
 	preload("res://scenes/nodes/OBS/node_obs_set_current_scene.gd"),
-	preload("res://scenes/nodes/OBS/node_obs_scene_item_rect.gd")
+	preload("res://scenes/nodes/OBS/node_obs_scene_item_rect.gd"),
+	# WINDOW
+	preload("res://scenes/nodes/window/node_window_progressbar.gd")
 ]
