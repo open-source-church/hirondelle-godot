@@ -5,14 +5,13 @@ class_name HGraphEdit
 enum TYPES {
 	FLOW,
 	TEXT,
-	TEXT_LIST,
 	INT,
 	FLOAT,
 	COLOR,
 	VEC2,
-	RECT,
 	BOOL,
-	VARIANT
+	VARIANT,
+	TEXT_LIST,
 }
 
 const colors = {
@@ -28,7 +27,7 @@ const colors = {
 }
 
 @export var add_node_button : MenuButton
-@onready var selection_rect: TextureRect = $SelectionRect
+@onready var selection_rect: TextureRect = $PortSelectionRect
 
 func _ready() -> void:
 	G.graph = self

@@ -35,6 +35,7 @@ atlas = SubResource("CompressedTexture2D_3ub5v")
 region = Rect2(710.838, 100.506, 36.8143, 37.5658)
 
 [sub_resource type="Gradient" id="Gradient_qfcjl"]
+offsets = PackedFloat32Array(0.880851, 1)
 colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xb823"]
@@ -199,7 +200,7 @@ minimap_enabled = false
 script = ExtResource("1_s4m1c")
 add_node_button = NodePath("../../../../HBoxContainer/AddNodeButton")
 
-[node name="SelectionRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes/GraphEdit"]
+[node name="PortSelectionRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes/GraphEdit"]
 visible = false
 z_index = -1
 layout_mode = 0

@@ -11,7 +11,8 @@ func _init() -> void:
 	VALS = {
 		"start": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 
-			"side": INPUT
+			"side": INPUT,
+			"description": "Starts the timer."
 		}),
 		"stop": HPortFlow.new({
 			"type": G.graph.TYPES.FLOW, 

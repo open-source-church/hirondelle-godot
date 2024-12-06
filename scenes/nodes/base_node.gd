@@ -114,6 +114,12 @@ func update_slots() -> void:
 			set_slot_type_right(slot_index, c.type)
 			set_slot_color_left(slot_index, G.graph.colors[c.type])
 			set_slot_color_right(slot_index, G.graph.colors[c.type])
+			if c.type == G.graph.TYPES.FLOW:
+				var icon = get_theme_icon("port").duplicate()
+				icon.set_size_override(icon.get_size() * 1.25)
+				set_slot_custom_icon_left(slot_index, icon)
+				set_slot_custom_icon_right(slot_index, icon)
+				
 			slot_index += 1
 
 var _last_port_changed := ""
