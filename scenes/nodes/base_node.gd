@@ -265,4 +265,18 @@ func save() -> Dictionary:
 	
 	return s
 
-	
+func load(data : Dictionary) -> void:
+	position_offset = Vector2(data.pos.x, data.pos.y)
+	for _name in data.vals:
+		if not _name in VALS: 
+			print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [name, type])
+			continue
+		if VALS[_name].type == G.graph.TYPES.VEC2:
+			VALS[_name].value = Vector2(data.vals[_name].x, data.vals[_name].y)
+		elif VALS[_name].type == G.graph.TYPES.COLOR:
+			VALS[_name].value = Color(data.vals[_name])
+		else:
+			VALS[_name].value = data.vals[_name]
+		# Update the node with each value set to be sure it's properly displayed
+		_last_port_changed = _name
+		update()

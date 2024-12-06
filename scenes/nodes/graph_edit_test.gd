@@ -194,21 +194,8 @@ func load():
 	for n in content.nodes:
 		print("Loading node: ", n.name)
 		var node := add_node(n.type)
-		node.position_offset = Vector2(n.pos.x, n.pos.y)
 		node.name = n.name
-		for _name in n.vals:
-			if not _name in node.VALS: 
-				print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [_name, node._type])
-				continue
-			if node.VALS[_name].type == TYPES.VEC2:
-				node.VALS[_name].value = Vector2(n.vals[_name].x, n.vals[_name].y)
-			elif node.VALS[_name].type == TYPES.COLOR:
-				node.VALS[_name].value = Color(n.vals[_name])
-			else:
-				node.VALS[_name].value = n.vals[_name]
-			# Update the node with each value set to be sure it's properly displayed
-			node._last_port_changed = _name
-			node.update()
+		node.load(n)
 	
 	for c in content.connections:
 		var from = get_node_by_id(c.from_node)
@@ -249,3 +236,85 @@ func get_hover_port(pos : Vector2) -> Dictionary:
 			if (node.position_offset + node.get_output_port_position(i) - _pos).length() < 10:
 				return { "node": node, "side": HBaseNode.OUTPUT, "index": i }
 	return {}
+
+
+func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
+	print("Delete node request: ", nodes)
+	
+	for n in nodes:
+		var _n = get_node(NodePath(n))
+		# Remove connections
+		var connections = get_connection_list().filter(func (c): return c.from_node == n or c.to_node == n)
+		for c in connections:
+			disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+		# Remove node
+		_n.queue_free()
+
+func get_selected_nodes() -> Array[Node]:
+	return get_children().filter(func (c): return c is HBaseNode and c.selected)
+
+func get_mouse_position() -> Vector2:
+	return (get_local_mouse_position() + scroll_offset) / zoom
+
+func _on_copy_nodes_request() -> void:
+	var to_copy = {
+		"nodes": [],
+		"connections": [],
+	}
+	var selected = get_selected_nodes()
+	
+	for n in selected:
+		to_copy.nodes.append(n.save())
+	
+	for c in map_full(get_connection_list()):
+		if not c.from_node in selected or not c.to_node in selected:
+			continue
+		to_copy.connections.append({
+			"from_node": c.from_node.name,
+			"to_node": c.to_node.name,
+			"from_port": c.from_port.name,
+			"to_port": c.to_port.name
+		})
+	DisplayServer.clipboard_set(JSON.stringify(to_copy, "  "))
+
+func _on_paste_nodes_request() -> void:
+	var to_paste = JSON.parse_string(DisplayServer.clipboard_get())
+	if not to_paste:
+		print("Paste: invalid content - not JSON")
+		return
+	if not "nodes" in to_paste or not "connections" in to_paste:
+		print("Paste: invalid content")
+		return
+	
+	set_selected(null)
+	
+	# Get center of nodes, and mouse position, to position pasted nodes relatively
+	var center := Vector2()
+	for n in to_paste.nodes:
+		center += Vector2(n.pos.x, n.pos.y)
+	center = center / to_paste.nodes.size()
+	var delta_pos := get_mouse_position() - center
+	
+	# Node need to get new names (uniques), so we keep them in a map in order to
+	# update connections accordingly.
+	var name_map = {}
+	for n in to_paste.nodes:
+		var node := add_node(n.type)
+		name_map[n.name] = node.name
+		node.load(n)
+		node.position_offset += delta_pos
+		node.selected = true
+	
+	for c in to_paste.connections:
+		c.from_node = name_map.get(c.from_node, c.from_node)
+		c.to_node = name_map.get(c.to_node, c.to_node)
+		var from = get_node_by_id(c.from_node)
+		var to = get_node_by_id(c.to_node)
+		connect_node(c.from_node, from.get_port_number(c.from_port), c.to_node, to.get_port_number(c.to_port))
+
+
+func _on_duplicate_nodes_request() -> void:
+	var clipboard = DisplayServer.clipboard_get()
+	_on_copy_nodes_request()
+	_on_paste_nodes_request()
+	DisplayServer.clipboard_set(clipboard)
