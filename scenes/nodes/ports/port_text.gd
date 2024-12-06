@@ -12,4 +12,4 @@ func _get_value():
 	return line.text
 
 func _set_value(val):
-	line.text = val
+	line.text = str(val)

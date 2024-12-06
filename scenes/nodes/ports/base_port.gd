@@ -5,6 +5,7 @@ class_name HBasePort
 ## * get_value
 ## * set_value
 ## * get_component
+## * _on_params_changed if needed
 
 
 var default : Variant
@@ -15,9 +16,15 @@ var params : Dictionary:
 		_on_params_changed()
 func _on_params_changed() -> void: pass
 
+## Hides the name label
 var hide_label := false
 var option_button : OptionButton
 var custom_component : Control
+
+## Port is holding a dictionary instead of just a single value.
+##
+## Dictionaries allows for multiple connections.
+var is_dictionary := false
 
 var collapsed := false:
 	set(val):
@@ -39,12 +46,12 @@ func _init(opt : Dictionary) -> void:
 	default = opt.get("default", null)
 	params = opt.get("params", {})
 	hide_label = opt.get("hide_label", false)
+	is_dictionary = opt.get("dictionary", false)
 	custom_minimum_size = Vector2(0, 0)
 
 func _ready() -> void:
 	update_view()
 	if default != null: value = default
-
 
 var side := E.Side.INPUT:
 	set(val):
@@ -87,6 +94,18 @@ func _base_set_value(val):
 func _set_value(_val):
 	pass
 
+## Returns a list of all the ports connected to that port
+func get_ports_connected_to():
+	var node = get_parent() as HBaseNode
+	var port_number = node.get_port_number(name)
+	var connections = G.graph.get_connections_to_node_and_port(node.name, port_number)
+	connections = G.graph.map_full(connections)
+	return connections.map(func (c): return c.from_port)
+
+## Subclass to implement comportement from multiple connections
+func update_from_connections():
+	for port in get_ports_connected_to():
+		value = port.value
 
 var options:Array : set=_set_options
 
@@ -138,7 +157,14 @@ var _last_value
 func _process(_delta: float) -> void:
 	if value != _last_value:
 		value_changed.emit()
-		_last_value = value
+		_on_value_changed()
+		if value is Dictionary or value is Array:
+			_last_value = value.duplicate()
+		else:
+			_last_value = value
+
+func _on_value_changed():
+	pass
 
 ## Creates the proper nodes for the port.
 func update_view():
@@ -152,6 +178,7 @@ func update_view():
 	if side in [E.Side.OUTPUT, E.Side.BOTH]:
 		var left_margin = Control.new()
 		left_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		#left_margin.custom_minimum_size = Vector2(50, 0)
 		left_margin.visible = not collapsed
 		add_child(left_margin)
 	
@@ -181,6 +208,7 @@ func update_view():
 	if side in [E.Side.INPUT, E.Side.BOTH]:
 		var right_margin = Control.new()
 		right_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		#right_margin.custom_minimum_size = Vector2(50, 0)
 		add_child(right_margin)
 		right_margin.visible = not collapsed
 	

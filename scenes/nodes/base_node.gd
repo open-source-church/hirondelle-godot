@@ -72,9 +72,9 @@ func setup():
 		collapsed_changed.connect(p.set_collapsed)
 		
 		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
-			p.value_changed.connect(_update.bind(_name), CONNECT_DEFERRED)
+			p.value_changed.connect(_update.bind(_name)) # CONNECT_DEFERRED
 		if p.side in [E.Side.OUTPUT, E.Side.BOTH]:
-			p.value_changed.connect(propagate_value.bind(_name), CONNECT_DEFERRED)
+			p.value_changed.connect(propagate_value.bind(_name)) # CONNECT_DEFERRED
 	
 	warning = Label.new()
 	warning.add_theme_color_override("font_color", Color.ORANGE)
@@ -90,8 +90,6 @@ func setup():
 	
 	update()
 	update_slots()
-	
-	print("Finished setup")
 
 func on_port_clicked(port_name : String) -> void:
 	var val = VALS[port_name]
@@ -100,9 +98,25 @@ func on_port_clicked(port_name : String) -> void:
 	if val.type == G.graph.TYPES.FLOW and val.side == E.Side.OUTPUT:
 		emit(port_name)
 
+func get_port_icon(n := 0, width := 10) -> Texture2D:
+	var icon = AtlasTexture.new()
+	icon.atlas = preload("res://themes/ports.svg")
+	icon.region = Rect2(n * 32, 0, 32, 32)
+	icon = ImageTexture.create_from_image(icon.get_image())
+	icon.set_size_override(Vector2i(width, width))
+	return icon
+
+func _reverse_icon(icon : Texture2D) -> Texture2D:
+	var img = icon.get_image()
+	img.flip_x()
+	var icon2 = ImageTexture.create_from_image(img)
+	icon2.set_size_override(icon.get_size())
+	return icon2
+
 ## Turn on and off slots and give them the proper color
 func update_slots() -> void:
 	clear_all_slots()
+	
 	var slot_index := 0
 	for _name in VALS:
 		var c = VALS[_name]
@@ -114,13 +128,21 @@ func update_slots() -> void:
 			set_slot_type_right(slot_index, c.type)
 			set_slot_color_left(slot_index, G.graph.colors[c.type])
 			set_slot_color_right(slot_index, G.graph.colors[c.type])
+			var icon
 			if c.type == G.graph.TYPES.FLOW:
-				var icon = get_theme_icon("port").duplicate()
-				icon.set_size_override(icon.get_size() * 1.25)
-				set_slot_custom_icon_left(slot_index, icon)
-				set_slot_custom_icon_right(slot_index, icon)
+				icon = get_port_icon(3, 15)
+			elif c.is_dictionary:
+				icon = get_port_icon(2, 10)
+			else:
+				icon = get_port_icon(0, 10)
+			#var icon_width = 14 if c.type == G.graph.TYPES.FLOW else 10
+			#var icon_idx = 2 if c.is_dictionary else 0
+			#var icon = get_port_icon(icon_idx, icon_width)
+			set_slot_custom_icon_right(slot_index, icon)
+			set_slot_custom_icon_left(slot_index, icon)
 				
 			slot_index += 1
+	reset_size()
 
 var _last_port_changed := ""
 func _update(_last_changed := "") -> void:
@@ -135,10 +157,18 @@ func _update(_last_changed := "") -> void:
 	#update_slots()
 
 func propagate_value(_name : String) -> void:
+	#if not is_node_ready(): await ready
+	
 	var port = get_port_number(_name)
 	for c in G.graph.get_connections_from_node_and_port(name, port):
 		var _c = G.graph.full_connection(c)
-		_c.to_port.value = _c.from_port.value
+		_c.to_port.update_from_connections()
+		#if _c.to_port.is_dictionary:
+			## Updating dictionary
+			#_c.to_port.value[_name] = _c.from_port.value
+		#else:
+			## Updating normal value
+			#_c.to_port.value = _c.from_port.value
 
 ## Virtual. Called when input value changed.
 func update() -> void:
@@ -159,7 +189,8 @@ func get_output_port(idx : int) -> Node:
 	var k := 0
 	for c in VALS.values():
 		if c.visible and c.side in [E.Side.OUTPUT, E.Side.BOTH]:
-			if k == idx: return c
+			if k == idx:
+				return c
 			k += 1
 	return null
 
@@ -178,6 +209,7 @@ func get_port_number(port_name : String) -> int:
 	var _output = 0
 	for _name in VALS:
 		var v = VALS[_name]
+		if not v.visible: continue
 		if _name == port_name:
 			return _input if v.side == E.Side.INPUT else _output
 		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
@@ -191,6 +223,7 @@ func get_port_name(side, index : int) -> String:
 	var _output = 0
 	for _name in VALS:
 		var v = VALS[_name]
+		if not v.visible: continue
 		if v.side in [E.Side.INPUT, E.Side.BOTH] and side == E.Side.INPUT and index == _input: return _name
 		if v.side in [E.Side.OUTPUT, E.Side.BOTH] and side == E.Side.OUTPUT and index == _output: return _name
 		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1

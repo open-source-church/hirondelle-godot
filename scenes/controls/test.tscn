@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=17 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/test.gd" id="1_6p6jm"]
 [ext_resource type="Script" path="res://scenes/nodes/graph_edit_test.gd" id="1_s4m1c"]
@@ -33,6 +33,17 @@ region = Rect2(356.223, 50.7847, 38.5543, 36.3239)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lnt1c"]
 atlas = SubResource("CompressedTexture2D_3ub5v")
 region = Rect2(710.838, 100.506, 36.8143, 37.5658)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os6en"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0.6, 0.6, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="Gradient" id="Gradient_qfcjl"]
 offsets = PackedFloat32Array(0.880851, 1)
@@ -166,6 +177,12 @@ text = "Twitch"
 
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+text = "Nodes
+"
+
+[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_os6en")
 text = "Nodes
 "
 

@@ -11,19 +11,19 @@ enum TYPES {
 	VEC2,
 	BOOL,
 	VARIANT,
-	TEXT_LIST,
+	VARIANT_ARRAY
 }
 
 const colors = {
 	TYPES.FLOW: Color.GREEN,
 	TYPES.TEXT: Color.PURPLE,
-	TYPES.TEXT_LIST: Color.WEB_PURPLE,
 	TYPES.INT: Color.YELLOW,
 	TYPES.COLOR: Color.BLUE,
 	TYPES.FLOAT: Color.ORANGE,
 	TYPES.BOOL: Color.CYAN,
 	TYPES.VEC2: Color.BROWN,
-	TYPES.VARIANT: Color.GRAY
+	TYPES.VARIANT: Color.GRAY,
+	TYPES.VARIANT_ARRAY: Color.DIM_GRAY,
 }
 
 @export var add_node_button : MenuButton
@@ -96,12 +96,19 @@ func get_connections_to_node_and_port(to_node: String, to_port: int) -> Array:
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print("Connection request FROM %s at %d TO %s at %d" % [from_node, from_port, to_node, to_port])
-	# Clear existing connections
-	# FIXME: allow to keep multiple FLOW connections
-	for c in get_connections_to_node_and_port(to_node, to_port):
-		var _c = full_connection(c)
-		if not _c.to_port.type == TYPES.FLOW:
-			disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+	
+	var _to_node = get_node_by_id(to_node)
+	var _to_port = _to_node.get_input_port(to_port)
+	
+	if _to_port.type == TYPES.FLOW or _to_port.is_dictionary:
+		pass
+	else:
+		# Clear existing connections
+		for c in get_connections_to_node_and_port(to_node, to_port):
+			var _c = full_connection(c)
+			if not _c.to_port.type == TYPES.FLOW:
+				disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+	
 	# Make connection
 	connect_node(from_node, from_port, to_node, to_port)
 	update_values_from_connection({"from_node": from_node, "from_port": from_port, "to_node": to_node, "to_port": to_port})
@@ -110,7 +117,7 @@ func update_values_from_connection(connection : Dictionary) -> void:
 	update_values_from_full_connection(full_connection(connection))
 	
 func update_values_from_full_connection(connection : Dictionary) -> void:
-	connection.to_port.value = connection.from_port.value
+	connection.from_node.propagate_value(connection.from_port.name)
 
 func map_full(connections : Array) -> Array:
 	return connections.map(func (c): return full_connection(c))
@@ -130,7 +137,16 @@ func full_connection(connection : Dictionary) -> Dictionary:
 func _on_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print("Disconnection request FROM %s at %d TO %s at %d" % [from_node, from_port, to_node, to_port])
 	disconnect_node(from_node, from_port, to_node, to_port)
-
+	# Check if port is dictionary to update
+	var _to_node = get_node_by_id(to_node)
+	var _to_port = _to_node.get_input_port(to_port)
+	if _to_port.is_dictionary:
+		var connections = map_full(get_connections_to_node_and_port(to_node, to_port))
+		_to_port.update_from_connections()
+		#_to_port.value = {}
+		#for c in connections:
+			#print(" * ", c.from_node.name, " ", c.from_port.name)
+			#c.from_node.propagate_value(c.from_port.name)
 
 ## Removes all nodes and connections.
 func clear():
@@ -177,14 +193,21 @@ func load():
 	print("Loading from: ", load_file.get_path_absolute())
 	
 	for n in content.nodes:
+		print("Loading node: ", n.name)
 		var node := add_node(n.type)
 		node.position_offset = Vector2(n.pos.x, n.pos.y)
 		node.name = n.name
 		for _name in n.vals:
+			if not _name in node.VALS: 
+				print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [_name, node._type])
+				continue
 			if node.VALS[_name].type == TYPES.VEC2:
 				node.VALS[_name].value = Vector2(n.vals[_name].x, n.vals[_name].y)
 			else:
 				node.VALS[_name].value = n.vals[_name]
+			# Update the node with each value set to be sure it's properly displayed
+			node._last_port_changed = _name
+			node.update()
 	
 	for c in content.connections:
 		var from = get_node_by_id(c.from_node)
