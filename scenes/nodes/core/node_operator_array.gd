@@ -3,6 +3,8 @@ class_name HNodeOperatorArray
 
 static var _title = "Array Operations"
 static var _type = "core/op/array"
+static var _category = "Core"
+static var _icon = "array"
 
 func _init() -> void:
 	title = _title

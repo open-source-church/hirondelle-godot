@@ -3,6 +3,8 @@ class_name HNodeComposeVec2
 
 static var _title = "Vec2 Compose"
 static var _type = "core/compose/vec2"
+static var _category = "Core"
+static var _icon = "vector"
 
 func _init() -> void:
 	title = _title

@@ -4,6 +4,8 @@ class_name HNodeRandomNumber
 
 static var _title = "Random number"
 static var _type = "core/random/number"
+static var _category = "Core"
+static var _icon = "random"
 
 func _init() -> void:
 	title = _title

@@ -3,6 +3,8 @@ class_name HNodeOperatorText
 
 static var _title = "Text Operations"
 static var _type = "core/op/text"
+static var _category = "Core"
+static var _icon = "text"
 
 func _init() -> void:
 	title = _title

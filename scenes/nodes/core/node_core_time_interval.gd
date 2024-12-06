@@ -2,6 +2,8 @@ extends HBaseNode
 
 static var _title = "Time interval"
 static var _type = "core/time_interval"
+static var _category = "Time"
+static var _icon = "time"
 
 var timer : Timer
 

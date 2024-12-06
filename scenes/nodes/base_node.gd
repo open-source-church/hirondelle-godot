@@ -10,14 +10,18 @@ class_name HBaseNode
 
 enum { INPUT, OUTPUT, BOTH, NONE }
 
+#var _title = ""
+#var _type = ""
+var category = ""
+var icon = ""
+var description = ""
+
 ## Unique identifier for node type
 var type = ""
 
 ## Unique identifier for node. Unique in the whole graph.
 #var id : String
 # Use name instead
-
-var description := ""
 
 #var COMPONENTS := {}
 var VALS := {}
@@ -43,6 +47,13 @@ func _ready() -> void:
 	btn_collapse.flat = true
 	btn_collapse.toggled.connect(_update_separation.unbind(1))
 	btn_collapse.toggled.connect(collapsed_changed.emit, CONNECT_DEFERRED)
+	if "_icon" in self:
+		var texture = TextureRect.new()
+		texture.texture = G.get_main_icon(self["_icon"], 24)
+		texture.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+		texture.modulate = G.get_node_color(self)
+		hbox.add_child(texture)
+		hbox.move_child(texture, 0)
 	hbox.add_child(btn_collapse)
 	
 	add_theme_constant_override("separation", 6)
@@ -99,12 +110,7 @@ func on_port_clicked(port_name : String) -> void:
 		emit(port_name)
 
 func get_port_icon(n := 0, width := 10) -> Texture2D:
-	var icon = AtlasTexture.new()
-	icon.atlas = preload("res://themes/ports.svg")
-	icon.region = Rect2(n * 32, 0, 32, 32)
-	icon = ImageTexture.create_from_image(icon.get_image())
-	icon.set_size_override(Vector2i(width, width))
-	return icon
+	return G.get_icon_from_atlas(preload("res://themes/ports.svg"), n, 0, 32, width)
 
 func _reverse_icon(icon : Texture2D) -> Texture2D:
 	var img = icon.get_image()

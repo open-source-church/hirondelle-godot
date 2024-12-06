@@ -1,38 +1,34 @@
-[gd_scene load_steps=17 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=16 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/test.gd" id="1_6p6jm"]
 [ext_resource type="Script" path="res://scenes/nodes/graph_edit_test.gd" id="1_s4m1c"]
-[ext_resource type="PackedScene" uid="uid://dmpvvn1io6hex" path="res://scenes/controls/add_node_button.tscn" id="2_jbatr"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="2_v0q7l"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="3_5tveq"]
 [ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="7_vwegq"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3ub5v"]
-load_path = "res://.godot/imported/vector_whiteIcons.svg-fa4c64466445416748be9807d00a7e2b.ctex"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_dr2k0"]
-atlas = SubResource("CompressedTexture2D_3ub5v")
-region = Rect2(608.659, 0, 39.068, 36.063)
+atlas = ExtResource("3_5tveq")
+region = Rect2(832, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eakjk"]
-atlas = SubResource("CompressedTexture2D_3ub5v")
-region = Rect2(204.162, 101.32, 36.5663, 36.6805)
+atlas = ExtResource("3_5tveq")
+region = Rect2(320, 128, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0o36h"]
 atlas = ExtResource("3_5tveq")
-region = Rect2(254, 254, 36, 34)
+region = Rect2(128, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ar7wv"]
 atlas = ExtResource("3_5tveq")
-region = Rect2(156, 103, 35, 35)
+region = Rect2(256, 128, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_miyoq"]
 atlas = ExtResource("3_5tveq")
-region = Rect2(356.223, 50.7847, 38.5543, 36.3239)
+region = Rect2(512, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lnt1c"]
-atlas = SubResource("CompressedTexture2D_3ub5v")
-region = Rect2(710.838, 100.506, 36.8143, 37.5658)
+atlas = ExtResource("3_5tveq")
+region = Rect2(960, 128, 64, 64)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os6en"]
 content_margin_left = 6.0
@@ -44,6 +40,10 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fsma"]
+atlas = ExtResource("3_5tveq")
+region = Rect2(448, 128, 64, 64)
 
 [sub_resource type="Gradient" id="Gradient_qfcjl"]
 offsets = PackedFloat32Array(0.880851, 1)
@@ -117,10 +117,11 @@ icon = SubResource("AtlasTexture_ar7wv")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AddNodeButton" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_jbatr")]
+[node name="BtnAddNode" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+text = "Add node"
 icon = SubResource("AtlasTexture_miyoq")
-flat = false
 
 [node name="Control2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -189,6 +190,9 @@ text = "Nodes
 [node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+item_count = 1
+item_0/text = "Youplaboom"
+item_0/icon = SubResource("AtlasTexture_5fsma")
 
 [node name="Tabs" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes"]
 layout_mode = 2
@@ -208,15 +212,13 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="GraphEdit" type="GraphEdit" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes" node_paths=PackedStringArray("add_node_button")]
+[node name="GraphEdit" type="GraphEdit" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-scroll_offset = Vector2(0, -188)
 right_disconnects = true
 minimap_enabled = false
 script = ExtResource("1_s4m1c")
-add_node_button = NodePath("../../../../HBoxContainer/AddNodeButton")
 
 [node name="PortSelectionRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes/GraphEdit"]
 visible = false

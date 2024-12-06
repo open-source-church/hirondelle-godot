@@ -26,7 +26,6 @@ const colors = {
 	TYPES.VARIANT_ARRAY: Color.DIM_GRAY,
 }
 
-@export var add_node_button : MenuButton
 @onready var selection_rect: TextureRect = $PortSelectionRect
 
 func _ready() -> void:
@@ -38,8 +37,7 @@ func _ready() -> void:
 	add_valid_connection_type(TYPES.VEC2, TYPES.VARIANT)
 	add_valid_connection_type(TYPES.TEXT, TYPES.VARIANT)
 	add_valid_connection_type(TYPES.COLOR, TYPES.VARIANT)
-	add_node_button.add_node.connect(add_node)
-	#popup_request.connect(show_popup) # FIXME: see comment in show_popup
+	popup_request.connect(show_popup) # FIXME: see comment in show_popup
 
 func on_child_enter_tree(node : Node):
 	if node is HBaseNode:
@@ -77,10 +75,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## FIXME: doesn't work with multiple windows: some components lose ability to focus ..?
 func show_popup(at_position: Vector2) -> void:
-	var popup = add_node_button.get_popup()
-	#popup.position = at_position
-	popup.position = Vector2(get_window().position) + at_position
-	popup.show()
+	print("FIXME: show popup")
+	#var popup = add_node_button.get_popup()
+	##popup.position = at_position
+	#popup.position = Vector2(get_window().position) + at_position
+	#popup.show()
 
 func get_connections_from_node_and_port(from_node: String, from_port: int) -> Array:
 	return get_connection_list().filter(func (c): return c.from_node == from_node and c.from_port == from_port)
@@ -141,7 +140,7 @@ func _on_disconnection_request(from_node: StringName, from_port: int, to_node: S
 	var _to_node = get_node_by_id(to_node)
 	var _to_port = _to_node.get_input_port(to_port)
 	if _to_port.is_dictionary:
-		var connections = map_full(get_connections_to_node_and_port(to_node, to_port))
+		#var connections = map_full(get_connections_to_node_and_port(to_node, to_port))
 		_to_port.update_from_connections()
 		#_to_port.value = {}
 		#for c in connections:

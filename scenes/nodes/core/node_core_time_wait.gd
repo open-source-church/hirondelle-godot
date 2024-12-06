@@ -2,6 +2,8 @@ extends HBaseNode
 
 static var _title = "Wait..."
 static var _type = "core/time_wait"
+static var _category = "Time"
+static var _icon = "hourglass"
 
 var timer : Timer
 

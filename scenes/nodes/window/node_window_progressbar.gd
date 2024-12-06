@@ -2,6 +2,8 @@ extends HBaseNode
 
 static var _title = "Progress Bar"
 static var _type = "window/progress_bar"
+static var _category = "Window"
+static var _icon = "progressbar"
 
 var ID : int
 

@@ -2,6 +2,8 @@ extends HBaseNode
 
 static var _title = "OBS Studio mode"
 static var _type = "obs/studio_mode"
+static var _category = "OBS"
+static var _icon = "obs"
 
 func _init() -> void:
 	title = _title

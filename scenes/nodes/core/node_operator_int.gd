@@ -3,6 +3,8 @@ class_name HNodeOperatorInt
 
 static var _title = "INT Operations"
 static var _type = "core/op/int"
+static var _category = "Core"
+static var _icon = "int"
 
 func _init() -> void:
 	title = _title

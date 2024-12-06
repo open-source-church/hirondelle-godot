@@ -3,6 +3,8 @@ class_name HNodeTest
 
 static var _title = "Test Node"
 static var _type = "core/test"
+static var _category = "Core"
+static var _description = "Un node pour tester des trucs."
 
 func _init() -> void:
 	title = _title

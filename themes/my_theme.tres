@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://ytq3vmqj18ky"]
+[gd_resource type="Theme" load_steps=25 format=3 uid="uid://ytq3vmqj18ky"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru3g6"]
 content_margin_left = 8.0
@@ -87,12 +87,31 @@ bg_color = Color(0.00532045, 0.321241, 0.32123, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3g84h"]
-bg_color = Color(1, 1, 1, 0.0470588)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ctyt6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_86fyv"]
+bg_color = Color(0, 1, 1, 0.0980392)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kd0t2"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h84h6"]
+bg_color = Color(0, 1, 1, 0.596078)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kaqu4"]
+bg_color = Color(0, 1, 1, 0.596078)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5g8u"]
 content_margin_left = 6.0
@@ -180,7 +199,12 @@ GraphNode/styles/panel_selected = SubResource("StyleBoxFlat_ujicm")
 GraphNode/styles/slot = SubResource("StyleBoxFlat_qirvc")
 GraphNode/styles/titlebar = SubResource("StyleBoxFlat_rf3lm")
 GraphNode/styles/titlebar_selected = SubResource("StyleBoxFlat_xffgj")
-ItemList/styles/panel = SubResource("StyleBoxFlat_3g84h")
+ItemList/constants/v_separation = 12
+ItemList/styles/focus = SubResource("StyleBoxEmpty_ctyt6")
+ItemList/styles/hovered = SubResource("StyleBoxFlat_86fyv")
+ItemList/styles/panel = SubResource("StyleBoxFlat_kd0t2")
+ItemList/styles/selected = SubResource("StyleBoxFlat_h84h6")
+ItemList/styles/selected_focus = SubResource("StyleBoxFlat_kaqu4")
 LineEdit/styles/focus = SubResource("StyleBoxFlat_n5g8u")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_4rlqk")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_wrond")

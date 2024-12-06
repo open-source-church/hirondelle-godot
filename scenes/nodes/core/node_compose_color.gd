@@ -3,6 +3,8 @@ class_name HNodeComposeColor
 
 static var _title = "Color Compose"
 static var _type = "core/compose/color"
+static var _category = "Core"
+static var _icon = "color"
 
 func _init() -> void:
 	title = _title

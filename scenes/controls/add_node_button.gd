@@ -4,7 +4,7 @@ extends MenuButton
 
 
 
-signal add_node(node_type)
+signal add_node(node_type : String)
 
 func _init() -> void:
 	var menu = get_popup()

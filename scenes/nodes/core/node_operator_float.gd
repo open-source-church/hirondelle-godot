@@ -1,7 +1,10 @@
 extends HBaseNode
 class_name HNodeOperatorFloat
+
 static var _title = "FLOAT Operations"
 static var _type = "core/op/float"
+static var _category = "Core"
+static var _icon = "float"
 
 func _init() -> void:
 	title = _title

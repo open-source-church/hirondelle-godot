@@ -2,6 +2,8 @@ extends HBaseNode
 
 static var _title = "Value changed"
 static var _type = "core/utility_value_changed"
+static var _category = "Core"
+static var _icon = "eye"
 
 func _init() -> void:
 	title = _title

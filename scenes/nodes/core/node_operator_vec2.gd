@@ -3,6 +3,8 @@ class_name HNodeOperatorVec2
 
 static var _title = "Vec2 Operations"
 static var _type = "core/op/vec2"
+static var _category = "Core"
+static var _icon = "vector"
 
 func _init() -> void:
 	title = _title

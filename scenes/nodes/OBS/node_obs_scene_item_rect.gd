@@ -2,6 +2,8 @@ extends HBaseNode
 
 static var _title = "OBS Scene item rect"
 static var _type = "obs/scene_item_rect"
+static var _category = "OBS"
+static var _icon = "obs"
 
 func _init() -> void:
 	title = _title
