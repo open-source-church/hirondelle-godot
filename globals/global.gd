@@ -15,6 +15,9 @@ const NODES = [
 	preload("res://scenes/nodes/core/node_core_utility_value_changed.gd"),
 	preload("res://scenes/nodes/core/node_operator_text.gd"),
 	preload("res://scenes/nodes/core/node_operator_array.gd"),
+	preload("res://scenes/nodes/core/node_operator_vec2.gd"),
+	preload("res://scenes/nodes/core/node_compose_vec2.gd"),
+	preload("res://scenes/nodes/core/node_compose_color.gd"),
 	# OBS
 	preload("res://scenes/nodes/OBS/node_obs_current_scene_changed.gd"),
 	preload("res://scenes/nodes/OBS/node_obs_studio_mode.gd"),
