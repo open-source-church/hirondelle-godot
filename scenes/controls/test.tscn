@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/test.gd" id="1_6p6jm"]
-[ext_resource type="Script" path="res://scenes/nodes/graph_edit_test.gd" id="1_s4m1c"]
+[ext_resource type="Script" path="res://scenes/nodes/h_graph_edit.gd" id="1_s4m1c"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="2_v0q7l"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="3_5tveq"]
 [ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="7_vwegq"]
@@ -212,18 +212,10 @@ unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 3
-
 [node name="GraphEdit" type="GraphEdit" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-right_disconnects = true
 minimap_enabled = false
 script = ExtResource("1_s4m1c")
 
@@ -231,10 +223,8 @@ script = ExtResource("1_s4m1c")
 visible = false
 z_index = -1
 layout_mode = 0
-offset_left = 200.0
-offset_top = 200.0
-offset_right = 232.0
-offset_bottom = 232.0
+offset_right = 32.0
+offset_bottom = 32.0
 texture = SubResource("GradientTexture2D_xb823")
 
 [node name="OBS" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs"]

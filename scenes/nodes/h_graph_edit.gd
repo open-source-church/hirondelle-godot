@@ -91,6 +91,7 @@ func clear():
 ## Clickable ports
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
+		# Ports
 		var hover_port = get_hover_port(event.position)
 		if hover_port:
 			selection_rect.scale = Vector2.ONE * zoom
@@ -99,11 +100,22 @@ func _gui_input(event: InputEvent) -> void:
 		else:
 			mouse_default_cursor_shape = Control.CURSOR_ARROW
 		selection_rect.visible = hover_port != {}
+	
+		# Connection: change mouse cursor when hovering
+		var connection = get_closest_connection_at_point(event.position)
+		if connection:
+			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			var hover_port = get_hover_port(event.position)
 			if hover_port:
 				hover_port.node.port_clicked.emit(hover_port.node.get_port_name(hover_port.side, hover_port.index))
+			
+			# Connection: remove connection
+			var connection = get_closest_connection_at_point(event.position)
+			if not hover_port and connection:
+				connections.remove_connection_godot(connection.from_node, connection.from_port, connection.to_node, connection.to_port)
 
 ## Return a node's port that is hovered by `pos` (global).
 func get_hover_port(pos : Vector2) -> Dictionary:
