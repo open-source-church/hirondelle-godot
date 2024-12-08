@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=25 format=3 uid="uid://ytq3vmqj18ky"]
+[gd_resource type="Theme" load_steps=26 format=3 uid="uid://ytq3vmqj18ky"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru3g6"]
 content_margin_left = 8.0
@@ -113,6 +113,13 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_70dke"]
+bg_color = Color(1, 1, 1, 0.0980392)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5g8u"]
 content_margin_left = 6.0
 content_margin_right = 6.0
@@ -205,6 +212,10 @@ ItemList/styles/hovered = SubResource("StyleBoxFlat_86fyv")
 ItemList/styles/panel = SubResource("StyleBoxFlat_kd0t2")
 ItemList/styles/selected = SubResource("StyleBoxFlat_h84h6")
 ItemList/styles/selected_focus = SubResource("StyleBoxFlat_kaqu4")
+ItemListLight/base_type = &"ItemList"
+ItemListLight/constants/h_separation = 12
+ItemListLight/constants/v_separation = 3
+ItemListLight/styles/panel = SubResource("StyleBoxFlat_70dke")
 LineEdit/styles/focus = SubResource("StyleBoxFlat_n5g8u")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_4rlqk")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_wrond")
