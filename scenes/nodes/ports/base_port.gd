@@ -26,6 +26,8 @@ var custom_component : Control
 ## Dictionaries allows for multiple connections.
 var is_dictionary := false
 
+var graph : HGraphEdit
+
 var collapsed := false:
 	set(val):
 		collapsed = val
@@ -58,7 +60,7 @@ var side := E.Side.INPUT:
 		side = val
 		update_view()
 		
-var type : HGraphEdit.TYPES:
+var type : E.CONNECTION_TYPES:
 	set(val):
 		type = val
 		update_view()
@@ -95,18 +97,15 @@ func _base_set_value(val):
 func _set_value(_val):
 	pass
 
-## Returns a list of all the ports connected to that port
-func get_ports_connected_to():
+## Returns a list of all connections to that port
+func get_connections_to():
 	var node = get_parent() as HBaseNode
-	var port_number = node.get_port_number(name)
-	var connections = G.graph.get_connections_to_node_and_port(node.name, port_number)
-	connections = G.graph.map_full(connections)
-	return connections.map(func (c): return c.from_port)
+	return node.graph.connections.list_to_port(self)
 
 ## Subclass to implement comportement from multiple connections
 func update_from_connections():
-	for port in get_ports_connected_to():
-		value = port.value
+	for c in get_connections_to():
+		value = c.from_port.value
 
 var options:Array : set=_set_options
 

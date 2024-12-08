@@ -32,7 +32,7 @@ func update_labels():
 		lbl.text = key
 		
 		var stylebox = StyleBoxFlat.new()
-		stylebox.bg_color = G.graph.colors[dict_types[key]].darkened(0.0)
+		stylebox.bg_color = E.connection_colors[dict_types[key]].darkened(0.0)
 		stylebox.bg_color.a = 0.3
 		stylebox.content_margin_bottom = 3
 		stylebox.content_margin_left = 6
@@ -50,15 +50,15 @@ func update_from_connections():
 	dict = {}
 	dict_types = {}
 	var keys = {}
-	for port in get_ports_connected_to():
-		var key = keys.get_or_add(port.name, 0)
+	for c in get_connections_to():
+		var key = keys.get_or_add(c.from_port.name, 0)
 		if key:
-			key = "%s_%s" % [port.name, key]
+			key = "%s_%s" % [c.from_port.name, key]
 		else:
-			key = port.name
-		keys[port.name] += 1
-		dict[key] = port.value
-		dict_types[key] = port.type
+			key = c.from_port.name
+		keys[c.from_port.name] += 1
+		dict[key] = c.from_port.value
+		dict_types[key] = c.from_port.type
 
 func _on_value_changed():
 	update_labels()

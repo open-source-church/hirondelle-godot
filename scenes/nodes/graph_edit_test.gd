@@ -1,43 +1,22 @@
 extends GraphEdit
 class_name HGraphEdit
 
-## Connexion types
-enum TYPES {
-	FLOW,
-	TEXT,
-	INT,
-	FLOAT,
-	COLOR,
-	VEC2,
-	BOOL,
-	VARIANT,
-	VARIANT_ARRAY
-}
-
-const colors = {
-	TYPES.FLOW: Color.GREEN,
-	TYPES.TEXT: Color.PURPLE,
-	TYPES.INT: Color.YELLOW,
-	TYPES.COLOR: Color.BLUE,
-	TYPES.FLOAT: Color.ORANGE,
-	TYPES.BOOL: Color.CYAN,
-	TYPES.VEC2: Color.BROWN,
-	TYPES.VARIANT: Color.GRAY,
-	TYPES.VARIANT_ARRAY: Color.DIM_GRAY,
-}
-
 @onready var selection_rect: TextureRect = $PortSelectionRect
 
+var connections : HGraphConnections
+
 func _ready() -> void:
-	G.graph = self
-	add_valid_connection_type(TYPES.INT, TYPES.FLOAT)
-	add_valid_connection_type(TYPES.INT, TYPES.VARIANT)
-	add_valid_connection_type(TYPES.FLOAT, TYPES.VARIANT)
-	add_valid_connection_type(TYPES.BOOL, TYPES.VARIANT)
-	add_valid_connection_type(TYPES.VEC2, TYPES.VARIANT)
-	add_valid_connection_type(TYPES.TEXT, TYPES.VARIANT)
-	add_valid_connection_type(TYPES.COLOR, TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT)
+	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.FLOAT, E.CONNECTION_TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.BOOL, E.CONNECTION_TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.VEC2, E.CONNECTION_TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.TEXT, E.CONNECTION_TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.COLOR, E.CONNECTION_TYPES.VARIANT)
 	popup_request.connect(show_popup) # FIXME: see comment in show_popup
+	
+	connections = HGraphConnections.new()
+	connections.graph = self
 
 func on_child_enter_tree(node : Node):
 	if node is HBaseNode:
@@ -81,132 +60,33 @@ func show_popup(at_position: Vector2) -> void:
 	#popup.position = Vector2(get_window().position) + at_position
 	#popup.show()
 
-func get_connections_from_node_and_port(from_node: String, from_port: int) -> Array:
-	return get_connection_list().filter(func (c): return c.from_node == from_node and c.from_port == from_port)
-
-func get_connections_from_node(from_node: String) -> Array:
-	return get_connection_list().filter(func (c): return c.from_node == from_node)
-
-func get_full_connections_from_node(from_node: String) -> Array:
-	return map_full(get_connections_from_node(from_node))
-
-func get_connections_to_node_and_port(to_node: String, to_port: int) -> Array:
-	return get_connection_list().filter(func (c): return c.to_node == to_node and c.to_port == to_port)
-
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print("Connection request FROM %s at %d TO %s at %d" % [from_node, from_port, to_node, to_port])
 	
 	var _to_node = get_node_by_id(to_node)
 	var _to_port = _to_node.get_input_port(to_port)
 	
-	if _to_port.type == TYPES.FLOW or _to_port.is_dictionary:
-		pass
-	else:
-		# Clear existing connections
-		for c in get_connections_to_node_and_port(to_node, to_port):
-			var _c = full_connection(c)
-			if not _c.to_port.type == TYPES.FLOW:
-				disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+	# Clear existing connections if needed
+	if _to_port.type != E.CONNECTION_TYPES.FLOW and not _to_port.is_dictionary:
+		for c in connections.list_to_node_and_port(_to_node, _to_port):
+			connections.remove_connection(c)
 	
 	# Make connection
-	connect_node(from_node, from_port, to_node, to_port)
-	update_values_from_connection({"from_node": from_node, "from_port": from_port, "to_node": to_node, "to_port": to_port})
-
-func update_values_from_connection(connection : Dictionary) -> void:
-	update_values_from_full_connection(full_connection(connection))
-	
-func update_values_from_full_connection(connection : Dictionary) -> void:
-	connection.from_node.propagate_value(connection.from_port.name)
-
-func map_full(connections : Array) -> Array:
-	return connections.map(func (c): return full_connection(c))
+	connections.add_connection_godot(from_node, from_port, to_node, to_port)
 
 func get_node_by_id(id: String) -> HBaseNode:
 	return get_node(NodePath(id))
 
-## Map a connection to its real objects (nodes and controls)
-func full_connection(connection : Dictionary) -> Dictionary:
-	var c := {}
-	c.from_node = get_node_by_id(connection.from_node)
-	c.to_node = get_node_by_id(connection.to_node)
-	c.from_port = c.from_node.get_output_port(connection.from_port)
-	c.to_port = c.to_node.get_input_port(connection.to_port)
-	return c
-
 func _on_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print("Disconnection request FROM %s at %d TO %s at %d" % [from_node, from_port, to_node, to_port])
-	disconnect_node(from_node, from_port, to_node, to_port)
-	# Check if port is dictionary to update
-	var _to_node = get_node_by_id(to_node)
-	var _to_port = _to_node.get_input_port(to_port)
-	if _to_port.is_dictionary:
-		#var connections = map_full(get_connections_to_node_and_port(to_node, to_port))
-		_to_port.update_from_connections()
-		#_to_port.value = {}
-		#for c in connections:
-			#print(" * ", c.from_node.name, " ", c.from_port.name)
-			#c.from_node.propagate_value(c.from_port.name)
+	connections.remove_connection_godot(from_node, from_port, to_node, to_port)
 
 ## Removes all nodes and connections.
 func clear():
-	clear_connections()
+	connections.clear()
 	for c in get_children():
 		if c is HBaseNode:
 			c.queue_free()
-
-## Saves graph in user dir
-func save():
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
-	var to_save = {
-		"nodes": [],
-		"connections": [],
-		"settings": {
-			"scroll_offset_x": scroll_offset.x,
-			"scroll_offset_y": scroll_offset.y,
-			"zoom": zoom
-		}
-	}
-	
-	for n in get_children():
-		if n.has_method("save"):
-			to_save.nodes.append(n.save())
-	
-	for c in get_connection_list():
-		var _c = full_connection(c)
-		to_save.connections.append({
-			"from_node": _c.from_node.name,
-			"to_node": _c.to_node.name,
-			"from_port": _c.from_port.name,
-			"to_port": _c.to_port.name
-		})
-	
-	save_file.store_line(JSON.stringify(to_save, "\t"))
-	print(save_file.get_path_absolute())
-
-## Loads graph from user dir
-func load():
-	clear()
-	var load_file = FileAccess.open("user://savegame.save", FileAccess.READ)
-	var content = load_file.get_as_text()
-	content = JSON.parse_string(content)
-	print("Loading from: ", load_file.get_path_absolute())
-	
-	for n in content.nodes:
-		print("Loading node: ", n.name)
-		var node := add_node(n.type)
-		node.name = n.name
-		node.load(n)
-	
-	for c in content.connections:
-		var from = get_node_by_id(c.from_node)
-		var to = get_node_by_id(c.to_node)
-		connect_node(c.from_node, from.get_port_number(c.from_port), c.to_node, to.get_port_number(c.to_port))
-	
-	if content.has("settings") and content.settings.has("zoom"):
-		zoom = content.settings.zoom
-	if content.has("settings") and content.settings.has("scroll_offset_x"):
-		scroll_offset.x = content.settings.scroll_offset_x
-		scroll_offset.y = content.settings.scroll_offset_y
 
 ## Clickable ports
 func _gui_input(event: InputEvent) -> void:
@@ -244,9 +124,7 @@ func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
 	for n in nodes:
 		var _n = get_node(NodePath(n))
 		# Remove connections
-		var connections = get_connection_list().filter(func (c): return c.from_node == n or c.to_node == n)
-		for c in connections:
-			disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+		connections.disconnect_node(_n)
 		# Remove node
 		_n.queue_free()
 
@@ -255,6 +133,51 @@ func get_selected_nodes() -> Array[Node]:
 
 func get_mouse_position() -> Vector2:
 	return (get_local_mouse_position() + scroll_offset) / zoom
+
+## Saves graph in user dir
+func save():
+	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+	var to_save = {
+		"nodes": [],
+		"connections": [],
+		"settings": {
+			"scroll_offset_x": scroll_offset.x,
+			"scroll_offset_y": scroll_offset.y,
+			"zoom": zoom
+		}
+	}
+	
+	for n in get_children():
+		if n.has_method("save"):
+			to_save.nodes.append(n.save())
+	
+	to_save.connections = connections.save()
+	
+	save_file.store_line(JSON.stringify(to_save, "\t"))
+	print(save_file.get_path_absolute())
+
+## Loads graph from user dir
+func load():
+	clear()
+	var load_file = FileAccess.open("user://savegame.save", FileAccess.READ)
+	var content = load_file.get_as_text()
+	content = JSON.parse_string(content)
+	print("Loading from: ", load_file.get_path_absolute())
+	
+	for n in content.nodes:
+		print("Loading node: ", n.name)
+		var node := add_node(n.type)
+		node.name = n.name
+		node.load(n)
+	
+	for c in content.connections:
+		connections.add_connection_names(c.from_node, c.from_port, c.to_node, c.to_port, c.get("visible", true))
+	
+	if content.has("settings") and content.settings.has("zoom"):
+		zoom = content.settings.zoom
+	if content.has("settings") and content.settings.has("scroll_offset_x"):
+		scroll_offset.x = content.settings.scroll_offset_x
+		scroll_offset.y = content.settings.scroll_offset_y
 
 func _on_copy_nodes_request() -> void:
 	var to_copy = {
@@ -266,15 +189,8 @@ func _on_copy_nodes_request() -> void:
 	for n in selected:
 		to_copy.nodes.append(n.save())
 	
-	for c in map_full(get_connection_list()):
-		if not c.from_node in selected or not c.to_node in selected:
-			continue
-		to_copy.connections.append({
-			"from_node": c.from_node.name,
-			"to_node": c.to_node.name,
-			"from_port": c.from_port.name,
-			"to_port": c.to_port.name
-		})
+	to_copy.connections = connections.save(true)
+	
 	DisplayServer.clipboard_set(JSON.stringify(to_copy, "  "))
 
 func _on_paste_nodes_request() -> void:
@@ -310,8 +226,7 @@ func _on_paste_nodes_request() -> void:
 		c.to_node = name_map.get(c.to_node, c.to_node)
 		var from = get_node_by_id(c.from_node)
 		var to = get_node_by_id(c.to_node)
-		connect_node(c.from_node, from.get_port_number(c.from_port), c.to_node, to.get_port_number(c.to_port))
-
+		connections.add_connection_names(c.from_node, c.from_port, c.to_node, c.to_port, c.get("visible", true))
 
 func _on_duplicate_nodes_request() -> void:
 	var clipboard = DisplayServer.clipboard_get()

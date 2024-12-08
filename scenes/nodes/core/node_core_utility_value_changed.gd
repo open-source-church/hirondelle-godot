@@ -8,20 +8,20 @@ static var _icon = "eye"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"changed": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": OUTPUT
 		}),
 		"watch": HBasePort.new({
-			"type": G.graph.TYPES.VARIANT, 
+			"type": E.CONNECTION_TYPES.VARIANT, 
 			"side": INPUT
 		}),
 	}
 
 var _last_value
 func update() -> void:
-	print("Update: ", _last_value, " ", VALS.watch.value)
-	if VALS.watch.value != _last_value:
+	print("Update: ", _last_value, " ", PORTS.watch.value)
+	if PORTS.watch.value != _last_value:
 		emit("changed")
-		_last_value = VALS.watch.value
+		_last_value = PORTS.watch.value

@@ -16,6 +16,8 @@ var category = ""
 var icon = ""
 var description = ""
 
+var graph : HGraphEdit
+
 ## Unique identifier for node type
 var type = ""
 
@@ -24,12 +26,11 @@ var type = ""
 # Use name instead
 
 #var COMPONENTS := {}
-var VALS := {}
+var PORTS := {}
 
 var warning : Label
 var error : Label
 
-const BASE_PORT = preload("res://scenes/nodes/ports/base_port.tscn")
 
 signal port_clicked(name:String)
 
@@ -41,6 +42,8 @@ func _update_separation():
 	add_theme_constant_override("separation", h)
 
 func _ready() -> void:
+	
+	graph = get_parent()
 	
 	var hbox = get_titlebar_hbox()
 	btn_collapse = CheckButton.new()
@@ -66,8 +69,8 @@ func _ready() -> void:
 #func _draw_port(slot_index: int, position: Vector2i, left: bool, color: Color) -> void:
 	#var port = get_children().filter(func (c): return c is HBasePort)[slot_index]
 	#if port:
-		#print(" * ", left, ": ", slot_index, " ", G.graph.TYPES.keys()[port.type], " at ", position)
-		#if port.type == G.graph.TYPES.FLOW:
+		#print(" * ", left, ": ", slot_index, " ", E.CONNECTION_TYPES.keys()[port.type], " at ", position)
+		#if port.type == E.CONNECTION_TYPES.FLOW:
 			#draw_circle(position, 7, color)
 		#else:
 			#draw_circle(position, 5, color)
@@ -76,8 +79,8 @@ func _ready() -> void:
 func setup():
 	clear_all_slots()
 	
-	for _name in VALS:
-		var p = VALS[_name]
+	for _name in PORTS:
+		var p = PORTS[_name]
 		p.name = _name
 		add_child(p)
 		collapsed_changed.connect(p.set_collapsed)
@@ -103,10 +106,10 @@ func setup():
 	update_slots()
 
 func on_port_clicked(port_name : String) -> void:
-	var val = VALS[port_name]
-	if val.type == G.graph.TYPES.FLOW and val.side == E.Side.INPUT:
+	var val = PORTS[port_name]
+	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.INPUT:
 		run(port_name)
-	if val.type == G.graph.TYPES.FLOW and val.side == E.Side.OUTPUT:
+	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.OUTPUT:
 		emit(port_name)
 
 func get_port_icon(n := 0, width := 10) -> Texture2D:
@@ -124,30 +127,36 @@ func update_slots() -> void:
 	clear_all_slots()
 	
 	var slot_index := 0
-	for _name in VALS:
-		var c = VALS[_name]
-		#VALS[_name].visible = c.visible
+	for _name in PORTS:
+		var c = PORTS[_name]
+		#PORTS[_name].visible = c.visible
 		if c.visible:
 			set_slot_enabled_left(slot_index, c.side in [E.Side.INPUT, E.Side.BOTH])
 			set_slot_enabled_right(slot_index, c.side in [E.Side.OUTPUT, E.Side.BOTH])
 			set_slot_type_left(slot_index, c.type)
 			set_slot_type_right(slot_index, c.type)
-			set_slot_color_left(slot_index, G.graph.colors[c.type])
-			set_slot_color_right(slot_index, G.graph.colors[c.type])
+			set_slot_color_left(slot_index, E.connection_colors[c.type])
+			set_slot_color_right(slot_index, E.connection_colors[c.type])
 			var icon
-			if c.type == G.graph.TYPES.FLOW:
+			if c.type == E.CONNECTION_TYPES.FLOW:
 				icon = get_port_icon(3, 15)
 			elif c.is_dictionary:
 				icon = get_port_icon(2, 10)
 			else:
 				icon = get_port_icon(0, 10)
-			#var icon_width = 14 if c.type == G.graph.TYPES.FLOW else 10
+			#var icon_width = 14 if c.type == E.CONNECTION_TYPES.FLOW else 10
 			#var icon_idx = 2 if c.is_dictionary else 0
 			#var icon = get_port_icon(icon_idx, icon_width)
 			set_slot_custom_icon_right(slot_index, icon)
 			set_slot_custom_icon_left(slot_index, icon)
 				
 			slot_index += 1
+	
+	# If we want to hide connections when port is hidden:
+	#graph.connections.update_node_slots_visibility(self)
+	# If we want to remove connections when port is hidden:
+	graph.connections.remove_connections_to_hidden_slots(self)
+	
 	reset_size()
 
 var _last_port_changed := ""
@@ -163,18 +172,8 @@ func _update(_last_changed := "") -> void:
 	#update_slots()
 
 func propagate_value(_name : String) -> void:
-	#if not is_node_ready(): await ready
-	
-	var port = get_port_number(_name)
-	for c in G.graph.get_connections_from_node_and_port(name, port):
-		var _c = G.graph.full_connection(c)
-		_c.to_port.update_from_connections()
-		#if _c.to_port.is_dictionary:
-			## Updating dictionary
-			#_c.to_port.value[_name] = _c.from_port.value
-		#else:
-			## Updating normal value
-			#_c.to_port.value = _c.from_port.value
+	for c in graph.connections.list_from_node_and_port(self, PORTS[_name]):
+		c.to_port.update_from_connections()
 
 ## Virtual. Called when input value changed.
 func update() -> void:
@@ -185,15 +184,13 @@ func run(_routine : String) -> void:
 	pass
 
 func emit(routine : String) -> void:
-	var connections = G.graph.get_connections_from_node_and_port(name, get_port_number(routine))
-	for c in connections:
-		var _c = G.graph.full_connection(c)
-		_c.to_node.run.call_deferred(_c.to_port.name)
+	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
+		c.to_node.run.call_deferred(c.to_port.name)
 
 ## Adapts get_output_port_slot to take into account invisible slots
 func get_output_port(idx : int) -> Node:
 	var k := 0
-	for c in VALS.values():
+	for c in PORTS.values():
 		if c.visible and c.side in [E.Side.OUTPUT, E.Side.BOTH]:
 			if k == idx:
 				return c
@@ -202,7 +199,7 @@ func get_output_port(idx : int) -> Node:
 
 func get_input_port(idx : int) -> Node:
 	var k := 0
-	for c in VALS.values():
+	for c in PORTS.values():
 		if c.visible and c.side in [E.Side.INPUT, E.Side.BOTH]:
 			if k == idx: return c
 			k += 1
@@ -213,8 +210,8 @@ func get_input_port(idx : int) -> Node:
 func get_port_number(port_name : String) -> int:
 	var _input = 0
 	var _output = 0
-	for _name in VALS:
-		var v = VALS[_name]
+	for _name in PORTS:
+		var v = PORTS[_name]
 		if not v.visible: continue
 		if _name == port_name:
 			return _input if v.side == E.Side.INPUT else _output
@@ -227,8 +224,8 @@ func get_port_number(port_name : String) -> int:
 func get_port_name(side, index : int) -> String:
 	var _input = 0
 	var _output = 0
-	for _name in VALS:
-		var v = VALS[_name]
+	for _name in PORTS:
+		var v = PORTS[_name]
 		if not v.visible: continue
 		if v.side in [E.Side.INPUT, E.Side.BOTH] and side == E.Side.INPUT and index == _input: return _name
 		if v.side in [E.Side.OUTPUT, E.Side.BOTH] and side == E.Side.OUTPUT and index == _output: return _name
@@ -255,28 +252,28 @@ func save() -> Dictionary:
 		"pos": { "x": position_offset.x, "y": position_offset.y },
 		"name": name
 	}
-	for v in VALS:
-		if VALS[v].type == HGraphEdit.TYPES.VEC2:
-			s.vals[v] = { "x": VALS[v].value.x, "y": VALS[v].value.y }
-		elif VALS[v].type == HGraphEdit.TYPES.COLOR:
-			s.vals[v] = VALS[v].value.to_html()
+	for v in PORTS:
+		if PORTS[v].type == E.CONNECTION_TYPES.VEC2:
+			s.vals[v] = { "x": PORTS[v].value.x, "y": PORTS[v].value.y }
+		elif PORTS[v].type == E.CONNECTION_TYPES.COLOR:
+			s.vals[v] = PORTS[v].value.to_html()
 		else:
-			s.vals[v] = VALS[v].value
+			s.vals[v] = PORTS[v].value
 	
 	return s
 
 func load(data : Dictionary) -> void:
 	position_offset = Vector2(data.pos.x, data.pos.y)
 	for _name in data.vals:
-		if not _name in VALS: 
+		if not _name in PORTS: 
 			print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [name, type])
 			continue
-		if VALS[_name].type == G.graph.TYPES.VEC2:
-			VALS[_name].value = Vector2(data.vals[_name].x, data.vals[_name].y)
-		elif VALS[_name].type == G.graph.TYPES.COLOR:
-			VALS[_name].value = Color(data.vals[_name])
+		if PORTS[_name].type == E.CONNECTION_TYPES.VEC2:
+			PORTS[_name].value = Vector2(data.vals[_name].x, data.vals[_name].y)
+		elif PORTS[_name].type == E.CONNECTION_TYPES.COLOR:
+			PORTS[_name].value = Color(data.vals[_name])
 		else:
-			VALS[_name].value = data.vals[_name]
+			PORTS[_name].value = data.vals[_name]
 		# Update the node with each value set to be sure it's properly displayed
 		_last_port_changed = _name
 		update()

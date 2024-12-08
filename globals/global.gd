@@ -2,7 +2,6 @@ extends Node
 
 const VECTOR_WHITE_ICONS = preload("res://themes/kenney-game-icons/vector_whiteIcons.svg")
 
-var graph : HGraphEdit
 var window : HWindow
 var OBS : OBSWebSocket
 
@@ -57,13 +56,13 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 
 func get_node_color(node):
 	if "text" in node._type:
-		return G.graph.colors[G.graph.TYPES.TEXT]
+		return E.connection_colors[E.CONNECTION_TYPES.TEXT]
 	if "int" in node._type:
-		return G.graph.colors[G.graph.TYPES.INT]
+		return E.connection_colors[E.CONNECTION_TYPES.INT]
 	if "vec2" in node._type:
-		return G.graph.colors[G.graph.TYPES.VEC2]
+		return E.connection_colors[E.CONNECTION_TYPES.VEC2]
 	if "float" in node._type:
-		return G.graph.colors[G.graph.TYPES.FLOAT]
+		return E.connection_colors[E.CONNECTION_TYPES.FLOAT]
 	if "bool" in node._type:
-		return G.graph.colors[G.graph.TYPES.BOOL]
+		return E.connection_colors[E.CONNECTION_TYPES.BOOL]
 	return Color.WHITE

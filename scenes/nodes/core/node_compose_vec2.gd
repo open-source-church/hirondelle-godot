@@ -9,29 +9,29 @@ static var _icon = "vector"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"vec": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2,
+			"type": E.CONNECTION_TYPES.VEC2,
 			"side": INPUT
 		}),
 		"x": HPortFloat.new({
-			"type": G.graph.TYPES.FLOAT,
+			"type": E.CONNECTION_TYPES.FLOAT,
 			"side": INPUT
 		}),
 		"y": HPortFloat.new({
-			"type": G.graph.TYPES.FLOAT,
+			"type": E.CONNECTION_TYPES.FLOAT,
 			"side": INPUT
 		}),
 		"o_vec": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2,
+			"type": E.CONNECTION_TYPES.VEC2,
 			"side": OUTPUT
 		}),
 		"o_x": HPortFloat.new({
-			"type": G.graph.TYPES.FLOAT,
+			"type": E.CONNECTION_TYPES.FLOAT,
 			"side": OUTPUT
 		}),
 		"o_y": HPortFloat.new({
-			"type": G.graph.TYPES.FLOAT,
+			"type": E.CONNECTION_TYPES.FLOAT,
 			"side": OUTPUT
 		}),
 	}
@@ -39,12 +39,12 @@ func _init() -> void:
 func update() -> void:
 	# INPUT
 	if _last_port_changed == "vec":
-		VALS.x.value = VALS.vec.value.x
-		VALS.y.value = VALS.vec.value.y
+		PORTS.x.value = PORTS.vec.value.x
+		PORTS.y.value = PORTS.vec.value.y
 	else:
-		VALS.vec.value = Vector2(VALS.x.value, VALS.y.value)
+		PORTS.vec.value = Vector2(PORTS.x.value, PORTS.y.value)
 	
 	# OUTPUT
-	VALS.o_vec.value = VALS.vec.value
-	VALS.o_x.value = VALS.vec.value.x
-	VALS.o_y.value = VALS.vec.value.y
+	PORTS.o_vec.value = PORTS.vec.value
+	PORTS.o_x.value = PORTS.vec.value.x
+	PORTS.o_y.value = PORTS.vec.value.y

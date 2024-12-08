@@ -10,27 +10,27 @@ var timer : Timer
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"start": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"stop": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"ping": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": OUTPUT
 		}),
 		"time": HPortIntSpin.new({
-			"type": G.graph.TYPES.INT,
+			"type": E.CONNECTION_TYPES.INT,
 			"default": 1000, 
 			"side": INPUT, 
 			"description": "Time in milisecond"
 		}),
 		"active": HPortBool.new({
-			"type": G.graph.TYPES.BOOL, 
+			"type": E.CONNECTION_TYPES.BOOL, 
 			"side": BOTH,
 			"default": false
 		}),
@@ -42,15 +42,15 @@ func _init() -> void:
 
 func run(routine:String):
 	if routine == "start":
-		timer.start(VALS.time.value / 1000.0)
-		VALS.active.value = true
+		timer.start(PORTS.time.value / 1000.0)
+		PORTS.active.value = true
 
 	if routine == "stop":
 		timer.stop()
-		VALS.active.value = false
+		PORTS.active.value = false
 
 func update() -> void:
 	print(_last_port_changed)
 	if _last_port_changed == "active":
-		if VALS.active.value: timer.start(VALS.time.value / 1000.0)
+		if PORTS.active.value: timer.start(PORTS.time.value / 1000.0)
 		else: timer.stop()

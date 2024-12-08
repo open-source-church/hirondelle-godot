@@ -9,41 +9,41 @@ static var _icon = "vector"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"operator": HPortText.new({
-			"type": G.graph.TYPES.TEXT,
+			"type": E.CONNECTION_TYPES.TEXT,
 			"default": "Add",
 			"side": NONE, 
 			"options": ["Add", "Substract", "Multiply", "Divide"]
 		}),
 		"a": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2,
+			"type": E.CONNECTION_TYPES.VEC2,
 			"side": INPUT
 		}),
 		"b": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2,
+			"type": E.CONNECTION_TYPES.VEC2,
 			"side": INPUT
 		}),
 		"r": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2,
+			"type": E.CONNECTION_TYPES.VEC2,
 			"side": OUTPUT
 		}),
 	}
 
 func update() -> void:
 	error.text = ""
-	#COMPONENTS.x.visible = VALS.operator.value == "Add"
-	if VALS.operator.value == "Add":
-		VALS.r.value = VALS.a.value + VALS.b.value
-	if VALS.operator.value == "Substract":
-		VALS.r.value = VALS.a.value - VALS.b.value
-	if VALS.operator.value == "Multiply":
-		VALS.r.value = VALS.a.value * VALS.b.value
-	if VALS.operator.value == "Divide":
-		if VALS.b.value.x and VALS.b.value.y:
-			VALS.r.value = VALS.a.value / VALS.b.value
+	#COMPONENTS.x.visible = PORTS.operator.value == "Add"
+	if PORTS.operator.value == "Add":
+		PORTS.r.value = PORTS.a.value + PORTS.b.value
+	if PORTS.operator.value == "Substract":
+		PORTS.r.value = PORTS.a.value - PORTS.b.value
+	if PORTS.operator.value == "Multiply":
+		PORTS.r.value = PORTS.a.value * PORTS.b.value
+	if PORTS.operator.value == "Divide":
+		if PORTS.b.value.x and PORTS.b.value.y:
+			PORTS.r.value = PORTS.a.value / PORTS.b.value
 		else:
-			VALS.r.value = Vector2(42, 42)
+			PORTS.r.value = Vector2(42, 42)
 			error.text = "Pas glop de diviser par 0."
-	if VALS.operator.value == "Power":
-		VALS.r.value = Vector2(VALS.a.value.x ** VALS.b.value.x, VALS.a.value.x ** VALS.b.value.x)
+	if PORTS.operator.value == "Power":
+		PORTS.r.value = Vector2(PORTS.a.value.x ** PORTS.b.value.x, PORTS.a.value.x ** PORTS.b.value.x)

@@ -9,63 +9,63 @@ static var _icon = "array"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"start_loop": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW,
+			"type": E.CONNECTION_TYPES.FLOW,
 			"side": INPUT
 		}),
 		"next": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW,
+			"type": E.CONNECTION_TYPES.FLOW,
 			"side": INPUT
 		}),
 		"for_each": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW,
+			"type": E.CONNECTION_TYPES.FLOW,
 			"side": OUTPUT
 		}),
 		"arrays": HPortDict.new({
-			"type": G.graph.TYPES.VARIANT_ARRAY,
+			"type": E.CONNECTION_TYPES.VARIANT_ARRAY,
 			"default": false,
 			"side": INPUT,
 			"dictionary": true
 		}),
 		"index": HPortIntSlider.new({
-			"type": G.graph.TYPES.INT,
+			"type": E.CONNECTION_TYPES.INT,
 			"side": INPUT,
 		}),
 		"loop": HPortBool.new({
-			"type": G.graph.TYPES.BOOL,
+			"type": E.CONNECTION_TYPES.BOOL,
 			"default": false,
 			"side": INPUT
 		}),
 		"merged": HPortArray.new({
-			"type": G.graph.TYPES.VARIANT_ARRAY,
+			"type": E.CONNECTION_TYPES.VARIANT_ARRAY,
 			"side": OUTPUT
 		}),
 		"value": HPortText.new({
-			"type": G.graph.TYPES.VARIANT,
+			"type": E.CONNECTION_TYPES.VARIANT,
 			"side": OUTPUT
 		}),
 		"idx": HPortIntSpin.new({
-			"type": G.graph.TYPES.INT,
+			"type": E.CONNECTION_TYPES.INT,
 			"side": OUTPUT
 		}),
 		"count": HPortIntSpin.new({
-			"type": G.graph.TYPES.INT,
+			"type": E.CONNECTION_TYPES.INT,
 			"side": OUTPUT
 		})
 	}
 
 func run(subroutine : String):
 	if subroutine == "start_loop":
-		VALS.index.value = 0
+		PORTS.index.value = 0
 		emit("for_each")
 	if subroutine == "next":
-		var i = VALS.index.value + 1
-		if i < VALS.count.value:
-			VALS.index.value = i
+		var i = PORTS.index.value + 1
+		if i < PORTS.count.value:
+			PORTS.index.value = i
 			emit("for_each")
-		elif VALS.loop.value:
-			VALS.index.value = 0
+		elif PORTS.loop.value:
+			PORTS.index.value = 0
 			emit("for_each")
 
 func update() -> void:
@@ -74,15 +74,15 @@ func update() -> void:
 		update_slots()
 	
 	var merged := []
-	for arr in VALS.arrays.value:
-		merged.append_array(VALS.arrays.value[arr])
+	for arr in PORTS.arrays.value:
+		merged.append_array(PORTS.arrays.value[arr])
 	
-	VALS.index.params = { "min": 0, "max": len(merged) - 1 }
+	PORTS.index.params = { "min": 0, "max": len(merged) - 1 }
 	
 	# Get Value
 	if merged:
-		VALS.merged.value = merged
-		VALS.value.value = merged[VALS.index.value]
-		VALS.idx.value = VALS.index.value
-		VALS.count.value = len(merged)
+		PORTS.merged.value = merged
+		PORTS.value.value = merged[PORTS.index.value]
+		PORTS.idx.value = PORTS.index.value
+		PORTS.count.value = len(merged)
 		

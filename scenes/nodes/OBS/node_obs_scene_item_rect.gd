@@ -8,29 +8,29 @@ static var _icon = "obs"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"scene": HPortText.new({
-			"type": G.graph.TYPES.TEXT, 
+			"type": E.CONNECTION_TYPES.TEXT, 
 			"side": INPUT
 		}),
 		"source": HPortText.new({
-			"type": G.graph.TYPES.TEXT, 
+			"type": E.CONNECTION_TYPES.TEXT, 
 			"side": INPUT
 		}),
 		"itemId": HPortIntSpin.new({
-			"type": G.graph.TYPES.INT, 
+			"type": E.CONNECTION_TYPES.INT, 
 			"side": INPUT
 		}),
 		"pos": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2, 
+			"type": E.CONNECTION_TYPES.VEC2, 
 			"side": OUTPUT,
 		}),
 		"size": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2, 
+			"type": E.CONNECTION_TYPES.VEC2, 
 			"side": OUTPUT
 		}),
 		"bounds": HPortVec2.new({
-			"type": G.graph.TYPES.VEC2, 
+			"type": E.CONNECTION_TYPES.VEC2, 
 			"side": OUTPUT
 		}),
 	}
@@ -42,37 +42,37 @@ func _init() -> void:
 
 func _update_scene_list(scenes : Array):
 	scenes.reverse()
-	VALS.scene.options = scenes.map(func (s): return s.sceneName)
+	PORTS.scene.options = scenes.map(func (s): return s.sceneName)
 
 func update() -> void:
 	#if not G.OBS.is_connected: 
 		#return
 	
 	# Update scene items
-	var r = await G.OBS.send_request("GetSceneItemList", { "sceneName": VALS.scene.value })
+	var r = await G.OBS.send_request("GetSceneItemList", { "sceneName": PORTS.scene.value })
 	
-	if r and (_last_port_changed == "scene" or not VALS.source.options):
-		VALS.source.options = r.sceneItems.map(func (s): return s.sourceName )
-		VALS.itemId.options = r.sceneItems.map(func (s): return s.sceneItemId )
+	if r and (_last_port_changed == "scene" or not PORTS.source.options):
+		PORTS.source.options = r.sceneItems.map(func (s): return s.sourceName )
+		PORTS.itemId.options = r.sceneItems.map(func (s): return s.sceneItemId )
 	
 	# Sync sourceName and sceneItemId
 	if r and _last_port_changed == "source":
-		VALS.itemId.value = r.sceneItems.filter(func (i): return i.sourceName == VALS.source.value).front().sceneItemId
+		PORTS.itemId.value = r.sceneItems.filter(func (i): return i.sourceName == PORTS.source.value).front().sceneItemId
 	elif r and r.sceneItems and _last_port_changed == "itemId":
-		VALS.source.value = r.sceneItems.filter(func (i): return i.sceneItemId == VALS.itemId.value).front().sourceName
+		PORTS.source.value = r.sceneItems.filter(func (i): return i.sceneItemId == PORTS.itemId.value).front().sourceName
 	
 	if _last_port_changed in ["pos", "size"]:
 		pass
 	else:
-		var rect = await G.OBS.send_request("GetSceneItemTransform", { "sceneName": VALS.scene.value, "sceneItemId": VALS.itemId.value })
+		var rect = await G.OBS.send_request("GetSceneItemTransform", { "sceneName": PORTS.scene.value, "sceneItemId": PORTS.itemId.value })
 		if rect:
-			VALS.pos.value = Vector2(rect.sceneItemTransform.positionX, rect.sceneItemTransform.positionY)
-			VALS.size.value = Vector2(
+			PORTS.pos.value = Vector2(rect.sceneItemTransform.positionX, rect.sceneItemTransform.positionY)
+			PORTS.size.value = Vector2(
 				rect.sceneItemTransform.width - 
 					(rect.sceneItemTransform.cropLeft + rect.sceneItemTransform.cropRight) * rect.sceneItemTransform.scaleX,
 				rect.sceneItemTransform.height -
 					(rect.sceneItemTransform.cropTop + rect.sceneItemTransform.cropBottom) * rect.sceneItemTransform.scaleY
 			)
-			VALS.bounds.value = Vector2(rect.sceneItemTransform.boundsWidth, rect.sceneItemTransform.boundsHeight)
+			PORTS.bounds.value = Vector2(rect.sceneItemTransform.boundsWidth, rect.sceneItemTransform.boundsHeight)
 	
 	

@@ -8,28 +8,28 @@ static var _icon = "obs"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"activate": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"deactivate": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"changed": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": OUTPUT
 		}),
 		"enabled": HPortBool.new({
-			"type": G.graph.TYPES.BOOL, 
+			"type": E.CONNECTION_TYPES.BOOL, 
 			"side": BOTH
 		})
 	}
 	G.OBS.studio_mode_state_changed.connect(_state_changed)
 
 func _state_changed(_enabled):
-	VALS.enabled.value = _enabled
+	PORTS.enabled.value = _enabled
 	emit("changed")
 
 func run(routine:String):
@@ -39,4 +39,4 @@ func run(routine:String):
 		G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : false })
 
 func update() -> void:
-	G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : VALS.enabled.value })
+	G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : PORTS.enabled.value })

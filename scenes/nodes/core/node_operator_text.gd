@@ -9,62 +9,62 @@ static var _icon = "text"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"text": HPortText.new({
-			"type": G.graph.TYPES.TEXT,
+			"type": E.CONNECTION_TYPES.TEXT,
 			"side": INPUT
 		}),
 		"vars": HPortDict.new({
-			"type": G.graph.TYPES.VARIANT,
+			"type": E.CONNECTION_TYPES.VARIANT,
 			"side": INPUT,
 			"dictionary": true
 		}),
 		"split": HPortBool.new({
-			"type": G.graph.TYPES.BOOL,
+			"type": E.CONNECTION_TYPES.BOOL,
 			"default": false,
 			"side": INPUT
 		}),
 		"delimiter": HPortText.new({
-			"type": G.graph.TYPES.TEXT,
+			"type": E.CONNECTION_TYPES.TEXT,
 			"side": INPUT,
 			"visible": false
 		}),
 		"trim": HPortBool.new({
-			"type": G.graph.TYPES.BOOL,
+			"type": E.CONNECTION_TYPES.BOOL,
 			"default": false,
 			"side": INPUT
 		}),
 		"r_text": HPortText.new({
-			"type": G.graph.TYPES.TEXT,
+			"type": E.CONNECTION_TYPES.TEXT,
 			"side": OUTPUT
 		}),
 		"r_array": HPortArray.new({
-			"type": G.graph.TYPES.VARIANT_ARRAY,
+			"type": E.CONNECTION_TYPES.VARIANT_ARRAY,
 			"side": OUTPUT
 		})
 	}
 
 func update() -> void:
 	if _last_port_changed == "split":
-		VALS.delimiter.visible = VALS.split.value
-		VALS.r_array.visible = VALS.split.value
-		VALS.r_text.visible = not VALS.split.value
+		PORTS.delimiter.visible = PORTS.split.value
+		PORTS.r_array.visible = PORTS.split.value
+		PORTS.r_text.visible = not PORTS.split.value
 		update_slots()
 	
-	var t : String = VALS.text.value
-	for _name in VALS.vars.value:
-		t = t.replace("[%s]" % _name, str(VALS.vars.value[_name]))
-	if VALS.trim.value:
+	var t : String = PORTS.text.value
+	for _name in PORTS.vars.value:
+		t = t.replace("[%s]" % _name, str(PORTS.vars.value[_name]))
+	if PORTS.trim.value:
 		t = t.strip_edges()
 	
 	# Normal text
-	if not VALS.split.value:
-		VALS.r_text.value = t
+	if not PORTS.split.value:
+		PORTS.r_text.value = t
 	
 	# Split
 	else:
-		var r = t.split(VALS.delimiter.value)
-		if VALS.trim.value: 
+		var r = t.split(PORTS.delimiter.value)
+		if PORTS.trim.value: 
 			for i in r.size():
 				r[i] = r[i].strip_edges()
-		VALS.r_array.value = Array(r)
+		PORTS.r_array.value = Array(r)

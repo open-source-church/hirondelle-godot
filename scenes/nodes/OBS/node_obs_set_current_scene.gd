@@ -8,21 +8,21 @@ static var _icon = "obs"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"set_program": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"set_preview": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"program": HPortText.new({
-			"type": G.graph.TYPES.TEXT, 
+			"type": E.CONNECTION_TYPES.TEXT, 
 			"side": INPUT,
 		}),
 		"preview": HPortText.new({
-			"type": G.graph.TYPES.TEXT, 
+			"type": E.CONNECTION_TYPES.TEXT, 
 			"side": INPUT
 		}),
 	}
@@ -33,14 +33,14 @@ func _init() -> void:
 
 func _update_scene_list(scenes : Array):
 	scenes.reverse()
-	VALS.program.options = scenes.map(func (s): return s.sceneName)
-	VALS.preview.options = scenes.map(func (s): return s.sceneName)
+	PORTS.program.options = scenes.map(func (s): return s.sceneName)
+	PORTS.preview.options = scenes.map(func (s): return s.sceneName)
 
 func run(routine:String):
 	if routine == "set_program":
-		G.OBS.send_request("SetCurrentProgramScene", { "sceneName" : VALS.program.value })
+		G.OBS.send_request("SetCurrentProgramScene", { "sceneName" : PORTS.program.value })
 	if routine == "set_preview":
-		G.OBS.send_request("SetCurrentPreviewScene", { "sceneName" : VALS.preview.value })
+		G.OBS.send_request("SetCurrentPreviewScene", { "sceneName" : PORTS.preview.value })
 
 func update() -> void:
 	pass

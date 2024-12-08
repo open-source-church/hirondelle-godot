@@ -26,7 +26,7 @@ func update_labels():
 		lbl.text = str(v)
 		
 		var stylebox = StyleBoxFlat.new()
-		#stylebox.bg_color = G.graph.colors[s.type].darkened(0.0)
+		#stylebox.bg_color = E.connection_colors[s.type].darkened(0.0)
 		stylebox.bg_color.a = 0.3
 		stylebox.content_margin_bottom = 3
 		stylebox.content_margin_left = 6

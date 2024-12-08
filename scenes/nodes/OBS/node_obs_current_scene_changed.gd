@@ -8,17 +8,17 @@ static var _icon = "obs"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"changed": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": OUTPUT
 		}),
 		"program": HPortText.new({
-			"type": G.graph.TYPES.TEXT, 
+			"type": E.CONNECTION_TYPES.TEXT, 
 			"side": OUTPUT
 		}),
 		"preview": HPortText.new({
-			"type": G.graph.TYPES.TEXT, 
+			"type": E.CONNECTION_TYPES.TEXT, 
 			"side": OUTPUT
 		}),
 	}
@@ -26,16 +26,16 @@ func _init() -> void:
 	G.OBS.current_preview_scene_changed.connect(_preview_scene_changed)
 	var _scene = await G.OBS.send_request("GetCurrentProgramScene")
 	if _scene:
-		VALS.program.value = _scene.sceneName
+		PORTS.program.value = _scene.sceneName
 	_scene = await G.OBS.send_request("GetCurrentPreviewScene")
 	if _scene:
-		VALS.program.value = _scene.sceneName
+		PORTS.program.value = _scene.sceneName
 
 func _program_scene_changed(new_name, _uuid):
-	VALS.program.value = new_name
+	PORTS.program.value = new_name
 	emit("changed")
 func _preview_scene_changed(new_name, _uuid):
-	VALS.preview.value = new_name
+	PORTS.preview.value = new_name
 	emit("changed")
 
 func update() -> void:

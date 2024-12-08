@@ -8,32 +8,32 @@ static var _icon = "obs"
 func _init() -> void:
 	title = _title
 	type = _type
-	VALS = {
+	PORTS = {
 		"start": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"stop": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": INPUT
 		}),
 		"started": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": OUTPUT
 		}),
 		"stopped": HPortFlow.new({
-			"type": G.graph.TYPES.FLOW, 
+			"type": E.CONNECTION_TYPES.FLOW, 
 			"side": OUTPUT
 		}),
 		"streaming": HPortBool.new({
-			"type": G.graph.TYPES.BOOL, 
+			"type": E.CONNECTION_TYPES.BOOL, 
 			"side": OUTPUT
 		})
 	}
 	G.OBS.stream_state_changed.connect(_state_changed)
 
 func _state_changed(_enabled, _state : String):
-	VALS.streaming.value = _enabled
+	PORTS.streaming.value = _enabled
 	if _enabled: emit("started")
 	else: emit("stopped")
 
