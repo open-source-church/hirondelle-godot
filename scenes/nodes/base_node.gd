@@ -113,14 +113,7 @@ func on_port_clicked(port_name : String) -> void:
 		emit(port_name)
 
 func get_port_icon(n := 0, width := 10) -> Texture2D:
-	return G.get_icon_from_atlas(preload("res://themes/ports.svg"), n, 0, 32, width)
-
-func _reverse_icon(icon : Texture2D) -> Texture2D:
-	var img = icon.get_image()
-	img.flip_x()
-	var icon2 = ImageTexture.create_from_image(img)
-	icon2.set_size_override(icon.get_size())
-	return icon2
+	return G.get_icon_from_atlas(G.PORTS_TEXTURE, n, 0, 32, width)
 
 ## Turn on and off slots and give them the proper color
 func update_slots() -> void:
@@ -137,18 +130,18 @@ func update_slots() -> void:
 			set_slot_type_right(slot_index, c.type)
 			set_slot_color_left(slot_index, E.connection_colors[c.type])
 			set_slot_color_right(slot_index, E.connection_colors[c.type])
-			var icon
+			var _icon
 			if c.type == E.CONNECTION_TYPES.FLOW:
-				icon = get_port_icon(3, 15)
+				_icon = get_port_icon(3, 15)
 			elif c.is_dictionary:
-				icon = get_port_icon(2, 10)
+				_icon = get_port_icon(2, 10)
 			else:
 				icon = get_port_icon(0, 10)
 			#var icon_width = 14 if c.type == E.CONNECTION_TYPES.FLOW else 10
 			#var icon_idx = 2 if c.is_dictionary else 0
 			#var icon = get_port_icon(icon_idx, icon_width)
-			set_slot_custom_icon_right(slot_index, icon)
-			set_slot_custom_icon_left(slot_index, icon)
+			set_slot_custom_icon_right(slot_index, _icon)
+			set_slot_custom_icon_left(slot_index, _icon)
 				
 			slot_index += 1
 	

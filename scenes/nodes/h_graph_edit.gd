@@ -1,11 +1,12 @@
 extends GraphEdit
 class_name HGraphEdit
 
-@onready var selection_rect: TextureRect = $PortSelectionRect
+@onready var selection_rect: TextureRect # = $PortSelectionRect
 
 var connections : HGraphConnections
 
 func _ready() -> void:
+	# Setup valid connections
 	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT)
 	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.VARIANT)
 	add_valid_connection_type(E.CONNECTION_TYPES.FLOAT, E.CONNECTION_TYPES.VARIANT)
@@ -15,8 +16,25 @@ func _ready() -> void:
 	add_valid_connection_type(E.CONNECTION_TYPES.COLOR, E.CONNECTION_TYPES.VARIANT)
 	popup_request.connect(show_popup) # FIXME: see comment in show_popup
 	
+	# Initial settings
+	minimap_enabled = false
+	zoom_min = 0.05
+	
+	# Setup connections
 	connections = HGraphConnections.new()
 	connections.graph = self
+	
+	# Setup selection rect
+	selection_rect = TextureRect.new()
+	selection_rect.texture = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 1, 32, 32)
+	selection_rect.z_index = -1
+	add_child(selection_rect)
+
+func _process(_delta: float) -> void:
+	# Makes grid lighter when zooming out (otherwise the screen is saturated)
+	if zoom < 0.5:
+		add_theme_color_override("grid_major", Color(1, 1, 1, 0.2 * zoom))
+		add_theme_color_override("grid_minor", Color(1, 1, 1, 0.05 * zoom))
 
 func on_child_enter_tree(node : Node):
 	if node is HBaseNode:
@@ -53,7 +71,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			print("Popup Menu")
 
 ## FIXME: doesn't work with multiple windows: some components lose ability to focus ..?
-func show_popup(at_position: Vector2) -> void:
+func show_popup(_at_position: Vector2) -> void:
 	print("FIXME: show popup")
 	#var popup = add_node_button.get_popup()
 	##popup.position = at_position
@@ -96,6 +114,7 @@ func _gui_input(event: InputEvent) -> void:
 		if hover_port:
 			selection_rect.scale = Vector2.ONE * zoom
 			selection_rect.position = -scroll_offset + hover_port.node.position_offset * zoom + hover_port.node.get_port_position(hover_port.side, hover_port.index) * zoom - selection_rect.size / 2 * zoom
+			selection_rect.modulate = E.connection_colors[hover_port.node.get_port_type(hover_port.side, hover_port.index)]
 			mouse_default_cursor_shape = Control.CURSOR_CROSS
 		else:
 			mouse_default_cursor_shape = Control.CURSOR_ARROW
@@ -236,8 +255,6 @@ func _on_paste_nodes_request() -> void:
 	for c in to_paste.connections:
 		c.from_node = name_map.get(c.from_node, c.from_node)
 		c.to_node = name_map.get(c.to_node, c.to_node)
-		var from = get_node_by_id(c.from_node)
-		var to = get_node_by_id(c.to_node)
 		connections.add_connection_names(c.from_node, c.from_port, c.to_node, c.to_port, c.get("visible", true))
 
 func _on_duplicate_nodes_request() -> void:

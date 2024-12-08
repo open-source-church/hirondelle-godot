@@ -22,9 +22,9 @@ func _ready() -> void:
 func update_node_list() -> void:
 	lst_nodes.clear()
 	
-	var _node_list = node_list.filter(func (i): return filter(i))
+	var _node_list = node_list.filter(func (_i): return filter(_i))
 	
-	var last_category
+	var last_category = null
 	
 	var i = 0
 	for n in _node_list:
@@ -62,7 +62,7 @@ func return_node(idx : int) -> void:
 	hide()
 	
 func select_item(idx : int) -> void:
-	var n = node_list.filter(func (n): return n._type == lst_nodes.get_item_metadata(idx)).front()
+	var n = node_list.filter(func (_n): return _n._type == lst_nodes.get_item_metadata(idx)).front()
 	if not n: return
 	
 	var description = "[b]%s[/b]\n" % n._title

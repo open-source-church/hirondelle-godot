@@ -1,6 +1,7 @@
 extends Node
 
 const VECTOR_WHITE_ICONS = preload("res://themes/kenney-game-icons/vector_whiteIcons.svg")
+const PORTS_TEXTURE =  preload("res://themes/ports.svg")
 
 var window : HWindow
 var OBS : OBSWebSocket
@@ -36,7 +37,6 @@ func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, i
 	icon = ImageTexture.create_from_image(icon.get_image())
 	icon.set_size_override(Vector2i(icon_width, icon_width))
 	return icon
-	return Texture2D.new()
 
 func get_main_icon(icon : String, width : int) -> Texture2D:
 	var p = Vector2i(0, 0)
@@ -66,3 +66,10 @@ func get_node_color(node):
 	if "bool" in node._type:
 		return E.connection_colors[E.CONNECTION_TYPES.BOOL]
 	return Color.WHITE
+
+func reverse_icon(icon : Texture2D) -> Texture2D:
+	var img = icon.get_image()
+	img.flip_x()
+	var icon2 = ImageTexture.create_from_image(img)
+	icon2.set_size_override(icon.get_size())
+	return icon2

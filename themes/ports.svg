@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="14.400345"
-     inkscape:cx="92.497783"
-     inkscape:cy="12.152487"
+     inkscape:zoom="10.182582"
+     inkscape:cx="62.459603"
+     inkscape:cy="33.881388"
      inkscape:window-width="3440"
      inkscape:window-height="1370"
      inkscape:window-x="0"
@@ -73,5 +73,12 @@
        style="fill:#e6e6e6;fill-rule:evenodd;stroke:#f9f9f9;stroke-width:1.91353;stroke-linejoin:round;paint-order:stroke markers fill"
        d="M 26.356758,0.95677155 32.909891,4.1405003 V 4.3261758 L 26.356758,7.5099046 Z"
        sodipodi:nodetypes="ccccc" />
+    <ellipse
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.8638;stroke-linejoin:round;-inkscape-stroke:none;paint-order:stroke markers fill;stroke-opacity:0.5053879"
+       id="ellipse1"
+       cx="4.2333326"
+       cy="12.700013"
+       rx="3.3014326"
+       ry="3.3014376" />
   </g>
 </svg>

@@ -30,6 +30,14 @@ region = Rect2(512, 64, 64, 64)
 atlas = ExtResource("3_5tveq")
 region = Rect2(960, 128, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ldwo"]
+atlas = ExtResource("3_5tveq")
+region = Rect2(320, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb77y"]
+atlas = ExtResource("3_5tveq")
+region = Rect2(896, 128, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4uuc"]
 atlas = ExtResource("3_5tveq")
 region = Rect2(512, 64, 64, 64)
@@ -37,18 +45,6 @@ region = Rect2(512, 64, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6sye"]
 atlas = ExtResource("3_5tveq")
 region = Rect2(512, 192, 64, 64)
-
-[sub_resource type="Gradient" id="Gradient_qfcjl"]
-offsets = PackedFloat32Array(0.880851, 1)
-colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xb823"]
-gradient = SubResource("Gradient_qfcjl")
-width = 32
-height = 32
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -158,24 +154,27 @@ unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
 text = "Nodes"
+icon = SubResource("AtlasTexture_0ldwo")
 
-[node name="BtnMenuOBS" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+[node name="BtnMenuSettings" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
-text = "OBS"
+text = "Settings"
+icon = SubResource("AtlasTexture_mb77y")
 
-[node name="BtnMenuTwitch" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+[node name="GraphList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Twitch"
+size_flags_vertical = 3
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/GraphList"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.490196)
+theme_override_colors/font_color = Color(1, 1, 1, 0.294118)
 text = "Graphs
 "
 
-[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/GraphList"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 3
@@ -184,19 +183,19 @@ item_count = 2
 item_0/text = "Graph 1"
 item_1/text = "Graph 2"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/GraphList"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/GraphList/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/GraphList/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/icon_max_width = 12
 icon = SubResource("AtlasTexture_j4uuc")
 
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/Nodes/MenuPanel/MarginContainer/VBoxContainer/GraphList/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/icon_max_width = 12
 icon = SubResource("AtlasTexture_v6sye")
@@ -207,27 +206,21 @@ tab_alignment = 1
 current_tab = 0
 tabs_visible = false
 
-[node name="Nodes" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs"]
+[node name="Nodes" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs"]
 unique_name_in_owner = true
 layout_mode = 2
+current_tab = 0
+tabs_visible = false
 metadata/_tab_index = 0
 
 [node name="GraphEdit" type="GraphEdit" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-minimap_enabled = false
 script = ExtResource("1_s4m1c")
+metadata/_tab_index = 0
 
-[node name="PortSelectionRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Nodes/GraphEdit"]
-visible = false
-z_index = -1
-layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
-texture = SubResource("GradientTexture2D_xb823")
-
-[node name="OBS" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs"]
+[node name="Settings" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -237,7 +230,22 @@ theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 metadata/_tab_index = 1
 
-[node name="OBS" parent="MarginContainer/VBoxContainer/Nodes/Tabs/OBS" instance=ExtResource("2_v0q7l")]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Settings"]
+layout_mode = 2
+current_tab = 0
+
+[node name="OBS" type="PanelContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Settings/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Settings/TabContainer/OBS"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="OBS" parent="MarginContainer/VBoxContainer/Nodes/Tabs/Settings/TabContainer/OBS/MarginContainer" instance=ExtResource("2_v0q7l")]
 layout_mode = 2
 
 [node name="HWindow" parent="." instance=ExtResource("7_vwegq")]

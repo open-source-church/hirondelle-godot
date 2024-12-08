@@ -9,11 +9,12 @@ extends Control
 @onready var btn_window: Button = %BtnWindow
 @onready var h_window: HWindow = %HWindow
 @onready var btn_add_node: Button = %BtnAddNode
+@onready var graph_list: VBoxContainer = %GraphList
 
 @onready var btn_menu_nodes: Button = %BtnMenuNodes
-@onready var btn_menu_obs: Button = %BtnMenuOBS
-@onready var nodes: VBoxContainer = %Nodes
-@onready var obs: MarginContainer = %OBS
+@onready var btn_menu_settings: Button = %BtnMenuSettings
+@onready var nodes: TabContainer = %Nodes
+@onready var settings: MarginContainer = %Settings
 
 const ADD_NODE_POPUP = preload("res://scenes/controls/add_node_popup.tscn")
 var popup_add_node : Window
@@ -25,9 +26,11 @@ func _ready() -> void:
 	btn_clear.pressed.connect(graph_edit.clear)
 	btn_menu.toggled.connect(menu_panel.set_visible)
 	btn_window.toggled.connect(h_window.set_visible)
-	btn_menu_nodes.toggled.connect(nodes.set_visible)
-	btn_menu_obs.toggled.connect(obs.set_visible)
 	btn_add_node.pressed.connect(show_add_node_popup)
+	# Left menu
+	btn_menu_nodes.pressed.connect(show_tab.bind(nodes))
+	btn_menu_settings.pressed.connect(show_tab.bind(settings))
+	show_tab(nodes)
 	
 	popup_add_node = ADD_NODE_POPUP.instantiate()
 	popup_add_node.visible = false
@@ -39,6 +42,8 @@ func show_add_node_popup() -> void:
 	popup_add_node.show()
 	popup_add_node.focus_filter()
 
-func _process(_delta: float) -> void:
-	btn_menu_nodes.button_pressed = nodes.visible
-	btn_menu_obs.button_pressed = obs.visible
+func show_tab(tab : Control) -> void:
+	tab.visible = true
+	btn_menu_nodes.button_pressed = tab == nodes
+	btn_menu_settings.button_pressed = tab == settings
+	graph_list.visible = tab == nodes
