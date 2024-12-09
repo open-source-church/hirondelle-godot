@@ -9,26 +9,11 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"start": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"stop": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"started": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"stopped": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"streaming": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL, 
-			"side": OUTPUT
-		})
+		"start": HPortFlow.new(E.Side.INPUT),
+		"stop": HPortFlow.new(E.Side.INPUT),
+		"started": HPortFlow.new(E.Side.OUTPUT),
+		"stopped": HPortFlow.new(E.Side.OUTPUT),
+		"streaming": HPortBool.new(E.Side.OUTPUT)
 	}
 	G.OBS.stream_state_changed.connect(_state_changed)
 

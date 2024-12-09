@@ -4,8 +4,9 @@ class_name HPortFlow
 var label_name : Label
 var label_parenthesis : Label
 
-func _init(opt : Dictionary) -> void:
-	super(opt)
+func _init(side : E.Side, opt : Dictionary = {}):
+	var _type = opt.get("type", E.CONNECTION_TYPES.FLOW)
+	super(side, _type, opt)
 	hide_label = true
 
 func get_component(_params) -> Control:

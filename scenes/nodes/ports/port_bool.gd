@@ -3,6 +3,10 @@ class_name HPortBool
 
 var toggle : CheckButton
 
+func _init(side : E.Side, opt : Dictionary = {}):
+	var _type = opt.get("type", E.CONNECTION_TYPES.BOOL)
+	super(side, _type, opt)
+
 func get_component(_params) -> Control:
 	toggle = CheckButton.new()
 	toggle.flat = true

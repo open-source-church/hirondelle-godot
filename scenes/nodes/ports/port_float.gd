@@ -3,6 +3,10 @@ class_name HPortFloat
 
 var line : LineEdit
 
+func _init(side : E.Side, opt : Dictionary = {}):
+	var _type = opt.get("type", E.CONNECTION_TYPES.FLOAT)
+	super(side, _type, opt)
+
 func get_component(_params) -> Control:
 	line = LineEdit.new()
 	line.custom_minimum_size = Vector2(200, 0)

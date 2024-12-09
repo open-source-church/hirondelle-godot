@@ -3,6 +3,10 @@ class_name HPortIntSpin
 
 var spinbox : SpinBox
 
+func _init(side : E.Side, opt : Dictionary = {}):
+	var _type = opt.get("type", E.CONNECTION_TYPES.INT)
+	super(side, _type, opt)
+
 func get_component(_params) -> Control:
 	spinbox = SpinBox.new()
 	spinbox.allow_greater = true

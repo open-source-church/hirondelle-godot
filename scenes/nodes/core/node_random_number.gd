@@ -11,33 +11,22 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"rand": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW,
-			"side": INPUT,
+		"rand": HPortFlow.new(E.Side.INPUT, {
 			"description": "Generate random number"
 		}),
-		"min": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
+		"min": HPortFloat.new(E.Side.INPUT, {
 			"default": 0.0,
-			"side": INPUT,
 			"description": "Minimum value"
 		}),
-		"max": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
+		"max": HPortFloat.new(E.Side.INPUT, {
 			"default": 100.0,
-			"side": INPUT,
 			"description": "Maximum value"
 		}),
-		"float": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL,
+		"float": HPortBool.new(E.Side.INPUT, {
 			"default": false,
-			"side": INPUT,
 			"description": "Retourne un nombre à virgule"
 		}),
-		"r": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
-			"side": OUTPUT
-		})
+		"r": HPortFloat.new(E.Side.OUTPUT)
 	}
 
 func run(routine:String):

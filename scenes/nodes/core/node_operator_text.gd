@@ -10,38 +10,13 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"text": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT,
-			"side": INPUT
-		}),
-		"vars": HPortDict.new({
-			"type": E.CONNECTION_TYPES.VARIANT,
-			"side": INPUT,
-			"dictionary": true
-		}),
-		"split": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL,
-			"default": false,
-			"side": INPUT
-		}),
-		"delimiter": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT,
-			"side": INPUT,
-			"visible": false
-		}),
-		"trim": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL,
-			"default": false,
-			"side": INPUT
-		}),
-		"r_text": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT,
-			"side": OUTPUT
-		}),
-		"r_array": HPortArray.new({
-			"type": E.CONNECTION_TYPES.VARIANT_ARRAY,
-			"side": OUTPUT
-		})
+		"text": HPortText.new(E.Side.INPUT),
+		"vars": HPortDict.new(E.Side.INPUT, { "dictionary": true }),
+		"split": HPortBool.new(E.Side.INPUT, {  "default": false }),
+		"delimiter": HPortText.new(E.Side.INPUT, { "visible": false }),
+		"trim": HPortBool.new(E.Side.INPUT, { "default": false }),
+		"r_text": HPortText.new(E.Side.OUTPUT),
+		"r_array": HPortArray.new(E.Side.OUTPUT)
 	}
 
 func update() -> void:

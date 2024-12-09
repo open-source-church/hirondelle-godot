@@ -11,38 +11,20 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"start": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT,
+		"start": HPortFlow.new(E.Side.INPUT, {
 			"description": "Starts the timer."
 		}),
-		"stop": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"started": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"finished": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"time": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
+		"stop": HPortFlow.new(E.Side.INPUT),
+		"started": HPortFlow.new(E.Side.OUTPUT),
+		"finished": HPortFlow.new(E.Side.OUTPUT),
+		"time": HPortIntSpin.new(E.Side.INPUT, {
 			"default": 1000, 
-			"side": INPUT, 
 			"description": "Time in milisecond"
 		}),
-		"elapsed": HPortIntSlider.new({
-			"type": E.CONNECTION_TYPES.INT, 
-			"side": OUTPUT,
+		"elapsed": HPortIntSlider.new(E.Side.OUTPUT, {
 			"params": { "min": 0, "max": 1000 }
 		}),
-		"running": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL, 
-			"side": OUTPUT
-		})
+		"running": HPortBool.new(E.Side.OUTPUT)
 	}
 	timer = Timer.new()
 	add_child(timer)

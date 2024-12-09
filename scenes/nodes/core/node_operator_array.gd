@@ -10,49 +10,19 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"start_loop": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW,
-			"side": INPUT
-		}),
-		"next": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW,
-			"side": INPUT
-		}),
-		"for_each": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW,
-			"side": OUTPUT
-		}),
-		"arrays": HPortDict.new({
-			"type": E.CONNECTION_TYPES.VARIANT_ARRAY,
+		"start_loop": HPortFlow.new(E.Side.INPUT),
+		"next": HPortFlow.new(E.Side.INPUT),
+		"for_each": HPortFlow.new(E.Side.OUTPUT),
+		"arrays": HPortDict.new(E.Side.INPUT, {
 			"default": false,
-			"side": INPUT,
 			"dictionary": true
 		}),
-		"index": HPortIntSlider.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": INPUT,
-		}),
-		"loop": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL,
-			"default": false,
-			"side": INPUT
-		}),
-		"merged": HPortArray.new({
-			"type": E.CONNECTION_TYPES.VARIANT_ARRAY,
-			"side": OUTPUT
-		}),
-		"value": HPortText.new({
-			"type": E.CONNECTION_TYPES.VARIANT,
-			"side": OUTPUT
-		}),
-		"idx": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": OUTPUT
-		}),
-		"count": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": OUTPUT
-		})
+		"index": HPortIntSlider.new(E.Side.INPUT),
+		"loop": HPortBool.new(E.Side.INPUT, { "default": false }),
+		"merged": HPortArray.new(E.Side.OUTPUT),
+		"value": HPortText.new(E.Side.OUTPUT),
+		"idx": HPortIntSpin.new(E.Side.OUTPUT),
+		"count": HPortIntSpin.new(E.Side.OUTPUT)
 	}
 
 func run(subroutine : String):

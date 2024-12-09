@@ -9,18 +9,9 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"changed": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"program": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT, 
-			"side": OUTPUT
-		}),
-		"preview": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT, 
-			"side": OUTPUT
-		}),
+		"changed": HPortFlow.new(E.Side.OUTPUT),
+		"program": HPortText.new(E.Side.OUTPUT),
+		"preview": HPortText.new(E.Side.OUTPUT),
 	}
 	G.OBS.current_program_scene_changed.connect(_program_scene_changed)
 	G.OBS.current_preview_scene_changed.connect(_preview_scene_changed)

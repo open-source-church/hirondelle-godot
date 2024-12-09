@@ -10,50 +10,16 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"input": HPortColor.new({
-			"type": E.CONNECTION_TYPES.COLOR,
-			"side": INPUT,
-		}),
-		"r": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": INPUT,
-			"default": 255
-		}),
-		"g": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": INPUT,
-			"default": 255
-		}),
-		"b": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": INPUT,
-			"default": 255
-		}),
-		"a": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": INPUT,
-			"default": 255
-		}),
-		"output": HPortColor.new({
-			"type": E.CONNECTION_TYPES.COLOR,
-			"side": OUTPUT
-		}),
-		"o_r": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": OUTPUT
-		}),
-		"o_g": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": OUTPUT
-		}),
-		"o_b": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": OUTPUT
-		}),
-		"o_a": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"side": OUTPUT
-		}),
+		"input": HPortColor.new(E.Side.INPUT),
+		"r": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
+		"g": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
+		"b": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
+		"a": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
+		"output": HPortColor.new(E.Side.OUTPUT),
+		"o_r": HPortIntSpin.new(E.Side.OUTPUT),
+		"o_g": HPortIntSpin.new(E.Side.OUTPUT),
+		"o_b": HPortIntSpin.new(E.Side.OUTPUT),
+		"o_a": HPortIntSpin.new(E.Side.OUTPUT),
 	}
 
 func update() -> void:

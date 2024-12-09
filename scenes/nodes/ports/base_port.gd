@@ -7,7 +7,6 @@ class_name HBasePort
 ## * get_component
 ## * _on_params_changed if needed
 
-
 var default : Variant
 var params : Dictionary:
 	set(val):
@@ -39,9 +38,9 @@ var collapsed := false:
 func set_collapsed(val: bool):
 	collapsed = val
 
-func _init(opt : Dictionary) -> void:
-	side = opt.get("side", E.Side.INPUT)
-	type = opt.type
+func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) -> void:
+	side = _side
+	type = _type
 	visible = opt.get("visible", true)
 	options = opt.get("options", [])
 	description = opt.get("description", "")

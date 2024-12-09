@@ -10,24 +10,13 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"operator": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT,
+		"operator": HPortText.new(E.Side.NONE, {
 			"default": "Add",
-			"side": NONE, 
 			"options": ["Add", "Substract", "Multiply", "Divide"]
 		}),
-		"a": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2,
-			"side": INPUT
-		}),
-		"b": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2,
-			"side": INPUT
-		}),
-		"r": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2,
-			"side": OUTPUT
-		}),
+		"a": HPortVec2.new(E.Side.INPUT),
+		"b": HPortVec2.new(E.Side.INPUT),
+		"r": HPortVec2.new(E.Side.OUTPUT),
 	}
 
 func update() -> void:

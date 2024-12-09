@@ -3,6 +3,10 @@ class_name HPortText
 
 var line : LineEdit
 
+func _init(side : E.Side, opt : Dictionary = {}):
+	var _type = opt.get("type", E.CONNECTION_TYPES.TEXT)
+	super(side, _type, opt)
+
 func get_component(_params) -> Control:
 	line = LineEdit.new()
 	line.custom_minimum_size = Vector2(200, 0)

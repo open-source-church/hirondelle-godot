@@ -9,30 +9,12 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"scene": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT, 
-			"side": INPUT
-		}),
-		"source": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT, 
-			"side": INPUT
-		}),
-		"itemId": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT, 
-			"side": INPUT
-		}),
-		"pos": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2, 
-			"side": OUTPUT,
-		}),
-		"size": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2, 
-			"side": OUTPUT
-		}),
-		"bounds": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2, 
-			"side": OUTPUT
-		}),
+		"scene": HPortText.new(E.Side.INPUT),
+		"source": HPortText.new(E.Side.INPUT),
+		"itemId": HPortIntSpin.new(E.Side.INPUT),
+		"pos": HPortVec2.new(E.Side.OUTPUT),
+		"size": HPortVec2.new(E.Side.OUTPUT),
+		"bounds": HPortVec2.new(E.Side.OUTPUT),
 	}
 	
 	G.OBS.scene_list_changed.connect(_update_scene_list)

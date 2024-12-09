@@ -9,22 +9,10 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"activate": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"deactivate": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"changed": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"enabled": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL, 
-			"side": BOTH
-		})
+		"activate": HPortFlow.new(E.Side.INPUT),
+		"deactivate": HPortFlow.new(E.Side.INPUT),
+		"changed": HPortFlow.new(E.Side.OUTPUT),
+		"enabled": HPortBool.new(E.Side.BOTH)
 	}
 	G.OBS.studio_mode_state_changed.connect(_state_changed)
 

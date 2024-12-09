@@ -10,30 +10,12 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"vec": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2,
-			"side": INPUT
-		}),
-		"x": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
-			"side": INPUT
-		}),
-		"y": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
-			"side": INPUT
-		}),
-		"o_vec": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2,
-			"side": OUTPUT
-		}),
-		"o_x": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
-			"side": OUTPUT
-		}),
-		"o_y": HPortFloat.new({
-			"type": E.CONNECTION_TYPES.FLOAT,
-			"side": OUTPUT
-		}),
+		"vec": HPortVec2.new(E.Side.INPUT),
+		"x": HPortFloat.new(E.Side.INPUT),
+		"y": HPortFloat.new(E.Side.INPUT),
+		"o_vec": HPortVec2.new(E.Side.OUTPUT),
+		"o_x": HPortFloat.new(E.Side.OUTPUT),
+		"o_y": HPortFloat.new(E.Side.OUTPUT),
 	}
 
 func update() -> void:

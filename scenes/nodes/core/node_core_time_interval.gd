@@ -11,29 +11,14 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"start": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"stop": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"ping": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"time": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
+		"start": HPortFlow.new(E.Side.INPUT),
+		"stop": HPortFlow.new(E.Side.INPUT),
+		"ping": HPortFlow.new(E.Side.OUTPUT),
+		"time": HPortIntSpin.new(E.Side.INPUT, {
 			"default": 1000, 
-			"side": INPUT, 
 			"description": "Time in milisecond"
 		}),
-		"active": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL, 
-			"side": BOTH,
-			"default": false
-		}),
+		"active": HPortBool.new(E.Side.BOTH, { "default": false }),
 	}
 	timer = Timer.new()
 	add_child(timer)

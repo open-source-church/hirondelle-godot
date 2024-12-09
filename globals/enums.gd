@@ -2,8 +2,6 @@ extends Node
 
 enum Side { INPUT, OUTPUT, BOTH, NONE }
 
-
-
 ## Connexion types
 enum CONNECTION_TYPES {
 	FLOW,

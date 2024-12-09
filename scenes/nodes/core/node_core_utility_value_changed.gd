@@ -9,14 +9,8 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"changed": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": OUTPUT
-		}),
-		"watch": HBasePort.new({
-			"type": E.CONNECTION_TYPES.VARIANT, 
-			"side": INPUT
-		}),
+		"changed": HPortFlow.new(E.Side.OUTPUT),
+		"watch": HBasePort.new(E.Side.INPUT, E.CONNECTION_TYPES.VARIANT),
 	}
 
 var _last_value

@@ -10,27 +10,13 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"operator": HPortText.new({
-			"type": E.CONNECTION_TYPES.TEXT,
+		"operator": HPortText.new(E.Side.NONE, {
 			"default": "Add",
-			"side": NONE, 
 			"options": ["Add", "Substract", "Multiply", "Divide", "Modulo", "Power"]
 		}),
-		"a": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"default": 0,
-			"side": INPUT
-		}),
-		"b": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"default": 0,
-			"side": INPUT
-		}),
-		"r": HPortIntSpin.new({
-			"type": E.CONNECTION_TYPES.INT,
-			"default": 0,
-			"side": OUTPUT
-		})
+		"a": HPortIntSpin.new(E.Side.INPUT, { "default": 0 }),
+		"b": HPortIntSpin.new(E.Side.INPUT, { "default": 0 }),
+		"r": HPortIntSpin.new(E.Side.OUTPUT, { "default": 0 })
 	}
 
 func update() -> void:

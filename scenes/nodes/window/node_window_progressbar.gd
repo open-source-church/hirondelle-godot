@@ -11,44 +11,14 @@ func _init() -> void:
 	title = _title
 	type = _type
 	PORTS = {
-		"show": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"hide": HPortFlow.new({
-			"type": E.CONNECTION_TYPES.FLOW, 
-			"side": INPUT
-		}),
-		"percentage": HPortIntSlider.new({
-			"type": E.CONNECTION_TYPES.INT, 
-			"side": INPUT,
-			"params": { "min": 0, "max": 100 }
-		}),
-		"pos": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2,
-			"default": Vector2(0, 0), 
-			"side": INPUT,
-		}),
-		"size": HPortVec2.new({
-			"type": E.CONNECTION_TYPES.VEC2, 
-			"default": Vector2(500, 30),
-			"side": INPUT
-		}),
-		"color": HPortColor.new({
-			"type": E.CONNECTION_TYPES.COLOR, 
-			"default": Color.PURPLE,
-			"side": INPUT
-		}),
-		"background": HPortColor.new({
-			"type": E.CONNECTION_TYPES.COLOR, 
-			"default": Color.GRAY,
-			"side": INPUT
-		}),
-		"visible": HPortBool.new({
-			"type": E.CONNECTION_TYPES.BOOL, 
-			"default": false,
-			"side": INPUT
-		}),
+		"show": HPortFlow.new(E.Side.INPUT),
+		"hide": HPortFlow.new(E.Side.INPUT),
+		"percentage": HPortIntSlider.new(E.Side.INPUT, { "params": { "min": 0, "max": 100 } }),
+		"pos": HPortVec2.new(E.Side.INPUT, { "default": Vector2(0, 0) }),
+		"size": HPortVec2.new(E.Side.INPUT, { "default": Vector2(500, 30) }),
+		"color": HPortColor.new(E.Side.INPUT, { "default": Color.PURPLE }),
+		"background": HPortColor.new(E.Side.INPUT, { "default": Color.GRAY }),
+		"visible": HPortBool.new(E.Side.INPUT, { "default": false }),
 	}
 	ID = randi()
 

@@ -3,6 +3,10 @@ class_name HPortIntSlider
 
 var slider : HSlider
 
+func _init(side : E.Side, opt : Dictionary = {}):
+	var _type = opt.get("type", E.CONNECTION_TYPES.INT)
+	super(side, _type, opt)
+
 func get_component(_params : Dictionary) -> Control:
 	slider = HSlider.new()
 	slider.custom_minimum_size = Vector2(100, 0)
