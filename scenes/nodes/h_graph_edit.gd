@@ -28,7 +28,17 @@ func _ready() -> void:
 	selection_rect = TextureRect.new()
 	selection_rect.texture = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 1, 32, 32)
 	selection_rect.z_index = -1
+	selection_rect.visible = false
 	add_child(selection_rect)
+	
+	# Setup signals
+	child_entered_tree.connect(_on_child_enter_tree)
+	connection_request.connect(_on_connection_request)
+	copy_nodes_request.connect(_on_copy_nodes_request)
+	delete_nodes_request.connect(_on_delete_nodes_request)
+	disconnection_request.connect(_on_disconnection_request)
+	duplicate_nodes_request.connect(_on_duplicate_nodes_request)
+	paste_nodes_request.connect(_on_paste_nodes_request)
 
 func _process(_delta: float) -> void:
 	# Makes grid lighter when zooming out (otherwise the screen is saturated)
@@ -36,7 +46,7 @@ func _process(_delta: float) -> void:
 		add_theme_color_override("grid_major", Color(1, 1, 1, 0.2 * zoom))
 		add_theme_color_override("grid_minor", Color(1, 1, 1, 0.05 * zoom))
 
-func on_child_enter_tree(node : Node):
+func _on_child_enter_tree(node : Node):
 	if node is HBaseNode:
 		node.name = get_unique_name(node)
 
@@ -166,9 +176,9 @@ func get_mouse_position() -> Vector2:
 	return (get_local_mouse_position() + scroll_offset) / zoom
 
 ## Saves graph in user dir
-func save():
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+func save() -> Dictionary:
 	var to_save = {
+		"name": name,
 		"nodes": [],
 		"connections": [],
 		"settings": {
@@ -184,31 +194,28 @@ func save():
 	
 	to_save.connections = connections.save()
 	
-	save_file.store_line(JSON.stringify(to_save, "\t"))
-	print(save_file.get_path_absolute())
+	return to_save
 
 ## Loads graph from user dir
-func load():
+func load(data : Dictionary):
 	clear()
-	var load_file = FileAccess.open("user://savegame.save", FileAccess.READ)
-	var content = load_file.get_as_text()
-	content = JSON.parse_string(content)
-	print("Loading from: ", load_file.get_path_absolute())
 	
-	for n in content.nodes:
+	name = data.get("name", "Unnamed")
+	
+	for n in data.nodes:
 		print("Loading node: ", n.name)
 		var node := add_node(n.type)
 		node.name = n.name
 		node.load(n)
 	
-	for c in content.connections:
+	for c in data.connections:
 		connections.add_connection_names(c.from_node, c.from_port, c.to_node, c.to_port, c.get("visible", true))
 	
-	if content.has("settings") and content.settings.has("zoom"):
-		zoom = content.settings.zoom
-	if content.has("settings") and content.settings.has("scroll_offset_x"):
-		scroll_offset.x = content.settings.scroll_offset_x
-		scroll_offset.y = content.settings.scroll_offset_y
+	if data.has("settings") and data.settings.has("zoom"):
+		zoom = data.settings.zoom
+	if data.has("settings") and data.settings.has("scroll_offset_x"):
+		scroll_offset.x = data.settings.scroll_offset_x
+		scroll_offset.y = data.settings.scroll_offset_y
 
 func _on_copy_nodes_request() -> void:
 	var to_copy = {
