@@ -50,6 +50,7 @@ func _ready() -> void:
 	btn_collapse.flat = true
 	btn_collapse.toggled.connect(_update_separation.unbind(1))
 	btn_collapse.toggled.connect(collapsed_changed.emit, CONNECT_DEFERRED)
+	
 	if "_icon" in self:
 		var texture = TextureRect.new()
 		texture.texture = G.get_main_icon(self["_icon"], 24)
@@ -120,10 +121,8 @@ func update_slots() -> void:
 	clear_all_slots()
 	
 	var slot_index := 0
-	for _name in PORTS:
-		var c = PORTS[_name]
-		#PORTS[_name].visible = c.visible
-		if c.visible:
+	for c in get_children():
+		if c is HBasePort and c.visible:
 			set_slot_enabled_left(slot_index, c.side in [E.Side.INPUT, E.Side.BOTH])
 			set_slot_enabled_right(slot_index, c.side in [E.Side.OUTPUT, E.Side.BOTH])
 			set_slot_type_left(slot_index, c.type)
@@ -142,7 +141,9 @@ func update_slots() -> void:
 			#var icon = get_port_icon(icon_idx, icon_width)
 			set_slot_custom_icon_right(slot_index, _icon)
 			set_slot_custom_icon_left(slot_index, _icon)
-				
+		
+		# Godot counts every Control children
+		if c is Control and c.visible:
 			slot_index += 1
 	
 	# If we want to hide connections when port is hidden:
@@ -199,17 +200,17 @@ func get_input_port(idx : int) -> Node:
 	return null
 
 ## Return the port number with given name. Useful to create connections.
-## FIXME: might not work on "BOTH" side.
-func get_port_number(port_name : String) -> int:
+func get_port_number(port_name : String, side := E.Side.INPUT) -> int:
 	var _input = 0
 	var _output = 0
 	for _name in PORTS:
 		var v = PORTS[_name]
 		if not v.visible: continue
-		if _name == port_name:
-			return _input if v.side == E.Side.INPUT else _output
+		if v.name == port_name:
+			return _input if side == E.Side.INPUT else _output
 		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
 		if v.side in [E.Side.OUTPUT, E.Side.BOTH]: _output += 1
+	
 	return -1
 
 ## Return the name of the given port.

@@ -31,12 +31,13 @@ class Connection:
 				and from_port == connection.from_port and to_port == connection.to_port)
 	
 	func to_godot() -> Dictionary:
-		return {
+		var r = {
 			"from_node": from_node.name,
 			"to_node": to_node.name,
-			"from_port": from_node.get_port_number(from_port.name),
-			"to_port": to_node.get_port_number(to_port.name)
+			"from_port": from_node.get_port_number(from_port.name, E.Side.OUTPUT),
+			"to_port": to_node.get_port_number(to_port.name, E.Side.INPUT)
 		}
+		return r
 	
 	func to_names() -> Dictionary:
 		return {

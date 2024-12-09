@@ -5,6 +5,7 @@ class_name HWindow
 @onready var canvas: Control = %canvas
 
 var progress_bars := {}
+var images := {}
 
 func _ready() -> void:
 	G.window = self
@@ -25,3 +26,9 @@ func on_canvas_draw() -> void:
 		if not pb.visible: continue
 		canvas.draw_rect(Rect2(pb.x, pb.y, pb.width, pb.height), Color(pb.bg_color), true)
 		canvas.draw_rect(Rect2(pb.x, pb.y, pb.width * pb.value, pb.height), Color(pb.color), true)
+	
+	for id in images:
+		var img = images[id]
+		if not img.visible: continue
+		canvas.draw_texture(img.texture, img.position)
+		#canvas.draw_texture_rect(img.texture, Rect2(img.position, img.size), false)
