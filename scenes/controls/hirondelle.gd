@@ -40,6 +40,7 @@ func _ready() -> void:
 	btn_clear.pressed.connect(clear)
 	btn_menu.toggled.connect(menu_panel.set_visible)
 	btn_window.toggled.connect(h_window.set_visible)
+	h_window.visibility_changed.connect(func (): btn_window.set_pressed_no_signal(h_window.visible))
 	
 	# Left menu
 	btn_menu_nodes.pressed.connect(show_main_tab.bind(graph_container))

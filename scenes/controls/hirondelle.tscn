@@ -244,5 +244,3 @@ layout_mode = 2
 unique_name_in_owner = true
 auto_translate_mode = 1
 visible = false
-transient = true
-transparent = true

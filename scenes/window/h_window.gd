@@ -11,13 +11,13 @@ func _ready() -> void:
 	
 	size_changed.connect(on_size_changed)
 	canvas.draw.connect(on_canvas_draw)
+	close_requested.connect(hide)
 
 func canvas_redraw():
 	canvas.queue_redraw()
 
 func on_size_changed():
 	fireworks.scale = Vector2(size.x / 1280.0, size.y / 720.0)
-	print(size, " ", fireworks.scale)
 
 func on_canvas_draw() -> void:
 	for id in progress_bars:
