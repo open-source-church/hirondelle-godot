@@ -9,7 +9,7 @@ enum FlowStep { INITIALIZATION, WAITING_FOR_TOKEN, DONE, REFRESH }
 var step : FlowStep
 
 ## Scopes requested
-var requested_scopes = [TwitchingScopes.CHAT_READ, TwitchingScopes.CHAT_EDIT]
+var requested_scopes = [TwitchingScopes.USER_READ_CHAT, TwitchingScopes.USER_WRITE_CHAT]
 
 ## Polling interval while waiting for access token
 @onready var poll_interval_ms := 5000
@@ -125,6 +125,13 @@ func get_tokens_from_response(response : Dictionary) -> void:
 	access_tokens_received.emit(access_token, refresh_token)
 	tokens_changed.emit()
 	store_tokens()
+
+func get_headers() -> Array:
+	return [
+		"Authorization: Bearer %s" % access_token,
+		"Content-Type: application/json",
+		"Client-Id: %s" % twitching.CLIENT_ID
+	]
 
 ## Stores tokens encrypted in user directory
 func store_tokens():
