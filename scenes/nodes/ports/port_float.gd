@@ -3,9 +3,9 @@ class_name HPortFloat
 
 var line : LineEdit
 
-func _init(side : E.Side, opt : Dictionary = {}):
+func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.FLOAT)
-	super(side, _type, opt)
+	super(_side, _type, opt)
 
 func get_component(_params) -> Control:
 	line = LineEdit.new()

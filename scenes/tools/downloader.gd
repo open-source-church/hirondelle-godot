@@ -37,7 +37,7 @@ func get_header_prop(headers: PackedStringArray, prop: String) -> String:
 	return ""
 
 # Called when the HTTP request is completed.
-func _http_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+func _http_request_completed(result: int, _response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	#print("Request completed: ", result, response_code, headers)
 	
 	if  result != HTTPRequest.RESULT_SUCCESS:

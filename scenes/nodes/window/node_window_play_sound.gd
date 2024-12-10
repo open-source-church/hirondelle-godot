@@ -72,7 +72,7 @@ func update() -> void:
 	if _last_port_changed == "pitch" and audio.stream:
 		PORTS.length.value = get_stream_length()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	PORTS.playback.value = audio.get_playback_position() * 1000 * 100 / PORTS.pitch.value
 	PORTS.playback.params = { "max": get_stream_length() }
 

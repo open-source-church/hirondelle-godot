@@ -7,9 +7,9 @@ var lbl_value : Label
 var btn_reset : Button
 
 
-func _init(side : E.Side, opt : Dictionary = {}):
+func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.INT)
-	super(side, _type, opt)
+	super(_side, _type, opt)
 
 func get_component(_params : Dictionary) -> Control:
 	hbox = HBoxContainer.new()

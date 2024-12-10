@@ -4,9 +4,9 @@ class_name HPortArray
 var hbox : HBoxContainer
 var array : Array
 
-func _init(side : E.Side, opt : Dictionary = {}):
+func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.VARIANT_ARRAY)
-	super(side, _type, opt)
+	super(_side, _type, opt)
 
 func get_component(_params) -> Control:
 	hbox = HBoxContainer.new()

@@ -4,9 +4,9 @@ class_name HPortVec2
 var txt_x : LineEdit
 var txt_y : LineEdit
 
-func _init(side : E.Side, opt : Dictionary = {}):
+func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.VEC2)
-	super(side, _type, opt)
+	super(_side, _type, opt)
 
 func get_component(_params) -> Control:
 	var box = HBoxContainer.new()
