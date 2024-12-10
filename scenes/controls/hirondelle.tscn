@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=16 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/hirondelle.gd" id="1_lwrrq"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="2_qjebv"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="3_pfph6"]
 [ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="4_eihrd"]
+[ext_resource type="PackedScene" uid="uid://dcvur7e3q0vkc" path="res://scenes/twitch_view.tscn" id="4_o648v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dr2k0"]
 atlas = ExtResource("2_qjebv")
@@ -203,18 +204,18 @@ icon = SubResource("AtlasTexture_v6sye")
 [node name="MenuTabs" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes"]
 layout_mode = 2
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="GraphContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tabs_visible = false
 metadata/_tab_index = 0
 
 [node name="Settings" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
@@ -224,9 +225,10 @@ metadata/_tab_index = 1
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs/Settings"]
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 
 [node name="OBS" type="PanelContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs/Settings/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -238,6 +240,20 @@ theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
 [node name="OBS" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs/Settings/TabContainer/OBS/MarginContainer" instance=ExtResource("3_pfph6")]
+layout_mode = 2
+
+[node name="Twitch" type="PanelContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs/Settings/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs/Settings/TabContainer/Twitch"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Twitch" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs/Settings/TabContainer/Twitch/MarginContainer" instance=ExtResource("4_o648v")]
 layout_mode = 2
 
 [node name="HWindow" parent="." instance=ExtResource("4_eihrd")]

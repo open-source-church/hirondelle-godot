@@ -1,0 +1,150 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcvur7e3q0vkc"]
+
+[ext_resource type="Script" path="res://scenes/twitch_view.gd" id="1_hc5d4"]
+
+[node name="Twitch" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hc5d4")
+metadata/_tab_index = 0
+
+[node name="LoginContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="LoginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnConnect" type="Button" parent="LoginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Connect"
+
+[node name="Control" type="Control" parent="LoginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeviceCodePannel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="DeviceCodePannel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeviceCodePannel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeviceCodePannel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Login code requested"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="DeviceCodePannel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Visit the following url and enter code"
+horizontal_alignment = 1
+
+[node name="TxtRequestCodeURL" type="LineEdit" parent="DeviceCodePannel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+editable = false
+
+[node name="LblCode" type="Label" parent="DeviceCodePannel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(6.06447e-06, 0.922831, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "141414"
+horizontal_alignment = 1
+
+[node name="BtnOpenBrowserForCode" type="Button" parent="DeviceCodePannel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Open browser"
+
+[node name="AccessTokenContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="AccessTokenContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AccessTokenContainer/MarginContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="AccessTokenContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Access:"
+
+[node name="TxtAccessToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="Label2" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Refresh:"
+
+[node name="TxtRefreshToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="Label3" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Expire: "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="TxtExpireToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="LblValidToken" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "valid"
+
+[node name="Label4" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Scopes: "
+
+[node name="TxtScopesToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="BtnRefreshToken" type="Button" parent="AccessTokenContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "RefreshToken"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
