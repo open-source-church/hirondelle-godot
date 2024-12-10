@@ -3,7 +3,7 @@ extends HBaseNode
 static var _title = "Image"
 static var _type = "window/image"
 static var _category = "Window"
-static var _icon = ""
+static var _icon = "image"
 
 var ID : int
 var preview : TextureRect

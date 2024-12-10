@@ -52,6 +52,10 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 
 func _ready() -> void:
 	update_view()
+	reset_value()
+
+## Set [member value] to [member default].
+func reset_value() -> void:
 	if default != null: value = default
 
 var side := E.Side.INPUT:

@@ -44,6 +44,8 @@ func _http_request_completed(result: int, response_code: int, headers: PackedStr
 		push_error("Error somewhere.")
 	
 	var ctype = get_header_prop(headers, "content-type")
+	#print(headers)
+	print("Downloaded content-type: ", ctype)
 	
 	if ctype == "application/json":
 		var r = JSON.parse_string(body.get_string_from_utf8())
@@ -73,3 +75,9 @@ func _http_request_completed(result: int, response_code: int, headers: PackedStr
 			push_error("Couldn't load the image.")
 		content_downloaded.emit(image)
 		content = image
+	
+	if ctype in ["audio/mpeg"]:
+		var stream := AudioStreamMP3.new()
+		stream.data = body
+		content_downloaded.emit(stream)
+		content = stream

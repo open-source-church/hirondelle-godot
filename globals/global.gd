@@ -28,7 +28,8 @@ const NODES = [
 	preload("res://scenes/nodes/OBS/node_obs_scene_item_rect.gd"),
 	## WINDOW
 	preload("res://scenes/nodes/window/node_window_image.gd"),
-	preload("res://scenes/nodes/window/node_window_progressbar.gd")
+	preload("res://scenes/nodes/window/node_window_progressbar.gd"),
+	preload("res://scenes/nodes/window/node_window_play_sound.gd"),
 ]
 
 func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, icon_width : int) -> Texture2D:
@@ -53,6 +54,9 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "time": p = Vector2i(2, 7)
 	if icon == "hourglass": p = Vector2i(3, 7)
 	if icon == "obs": p = Vector2i(4, 7)
+	if icon == "reset": p = Vector2i(4, 2)
+	if icon == "sound": p = Vector2i(2, 4)
+	if icon == "image": p = Vector2i(6, 7)
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 
 func get_node_color(node):
