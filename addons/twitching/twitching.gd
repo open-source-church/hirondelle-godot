@@ -10,10 +10,14 @@ var connected := false
 var auth : TwitchingAuth
 var eventsub : TwitchingEventSub
 
+var request : TwitchingRequest
+
 func _ready() -> void:
-	print("Twitching ready")
-	auth = TwitchingAuth.new()
+	auth = TwitchingAuth.new(self)
 	add_child(auth)
 	
-	eventsub = TwitchingEventSub.new()
+	eventsub = TwitchingEventSub.new(self)
 	add_child(eventsub)
+	
+	request = TwitchingRequest.new(self)
+	add_child(request)

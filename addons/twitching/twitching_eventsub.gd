@@ -9,12 +9,14 @@ var session_id : String
 
 const EVENTSUB_URL = "wss://eventsub.wss.twitch.tv/ws"
 
+func _init(_twitching: Twitching):
+	twitching = _twitching
+
 func _ready() -> void:
-	twitching = get_parent()
 	subscriber = TwitchingEventSubSubscriber.new()
 	add_child(subscriber)
 	
-	connect_websocket()
+	#connect_websocket()
 
 func connect_websocket() -> void:
 	print("Connecting websocket")

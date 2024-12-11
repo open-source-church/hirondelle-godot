@@ -34,7 +34,9 @@ func _ready() -> void:
 	btn_connect.pressed.connect(login)
 	btn_open_browser_for_code.pressed.connect(_open_browser_for_code_verification)
 	device_code_pannel.visible = false
-	# SUB
+	
+	var test = await twitch.request.GET("/users")
+	print("Response: ", test)
 
 func login() -> void:
 	print("Login")

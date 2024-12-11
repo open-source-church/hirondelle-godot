@@ -32,14 +32,15 @@ signal device_code_requested(response: TwitchingDeviceCodeResponse)
 signal access_tokens_received(access: String, refresh: String)
 signal tokens_changed
 
+func _init(_twitching: Twitching):
+	twitching = _twitching
+
 func _ready() -> void:
 	client = HTTPRequest.new()
 	client.request_completed.connect(_on_request_completed)
 	add_child(client)
 	
 	restore_tokens()
-	
-	twitching = owner
 
 func _process(delta: float) -> void:
 	if step == FlowStep.WAITING_FOR_TOKEN:
