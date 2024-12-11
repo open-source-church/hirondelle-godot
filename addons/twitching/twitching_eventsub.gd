@@ -9,14 +9,18 @@ var session_id : String
 
 const EVENTSUB_URL = "wss://eventsub.wss.twitch.tv/ws"
 
+# Settings
+var auto_connect := true
+
 func _init(_twitching: Twitching):
 	twitching = _twitching
 
 func _ready() -> void:
-	subscriber = TwitchingEventSubSubscriber.new()
+	subscriber = TwitchingEventSubSubscriber.new(twitching)
 	add_child(subscriber)
 	
-	#connect_websocket()
+	if auto_connect:
+		connect_websocket()
 
 func connect_websocket() -> void:
 	print("Connecting websocket")
@@ -33,8 +37,8 @@ func _process(delta):
 	if state == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count():
 			var msg = JSON.parse_string(socket.get_packet().get_string_from_utf8())
-			print("Packet: ", msg)
 			treat_twitch_message(msg)
+	
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
 		pass
@@ -51,13 +55,21 @@ func treat_twitch_message(msg : Dictionary):
 	if msg_type == "session_welcome":
 		session_id = msg.get("payload", {}).get("session", {}).get("id", "")
 		
-		var _list = await subscriber.list()
-		print(JSON.stringify(_list, ""))
-		#var id = await subscriber.subscribe("channel.chat.message", "1", {
-			#"broadcaster_user_id" : "499044140",
-			#"user_id": "499044140",
-		#})
-		#print("Subscription success? ", id)
-		#var r = await subscriber.unsubscribe("358908d6-1bbb-4f48-a1d2-64abaa1bd5b7")
-		#print("Unsubscription success? ", r)
-		#subscriber.unsubscribe_all()
+		create_subscriptions()
+	
+	elif msg_type == "session_keepalive":
+		# Everything alright
+		pass
+	
+	else:
+		print("[EventSub] Websocket message:", msg)
+
+func create_subscriptions():
+	# Unsubscribe all, because past subscriptions are still in memory
+	await subscriber.unsubscribe_all()
+	# Channel read message
+	await subscriber.subscribe("channel.chat.message", "1", {
+		"broadcaster_user_id" : "499044140",
+		"user_id": "499044140",
+	})
+	

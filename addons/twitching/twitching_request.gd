@@ -31,10 +31,14 @@ static func request(twitching : Twitching, url: String,
 	# Removes first "/" if provided
 	if url and url[0] == "/": url = url.substr(1)
 	var _url = URL_MASK % url
-	if request_obj:
+	# Encodes parameter if method is GET
+	if request_obj and method == HTTPClient.METHOD_GET:
 		_url += "?%s" % http.query_string_from_dict(request_obj)
+		request_obj = {}
 	
-	http.request(method, _url, twitching.auth.get_headers())
+	var body : String = JSON.stringify(request_obj) if request_obj else ""
+	
+	http.request(method, _url, twitching.auth.get_headers(), body)
 	
 	while http.get_status() == HTTPClient.STATUS_REQUESTING:
 		# Keep polling for as long as the request is being processed.
@@ -64,6 +68,7 @@ static func request(twitching : Twitching, url: String,
 				rb = rb + chunk # Append to read buffer.
 
 		var text = rb.get_string_from_utf8()
-		_response_obj = JSON.parse_string(text)
-		
+		if text:
+			_response_obj = JSON.parse_string(text)
+	
 	return TwitchingHTTPResponse.new(_response_code, _headers, _response_obj)

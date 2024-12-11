@@ -5,24 +5,19 @@ class_name TwitchingEventSubSubscriber
 # Get user id: https://www.streamweasels.com/tools/convert-twitch-username-%20to-user-id/
 # Twitch API reference: https://dev.twitch.tv/docs/api/reference/
 
-var eventsub : TwitchingEventSub
+var twitching : Twitching
 
 var client : HTTPRequest
 var logging := true
 
-const EVENTSUB_URL = "https://api.twitch.tv/helix/eventsub/subscriptions"
+const EVENTSUB_URL = "eventsub/subscriptions"
 
-signal subscription_completed
-
-var subscription_success : bool
-var subscription_id : String
-var subscription_list := []
+func _init(_twitching: Twitching):
+	twitching = _twitching
 
 func _ready() -> void:
-	eventsub = get_parent()
 	client = HTTPRequest.new()
 	add_child(client)
-	client.request_completed.connect(_on_request_completed)
 
 ## Creates and EventSub subscription. Cf. https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription
 ## Subscription types: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types
@@ -35,25 +30,37 @@ func subscribe(_name : String, _version := "1", _condition := {}) -> String:
 		"condition": _condition,
 		"transport": {
 			"method": "websocket",
-			"session_id": eventsub.session_id
+			"session_id": twitching.eventsub.session_id
 		}
 	}
-	client.request(EVENTSUB_URL, eventsub.twitching.auth.get_headers(), HTTPClient.METHOD_POST, JSON.stringify(request))
-	await subscription_completed
-	return subscription_id
+	var r = await twitching.request.POST(EVENTSUB_URL, request)
+	if r.response_code == 202:
+		return r.response.data[0].id
+	else:
+		_log("Subscribe error:")
+		_log(r)
+		return ""
 
 func unsubscribe(id : String) -> bool:
 	var request = {
 		"id": id,
 	}
-	client.request(EVENTSUB_URL, eventsub.twitching.auth.get_headers(), HTTPClient.METHOD_DELETE, JSON.stringify(request))
-	await subscription_completed
-	return subscription_success
+	var r = await twitching.request.DELETE(EVENTSUB_URL, request)
+	if r.response_code == 204:
+		return true
+	else:
+		_log("Unsubscribe error:")
+		_log(r)
+		return false
 
 func list() -> Array:
-	client.request(EVENTSUB_URL, eventsub.twitching.auth.get_headers())
-	await subscription_completed
-	return subscription_list
+	var r = await twitching.request.GET(EVENTSUB_URL)
+	if r.response_code == 200:
+		return r.response.data
+	else:
+		_log("List error:")
+		_log(r)
+		return []
 	
 func unsubscribe_all():
 	var _list = await list()
@@ -61,36 +68,6 @@ func unsubscribe_all():
 		_log(" * Unsubscribing: %s" % c.id)
 		await unsubscribe(c.id)
 	_log("Done")
-
-func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	if not result == HTTPRequest.RESULT_SUCCESS:
-		return
-	
-	var response
-	if body: response = JSON.parse_string(body.get_string_from_utf8())
-	
-	_log(response_code)
-	_log(response)
-	
-	# Subscription successful
-	if response_code == 202:
-		subscription_success = true
-		subscription_id = response.get("data", []).front().get("id", "")
-		print("Subscription id: ", subscription_id)
-	# Unsubscription successful
-	elif response_code == 204:
-		subscription_success = true
-	# List successful
-	elif response_code == 200:
-		subscription_list = response.data
-	else:
-		_log(response_code)
-		_log(response)
-		subscription_success = false
-		subscription_id = ""
-		subscription_list = []
-	
-	subscription_completed.emit()
 
 func _log(msg):
 	if not logging: return
