@@ -1,0 +1,368 @@
+[gd_scene load_steps=10 format=3 uid="uid://bkb1u75fsgdj5"]
+
+[ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="1_njuuc"]
+[ext_resource type="Script" path="res://scenes/twitch/rewards_container.gd" id="1_vmojy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6puv"]
+atlas = ExtResource("1_njuuc")
+region = Rect2(768, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v1g0h"]
+atlas = ExtResource("1_njuuc")
+region = Rect2(256, 128, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x1kxo"]
+load_path = "res://.godot/imported/vector_whiteIcons.svg-fa4c64466445416748be9807d00a7e2b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cvrg"]
+atlas = SubResource("CompressedTexture2D_x1kxo")
+region = Rect2(512, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jd0rs"]
+atlas = SubResource("CompressedTexture2D_x1kxo")
+region = Rect2(512, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1i1d"]
+atlas = ExtResource("1_njuuc")
+region = Rect2(256, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eo17w"]
+atlas = ExtResource("1_njuuc")
+region = Rect2(320, 128, 64, 64)
+
+[node name="Rewards" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vmojy")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="RewardsContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ToggleButton" type="Button" parent="MarginContainer/RewardsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ButtonFlat"
+theme_override_font_sizes/font_size = 24
+toggle_mode = true
+text = "Rewards"
+icon = SubResource("AtlasTexture_r6puv")
+flat = true
+alignment = 0
+
+[node name="Container" type="HBoxContainer" parent="MarginContainer/RewardsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LblUnavailable" type="Label" parent="MarginContainer/RewardsContainer/Container"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "You must have partner or affiliate status to manage rewards."
+
+[node name="ListContainer" type="VBoxContainer" parent="MarginContainer/RewardsContainer/Container"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LstRewards" type="ItemList" parent="MarginContainer/RewardsContainer/Container/ListContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"ItemListLight"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/ListContainer"]
+layout_mode = 2
+
+[node name="BtnRefresh" type="Button" parent="MarginContainer/RewardsContainer/Container/ListContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+icon = SubResource("AtlasTexture_v1g0h")
+
+[node name="BtnAddReward" type="Button" parent="MarginContainer/RewardsContainer/Container/ListContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+icon = SubResource("AtlasTexture_8cvrg")
+icon_alignment = 1
+
+[node name="BtnRemoveReward" type="Button" parent="MarginContainer/RewardsContainer/Container/ListContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+icon = SubResource("AtlasTexture_jd0rs")
+flat = true
+
+[node name="RewardContainer" type="MarginContainer" parent="MarginContainer/RewardsContainer/Container"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="GridContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 2
+
+[node name="Label" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "The custom reward’s title. The title may contain a maximum of 45 characters and it must be unique amongst all of the broadcaster’s custom rewards."
+mouse_filter = 1
+text = "Title"
+horizontal_alignment = 2
+
+[node name="TxtTitle" type="LineEdit" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The custom reward’s title. The title may contain a maximum of 45 characters and it must be unique amongst all of the broadcaster’s custom rewards."
+
+[node name="Label2" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "The cost of the reward, in Channel Points. The minimum is 1 point."
+mouse_filter = 1
+text = "Cost"
+horizontal_alignment = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="SpnCost" type="SpinBox" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="Control" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+tooltip_text = "A Boolean value that determines whether the reward is enabled. Viewers see only enabled rewards."
+mouse_filter = 1
+text = "Enabled"
+horizontal_alignment = 2
+
+[node name="BtnEnabled" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="Control2" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label4" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+tooltip_text = "The background color to use for the reward. "
+mouse_filter = 1
+text = "Color"
+horizontal_alignment = 2
+
+[node name="BtnColor" type="ColorPickerButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Color"
+
+[node name="Control3" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="LabelSettings" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.481789, 0.481789, 0.481789, 1)
+text = "Optional settings"
+
+[node name="Label7" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Viewers can’t redeem paused rewards."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.800491, 0.800491, 0.800491, 1)
+text = "Paused"
+horizontal_alignment = 2
+
+[node name="BtnIsPaused" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="Label5" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "A Boolean value that determines whether the user needs to enter information when redeeming the reward."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.800491, 0.800491, 0.800491, 1)
+text = "User input"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnUserInput" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="TxtUserInput" type="LineEdit" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Prompt"
+
+[node name="Label6" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "The maximum number of redemptions allowed per live stream. "
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.800491, 0.800491, 0.800491, 1)
+text = "Max per stream"
+horizontal_alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnMaxPerStream" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="SpnMaxPerStream" type="SpinBox" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="Control" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label7" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "The maximum number of redemptions allowed per user per stream. "
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.800491, 0.800491, 0.800491, 1)
+text = "Max per user per stream"
+horizontal_alignment = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnMaxPerUserPerStream" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="SpnMaxPerUserPerStream" type="SpinBox" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="Label8" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "The cooldown period, in seconds. The minimum value is 1; however, the minimum value is 60 for it to be shown in the Twitch UX."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.800491, 0.800491, 0.800491, 1)
+text = "Global cooldown"
+horizontal_alignment = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnGlobalCooldown" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="SpnGlobalCooldown" type="SpinBox" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+value = 60.0
+allow_greater = true
+
+[node name="Label9" type="Label" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "A Boolean value that determines whether redemptions should be set to FULFILLED status immediately when a reward is redeemed. If false, status is set to UNFULFILLED and follows the normal request queue process. The default is false."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.800491, 0.800491, 0.800491, 1)
+text = "Skip request queue"
+horizontal_alignment = 2
+
+[node name="BtnSkipRequestQueue" type="CheckButton" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+flat = true
+
+[node name="Control3" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Control4" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control5" type="Control" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="BtnReset" type="Button" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Reset"
+icon = SubResource("AtlasTexture_r1i1d")
+flat = true
+
+[node name="BtnSave" type="Button" parent="MarginContainer/RewardsContainer/Container/RewardContainer/ScrollContainer/VBoxContainer2/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+icon = SubResource("AtlasTexture_eo17w")

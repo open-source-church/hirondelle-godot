@@ -57,6 +57,8 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "reset": p = Vector2i(4, 2)
 	if icon == "sound": p = Vector2i(2, 4)
 	if icon == "image": p = Vector2i(6, 7)
+	if icon == "check": p = Vector2i(2, 2)
+	if icon == "cross-no": p = Vector2i(3, 2)
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 
 func get_node_color(node):

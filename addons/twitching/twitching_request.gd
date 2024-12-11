@@ -18,6 +18,8 @@ func POST(url: String, request_obj: Dictionary = {}) -> TwitchingHTTPResponse:
 	return await request(twitching, url, HTTPClient.METHOD_POST, request_obj)
 func DELETE(url: String, request_obj: Dictionary = {}) -> TwitchingHTTPResponse:
 	return await request(twitching, url, HTTPClient.METHOD_DELETE, request_obj)
+func PATCH(url: String, request_obj: Dictionary = {}) -> TwitchingHTTPResponse:
+	return await request(twitching, url, HTTPClient.METHOD_PATCH, request_obj)
 
 static func request(twitching : Twitching, url: String, 
 			method: HTTPClient.Method = HTTPClient.METHOD_GET, request_obj: Dictionary = {}) -> TwitchingHTTPResponse:

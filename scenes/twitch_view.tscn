@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcvur7e3q0vkc"]
+[gd_scene load_steps=6 format=3 uid="uid://dcvur7e3q0vkc"]
 
 [ext_resource type="Script" path="res://scenes/twitch_view.gd" id="1_hc5d4"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="2_op73w"]
+[ext_resource type="Script" path="res://addons/twitching/twitching.gd" id="2_xje5k"]
+[ext_resource type="PackedScene" uid="uid://bkb1u75fsgdj5" path="res://scenes/twitch/rewards_container.tscn" id="3_j6cwp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_scjle"]
 atlas = ExtResource("2_op73w")
@@ -15,6 +17,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hc5d4")
 metadata/_tab_index = 0
+
+[node name="Twitching" type="Node" parent="."]
+script = ExtResource("2_xje5k")
 
 [node name="LoginContainer" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
@@ -196,5 +201,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "RefreshToken"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="RewardsContainer" parent="." node_paths=PackedStringArray("twitch") instance=ExtResource("3_j6cwp")]
+unique_name_in_owner = true
 layout_mode = 2
+twitch = NodePath("../Twitching")

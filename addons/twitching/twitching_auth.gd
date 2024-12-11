@@ -31,6 +31,9 @@ var token_valid: bool:
 
 var user: TwitchingUser
 
+var logged : bool:
+	get(): return user != null
+
 signal device_code_requested(response: TwitchingDeviceCodeResponse)
 signal access_tokens_received(access: String, refresh: String)
 signal tokens_changed
@@ -59,7 +62,9 @@ func _process(delta: float) -> void:
 			_last_poll = Time.get_ticks_msec()
 			_get_access_token_request()
 
-func request_access_tokens() -> void:
+func request_access_tokens(scopes : Array[TwitchingScopes.Scope] = []) -> void:
+	if scopes:
+		requested_scopes = scopes
 	# Only strategy implemented
 	DCF_authorize()
 

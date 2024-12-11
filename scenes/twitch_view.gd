@@ -25,13 +25,17 @@ extends VBoxContainer
 @onready var btn_show_tokens: Button = %BtnShowTokens
 @onready var access_token_container: PanelContainer = %AccessTokenContainer
 @onready var texture_user: TextureRect = %TextureUser
+@onready var rewards_container: PanelContainer = %RewardsContainer
 
-var twitch : Twitching
+@onready var twitch: Twitching = $Twitching
 var connected := false
 
+var scopes : Array[TwitchingScopes.Scope] = [
+	TwitchingScopes.USER_READ_CHAT, TwitchingScopes.USER_WRITE_CHAT,
+	TwitchingScopes.CHANNEL_READ_REDEMPTIONS, TwitchingScopes.CHANNEL_MANAGE_REDEMPTIONS
+	]
+
 func _ready() -> void:
-	twitch = Twitching.new()
-	add_child(twitch)
 	twitch.auth.device_code_requested.connect(_on_device_code_requested)
 	twitch.auth.tokens_changed.connect(device_code_pannel.hide)
 	twitch.auth.tokens_changed.connect(_on_tokens_changed)
@@ -50,8 +54,8 @@ func _ready() -> void:
 	#print("Response: ", test)
 
 func login() -> void:
-	print("Login")
-	twitch.auth.request_access_tokens()
+	print("Login with %d scopes" % scopes.size())
+	twitch.auth.request_access_tokens(scopes)
 	
 func _process(_delta: float) -> void:
 	pass
@@ -76,8 +80,10 @@ func _on_user_changed() -> void:
 	if twitch.auth.user:
 		logged_container.visible = true
 		login_container.visible = false
+		rewards_container.visible = true
 		lbl_user_name.text = twitch.auth.user.login
 		texture_user.texture = twitch.auth.user.profile_image_texture
 	else:
 		logged_container.visible = false
 		login_container.visible = true
+		rewards_container.visible = false
