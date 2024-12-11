@@ -1,6 +1,7 @@
 extends VBoxContainer
 
-# Connection buttons
+# Login
+@onready var login_container: HBoxContainer = %LoginContainer
 @onready var btn_connect: Button = %BtnConnect
 
 # Device Code stuff
@@ -17,6 +18,14 @@ extends VBoxContainer
 @onready var btn_refresh_token: Button = %BtnRefreshToken
 @onready var lbl_valid_token: Label = %LblValidToken
 
+# Logged
+@onready var logged_container: HBoxContainer = %LoggedContainer
+@onready var lbl_user_name: Label = %LblUserName
+@onready var btn_disconnect: Button = %BtnDisconnect
+@onready var btn_show_tokens: Button = %BtnShowTokens
+@onready var access_token_container: PanelContainer = %AccessTokenContainer
+@onready var texture_user: TextureRect = %TextureUser
+
 var twitch : Twitching
 var connected := false
 
@@ -26,21 +35,23 @@ func _ready() -> void:
 	twitch.auth.device_code_requested.connect(_on_device_code_requested)
 	twitch.auth.tokens_changed.connect(device_code_pannel.hide)
 	twitch.auth.tokens_changed.connect(_on_tokens_changed)
+	twitch.auth.user_changed.connect(_on_user_changed)
 	_on_tokens_changed()
-	
-	btn_refresh_token.pressed.connect(twitch.auth.use_refresh_token)
 	
 	# UI connections
 	btn_connect.pressed.connect(login)
 	btn_open_browser_for_code.pressed.connect(_open_browser_for_code_verification)
 	device_code_pannel.visible = false
-	
-	var test = await twitch.request.GET("/users")
-	print("Response: ", test)
+	btn_show_tokens.toggled.connect(access_token_container.set_visible)
+	access_token_container.visible = false
+	btn_refresh_token.pressed.connect(twitch.auth.use_refresh_token)
+	btn_disconnect.pressed.connect(twitch.logout)
+	#var test = await twitch.request.GET("/users")
+	#print("Response: ", test)
 
 func login() -> void:
 	print("Login")
-	twitch.auth.get_access_tokens()
+	twitch.auth.request_access_tokens()
 	
 func _process(_delta: float) -> void:
 	pass
@@ -61,12 +72,12 @@ func _on_tokens_changed() -> void:
 	lbl_valid_token.text = "valid" if twitch.auth.token_valid else "invalid"
 	lbl_valid_token.add_theme_color_override("font_color", Color.GREEN if twitch.auth.token_valid else Color.RED)
 
-func _on_event(type: String, data: Dictionary):
-	print("NEW EVENT: ", type)
-	print(data)
-	print("\n")
-
-func _on_chat_message(from_user: String, message: String, tags):
-	print("NEW CHAT MESSAGE from %s: %s" % [from_user, message])
-	print("Tags: ", tags)
-	print("\n")
+func _on_user_changed() -> void:
+	if twitch.auth.user:
+		logged_container.visible = true
+		login_container.visible = false
+		lbl_user_name.text = twitch.auth.user.login
+		texture_user.texture = twitch.auth.user.profile_image_texture
+	else:
+		logged_container.visible = false
+		login_container.visible = true

@@ -10,7 +10,7 @@ var session_id : String
 const EVENTSUB_URL = "wss://eventsub.wss.twitch.tv/ws"
 
 # Settings
-var auto_connect := true
+var auto_connect := false
 
 func _init(_twitching: Twitching):
 	twitching = _twitching

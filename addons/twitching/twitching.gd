@@ -2,7 +2,6 @@ extends Node
 class_name Twitching
 ## A Godot library for [limited] Twitch functionnalities
 
-
 ## Application client identification, from https://dev.twitch.tv/console/apps
 const CLIENT_ID = "1rhr59814cpxizvresldeljmxxx4tn"
 
@@ -21,3 +20,7 @@ func _ready() -> void:
 	
 	request = TwitchingRequest.new(self)
 	add_child(request)
+
+func logout() -> void:
+	auth.logout()
+	eventsub.disconnect_websocket()

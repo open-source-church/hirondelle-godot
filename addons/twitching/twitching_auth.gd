@@ -4,6 +4,7 @@ class_name TwitchingAuth
 
 var client : HTTPRequest
 var twitching : Twitching
+var downloader: HDownloader
 
 enum FlowStep { INITIALIZATION, WAITING_FOR_TOKEN, DONE, REFRESH }
 var step : FlowStep
@@ -28,9 +29,13 @@ var secret_storage_path := "user://twitch_secrets"
 var token_valid: bool:
 	get(): return Time.get_unix_time_from_system() < expires_at
 
+var user: TwitchingUser
+
 signal device_code_requested(response: TwitchingDeviceCodeResponse)
 signal access_tokens_received(access: String, refresh: String)
 signal tokens_changed
+signal user_changed
+signal token_refreshed (success: bool)
 
 func _init(_twitching: Twitching):
 	twitching = _twitching
@@ -40,7 +45,12 @@ func _ready() -> void:
 	client.request_completed.connect(_on_request_completed)
 	add_child(client)
 	
-	restore_tokens()
+	downloader = HDownloader.new()
+	add_child(downloader)
+	
+	tokens_changed.connect(update_user)
+	
+	restore_tokens.call_deferred()
 
 func _process(delta: float) -> void:
 	if step == FlowStep.WAITING_FOR_TOKEN:
@@ -49,7 +59,7 @@ func _process(delta: float) -> void:
 			_last_poll = Time.get_ticks_msec()
 			_get_access_token_request()
 
-func get_access_tokens() -> void:
+func request_access_tokens() -> void:
 	# Only strategy implemented
 	DCF_authorize()
 
@@ -72,7 +82,8 @@ func _get_access_token_request():
 	]
 	client.request(url, [], HTTPClient.METHOD_POST)
 
-func use_refresh_token():
+## Use refresh token to get new access token. Returns true if succeeds.
+func use_refresh_token() -> bool:
 	var url = "https://id.twitch.tv/oauth2/token?client_id=%s&grant_type=%s&refresh_token=%s" % [
 		twitching.CLIENT_ID,
 		"refresh_token",
@@ -80,6 +91,7 @@ func use_refresh_token():
 	]
 	step = FlowStep.REFRESH
 	client.request(url, [], HTTPClient.METHOD_POST)
+	return await token_refreshed
 
 func format_scopes(scopes: Array):
 	return " ".join(scopes.map(func (s): return s.value)).uri_encode()
@@ -113,10 +125,12 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 		if response_code == 400:
 			# Invalid refresh token
 			print("[TwitchingAuth] Error: invalid refresh token :(")
+			token_refreshed.emit(false)
 		
 		if response_code == 200:
 			get_tokens_from_response(response)
 			step = FlowStep.DONE
+			token_refreshed.emit(true)
 
 func get_tokens_from_response(response : Dictionary) -> void:
 	access_token = response.access_token
@@ -153,4 +167,20 @@ func restore_tokens():
 	refresh_token = secret_file.get_value("auth", "refresh_token", "")
 	scopes = secret_file.get_value("auth", "scopes", [])
 	expires_at = secret_file.get_value("auth", "expires_at", 0)
+	tokens_changed.emit()
+
+func update_user():
+	var user_data = await twitching.request.GET("/users")
+	if user_data.response_code == 200:
+		user = TwitchingUser.new(user_data.response.data.front())
+	else:
+		user = null
+	user_changed.emit()
+
+func logout():
+	access_token = ""
+	refresh_token = ""
+	expires_at = 0
+	scopes = []
+	store_tokens()
 	tokens_changed.emit()
