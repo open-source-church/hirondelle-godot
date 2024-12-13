@@ -187,6 +187,10 @@ func _on_value_changed():
 func update_view():
 	if not is_node_ready(): return
 	
+	var _value
+	if custom_component:
+		_value = value
+	
 	# Clear nodes
 	for c in get_children():
 		c.queue_free()
@@ -221,7 +225,9 @@ func update_view():
 	
 	# FIXME: why was this needed ?
 	#if _last_value:
-		#value = _last_value
+	#	value = _last_value
+	if _value:
+		value = _value
 	
 	# Right Margin
 	if side in [E.Side.INPUT, E.Side.BOTH]:

@@ -71,6 +71,54 @@ class Connection:
 	func show():
 		visible = true
 		connect_in_graph()
+	
+	func animate():
+		var n = 3 if from_port.type == E.CONNECTION_TYPES.FLOW else 2
+		for i in range(n):
+			do_animation()
+			await graph.get_tree().create_timer(0.1).timeout
+	
+	func do_animation() -> void:
+		var flow = from_port.type == E.CONNECTION_TYPES.FLOW
+		var duration = 0.5 if flow else 0.3
+		var size = 16 if flow else 10
+		var _c = to_godot()
+		var from = from_node.position_offset + from_node.get_output_port_position(_c.from_port)
+		var to = to_node.position_offset + to_node.get_input_port_position(_c.to_port)
+		var points := graph.get_connection_line(from, to)
+		var _size = size * graph.zoom
+		var img := TextureRect.new()
+		var _atlas_x = 3 if flow else 0
+		img.texture = G.get_icon_from_atlas(G.PORTS_TEXTURE, _atlas_x, 0, 32, _size)
+		img.size = Vector2.ONE * _size
+		img.position -= Vector2(_size/2.0, _size/2.0)
+		img.pivot_offset = Vector2(_size/2.0, _size/2.0)
+		img.modulate = E.connection_colors[from_port.type]
+		var modulate_to = E.connection_colors[to_port.type]
+		var path = Path2D.new()
+		img.z_index = 120
+		path.curve = Curve2D.new()
+		for p in points:
+			path.curve.add_point(graph.local_to_graph(p))
+		var follow = PathFollow2D.new()
+		path.add_child(follow)
+		follow.add_child(img)
+		graph.add_child(path)
+		var tween1 = graph.create_tween()
+		var tween2 = graph.create_tween()
+		tween1.tween_property(follow, "progress_ratio", 1.0, duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tween1.set_parallel(true).tween_property(img, "modulate", modulate_to, duration)
+		
+		#tween.set_parallel(true).tween_property(img, "scale", Vector2.ONE * 2, duration)
+		tween2.tween_property(path, "modulate", Color(1, 1, 1, 0.2), duration / 2.0).from(Color.WHITE)
+		tween2.tween_property(path, "modulate", Color.WHITE, duration / 2.0).from(Color(1, 1, 1, 0.2))
+		#tween2.tween_property(img, "scale", Vector2.ONE * 0.8, duration / 2).from(Vector2.ONE * 1.0)
+		#tween2.tween_property(img, "scale", Vector2.ONE * 1.0, duration / 2).from(Vector2.ONE * 0.8)
+		await tween1.finished
+		path.queue_free()
+		
+		
+		
 
 ## The list of [member Connections]
 @onready var connections : Array[Connection] = []

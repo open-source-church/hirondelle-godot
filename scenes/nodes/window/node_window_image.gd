@@ -44,11 +44,16 @@ func run(routine:String):
 		PORTS.visible.value = false
 
 func download_image():
+	show_warning("Updating image...")
+	show_error("")
 	var r = await downloader.get_url(PORTS.url.value)
 	if r is Image:
+		show_warning("")
 		preview.texture = ImageTexture.create_from_image(r)
 		PORTS.source_size.value = r.get_size()
 	else:
+		show_warning("")
+		show_error("Invalid...", 5)
 		preview.texture = null
 	reset_size()
 

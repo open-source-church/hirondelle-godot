@@ -176,6 +176,7 @@ func _update(_last_changed := "") -> void:
 func propagate_value(_name : String) -> void:
 	for c in graph.connections.list_from_node_and_port(self, PORTS[_name]):
 		c.to_port.update_from_connections()
+		c.animate()
 
 ## Virtual. Called when input value changed.
 func update() -> void:
@@ -188,6 +189,7 @@ func run(_routine : String) -> void:
 func emit(routine : String) -> void:
 	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
 		c.to_node.run.call_deferred(c.to_port.name)
+		c.animate()
 
 ## Adapts get_output_port_slot to take into account invisible slots
 func get_output_port(idx : int) -> Node:
@@ -248,15 +250,15 @@ func get_port_type(side, index : int):
 	#warning.visible = warning.text != ""
 
 func show_success(msg: String, duration := 0) -> void:
-	show_message(success, create_tween(), msg, duration)
+	show_message(success, msg, duration)
 
 func show_warning(msg: String, duration := 0) -> void:
-	show_message(warning, create_tween(), msg, duration)
+	show_message(warning, msg, duration)
 
 func show_error(msg: String, duration := 0) -> void:
-	show_message(error, create_tween(), msg, duration)
+	show_message(error, msg, duration)
 
-func show_message(label:Label, tween:Tween, msg: String, duration := 0.0) -> void:
+func show_message(label:Label, msg: String, duration := 0.0) -> void:
 	# Nothing to do
 	if not label.text and not msg: return
 	# Actions
@@ -264,6 +266,7 @@ func show_message(label:Label, tween:Tween, msg: String, duration := 0.0) -> voi
 	var _temporary := msg and duration
 	const HIDE_DURATION = 0.3
 	# Operations
+	var tween = create_tween()
 	tween.set_parallel(false)
 	tween.tween_property(label, "visible", true, 0)
 	tween.tween_property(label, "modulate", Color.WHITE, 0)

@@ -175,6 +175,9 @@ func get_selected_nodes() -> Array[Node]:
 func get_mouse_position() -> Vector2:
 	return (get_local_mouse_position() + scroll_offset) / zoom
 
+func local_to_graph(pos: Vector2) -> Vector2:
+	return pos * zoom - scroll_offset
+
 ## Saves graph in user dir
 func save() -> Dictionary:
 	var to_save = {
