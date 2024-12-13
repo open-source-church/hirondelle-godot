@@ -32,7 +32,9 @@ var connected := false
 
 var scopes : Array[TwitchingScopes] = [
 	TwitchingScopes.USER_READ_CHAT, TwitchingScopes.USER_WRITE_CHAT,
-	TwitchingScopes.CHANNEL_READ_REDEMPTIONS, TwitchingScopes.CHANNEL_MANAGE_REDEMPTIONS
+	TwitchingScopes.CHANNEL_READ_REDEMPTIONS, TwitchingScopes.CHANNEL_MANAGE_REDEMPTIONS,
+	# Channel Follow
+	TwitchingScopes.MODERATOR_READ_FOLLOWERS
 	]
 
 func _ready() -> void:
@@ -40,6 +42,7 @@ func _ready() -> void:
 	twitch.auth.tokens_changed.connect(device_code_pannel.hide)
 	twitch.auth.tokens_changed.connect(_on_tokens_changed)
 	twitch.auth.user_changed.connect(_on_user_changed)
+	G.twitch = twitch
 	_on_tokens_changed()
 	_on_user_changed()
 	

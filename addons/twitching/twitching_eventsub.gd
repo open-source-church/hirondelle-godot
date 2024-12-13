@@ -5,7 +5,7 @@ class_name TwitchingEventSub
 var twitching : Twitching
 var socket := WebSocketPeer.new()
 var subscriber : TwitchingEventSubSubscriber
-var subs = TwitchingSubs
+var subs : TwitchingSubs
 var session_id : String
 
 const EVENTSUB_URL = "wss://eventsub.wss.twitch.tv/ws"

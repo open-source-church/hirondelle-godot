@@ -5,6 +5,7 @@ const PORTS_TEXTURE =  preload("res://themes/ports.svg")
 
 var window : HWindow
 var OBS : OBSWebSocket
+var twitch: Twitching
 
 const NODES = [
 	preload("res://scenes/nodes/core/node_test.gd"),
@@ -30,6 +31,9 @@ const NODES = [
 	preload("res://scenes/nodes/window/node_window_image.gd"),
 	preload("res://scenes/nodes/window/node_window_progressbar.gd"),
 	preload("res://scenes/nodes/window/node_window_play_sound.gd"),
+	## TWITCH
+	preload("res://scenes/nodes/twitch/twitch_channel_follow.gd"),
+	preload("res://scenes/nodes/twitch/twitch_channel_chat_message.gd")
 ]
 
 func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, icon_width : int) -> Texture2D:
