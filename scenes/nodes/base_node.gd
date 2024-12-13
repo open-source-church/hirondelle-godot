@@ -78,6 +78,7 @@ func _ready() -> void:
 
 ## Generate internal nodes and stuff based on COMPONENTS instructions.
 func setup():
+	print("Setting up: ", name)
 	clear_all_slots()
 	
 	for _name in PORTS:
@@ -176,6 +177,7 @@ func _update(_last_changed := "") -> void:
 func propagate_value(_name : String) -> void:
 	for c in graph.connections.list_from_node_and_port(self, PORTS[_name]):
 		c.to_port.update_from_connections()
+		c.to_port.animate_update()
 		c.animate()
 
 ## Virtual. Called when input value changed.
@@ -186,10 +188,16 @@ func update() -> void:
 func run(_routine : String) -> void:
 	pass
 
+func animate_run() -> void:
+	var tween = create_tween()
+	tween.tween_property(self, "self_modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
+
 func emit(routine : String) -> void:
+	print("Emit: ", routine)
 	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
 		c.to_node.run.call_deferred(c.to_port.name)
 		c.animate()
+		c.to_node.animate_run()
 
 ## Adapts get_output_port_slot to take into account invisible slots
 func get_output_port(idx : int) -> Node:

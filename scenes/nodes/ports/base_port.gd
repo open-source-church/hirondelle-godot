@@ -30,7 +30,9 @@ var graph : HGraphEdit
 var collapsed := false:
 	set(val):
 		collapsed = val
-		update_view()
+		main_vbox.visible = not collapsed
+		reset_size()
+		get_parent().reset_size()
 		await get_tree().process_frame
 		reset_size()
 		get_parent().reset_size()
@@ -124,6 +126,10 @@ func update_from_connections():
 	for c in get_connections_to():
 		value = c.from_port.value
 
+func animate_update() -> void:
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
+
 var options:Array : set=_set_options
 
 ## _options is either an Array of value, or an Array of Dictionary { "label": lbl, "value": val }
@@ -183,6 +189,7 @@ func get_option_button_val(btn : OptionButton):
 func _on_value_changed():
 	pass
 
+var main_vbox : HBoxContainer
 ## Creates the proper nodes for the port.
 func update_view():
 	if not is_node_ready(): return
@@ -213,6 +220,8 @@ func update_view():
 		lbl.tooltip_text = description
 		lbl.mouse_filter = Control.MOUSE_FILTER_PASS
 		vbox.add_child(lbl)
+	main_vbox = vbox
+	
 	# Custom component
 	custom_component = get_component(params)
 	vbox.add_child(custom_component)
