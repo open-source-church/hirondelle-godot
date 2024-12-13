@@ -10,6 +10,7 @@ func _init(_side : E.Side, opt : Dictionary = {}):
 func get_component(_params) -> Control:
 	line = LineEdit.new()
 	line.custom_minimum_size = Vector2(200, 0)
+	line.text_changed.connect(value_changed.emit.unbind(1))
 	return line
 
 func _get_value():

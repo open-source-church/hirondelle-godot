@@ -21,6 +21,8 @@ func get_component(_params) -> Control:
 	box.add_child(txt_x)
 	box.add_child(lbl)
 	box.add_child(txt_y)
+	txt_x.text_changed.connect(value_changed.emit.unbind(1))
+	txt_y.text_changed.connect(value_changed.emit.unbind(1))
 	return box
 
 func _get_value():
@@ -29,3 +31,6 @@ func _get_value():
 func _set_value(val):
 	txt_x.text = str(val.x)
 	txt_y.text = str(val.y)
+
+func type_cast(val):
+	return Vector2(float(val.x), float(val.y))

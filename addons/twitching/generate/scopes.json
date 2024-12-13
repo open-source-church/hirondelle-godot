@@ -1,0 +1,808 @@
+[
+  {
+    "name": "analytics:read:extensions",
+    "description": "View analytics data for the Twitch Extensions owned by the authenticated account.",
+    "api": [
+      "Get Extension Analytics"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "analytics:read:games",
+    "description": "View analytics data for the games owned by the authenticated account.",
+    "api": [
+      "Get Game Analytics"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "bits:read",
+    "description": "View Bits information for a channel.",
+    "api": [
+      "Get Bits Leaderboard"
+    ],
+    "eventsub": [
+      "Channel Cheer"
+    ]
+  },
+  {
+    "name": "channel:bot",
+    "description": "Joins your channel\u2019s chatroom as a bot user, and perform chat-related actions as that user.",
+    "api": [
+      "Send Chat Message"
+    ],
+    "eventsub": [
+      "Channel Chat Clear",
+      "Channel Chat Clear User Messages",
+      "Channel Chat Message",
+      "Channel Chat Message Delete",
+      "Channel Chat Notification",
+      "Channel Chat Settings Update"
+    ]
+  },
+  {
+    "name": "channel:manage:ads",
+    "description": "Manage ads schedule on a channel.",
+    "api": [
+      "Snooze Next Ad"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:ads",
+    "description": "Read the ads schedule and details on your channel.",
+    "api": [
+      "Get Ad Schedule"
+    ],
+    "eventsub": [
+      "Channel Ad Break Begin"
+    ]
+  },
+  {
+    "name": "channel:manage:broadcast",
+    "description": "Manage a channel\u2019s broadcast configuration, including updating channel configuration and managing stream markers and stream tags.",
+    "api": [
+      "Modify Channel Information",
+      "Create Stream Marker",
+      "Replace Stream Tags"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:charity",
+    "description": "Read charity campaign details and user donations on your channel.",
+    "api": [
+      "Get Charity Campaign",
+      "Get Charity Campaign Donations"
+    ],
+    "eventsub": [
+      "Charity Donation",
+      "Charity Campaign Start",
+      "Charity Campaign Progress",
+      "Charity Campaign Stop"
+    ]
+  },
+  {
+    "name": "channel:edit:commercial",
+    "description": "Run commercials on a channel.",
+    "api": [
+      "Start Commercial"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:editors",
+    "description": "View a list of users with the editor role for a channel.",
+    "api": [
+      "Get Channel Editors"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:manage:extensions",
+    "description": "Manage a channel\u2019s Extension configuration, including activating Extensions.",
+    "api": [
+      "Get User Active Extensions",
+      "Update User Extensions"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:goals",
+    "description": "View Creator Goals for a channel.",
+    "api": [
+      "Get Creator Goals"
+    ],
+    "eventsub": [
+      "Goal Begin",
+      "Goal Progress",
+      "Goal End"
+    ]
+  },
+  {
+    "name": "channel:read:guest_star",
+    "description": "Read Guest Star details for your channel.",
+    "api": [
+      "Get Channel Guest Star Settings",
+      "Get Guest Star Session",
+      "Get Guest Star Invites"
+    ],
+    "eventsub": [
+      "Channel Guest Star Session Begin",
+      "Channel Guest Star Session End",
+      "Channel Guest Star Guest Update",
+      "Channel Guest Star Settings Update"
+    ]
+  },
+  {
+    "name": "channel:manage:guest_star",
+    "description": "Manage Guest Star for your channel.",
+    "api": [
+      "Update Channel Guest Star Settings",
+      "Create Guest Star Session",
+      "End Guest Star Session",
+      "Send Guest Star Invite",
+      "Delete Guest Star Invite",
+      "Assign Guest Star Slot",
+      "Update Guest Star Slot",
+      "Delete Guest Star Slot",
+      "Update Guest Star Slot Settings"
+    ],
+    "eventsub": [
+      "Channel Guest Star Session Begin",
+      "Channel Guest Star Session End",
+      "Channel Guest Star Guest Update",
+      "Channel Guest Star Settings Update"
+    ]
+  },
+  {
+    "name": "channel:read:hype_train",
+    "description": "View Hype Train information for a channel.",
+    "api": [
+      "Get Hype Train Events"
+    ],
+    "eventsub": [
+      "Hype Train Begin",
+      "Hype Train Progress",
+      "Hype Train End"
+    ]
+  },
+  {
+    "name": "channel:manage:moderators",
+    "description": "Add or remove the moderator role from users in your channel.",
+    "api": [
+      "Add Channel Moderator",
+      "Remove Channel Moderator",
+      "Get Moderators"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:polls",
+    "description": "View a channel\u2019s polls.",
+    "api": [
+      "Get Polls"
+    ],
+    "eventsub": [
+      "Channel Poll Begin",
+      "Channel Poll Progress",
+      "Channel Poll End"
+    ]
+  },
+  {
+    "name": "channel:manage:polls",
+    "description": "Manage a channel\u2019s polls.",
+    "api": [
+      "Get Polls",
+      "Create Poll",
+      "End Poll"
+    ],
+    "eventsub": [
+      "Channel Poll Begin",
+      "Channel Poll Progress",
+      "Channel Poll End"
+    ]
+  },
+  {
+    "name": "channel:read:predictions",
+    "description": "View a channel\u2019s Channel Points Predictions.",
+    "api": [
+      "Get Channel Points Predictions"
+    ],
+    "eventsub": [
+      "Channel Prediction Begin",
+      "Channel Prediction Progress",
+      "Channel Prediction Lock",
+      "Channel Prediction End"
+    ]
+  },
+  {
+    "name": "channel:manage:predictions",
+    "description": "Manage of channel\u2019s Channel Points Predictions",
+    "api": [
+      "Get Channel Points Predictions",
+      "Create Channel Points Prediction",
+      "End Channel Points Prediction"
+    ],
+    "eventsub": [
+      "Channel Prediction Begin",
+      "Channel Prediction Progress",
+      "Channel Prediction Lock",
+      "Channel Prediction End"
+    ]
+  },
+  {
+    "name": "channel:manage:raids",
+    "description": "Manage a channel raiding another channel.",
+    "api": [
+      "Start a raid",
+      "Cancel a raid"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:redemptions",
+    "description": "View Channel Points custom rewards and their redemptions on a channel.",
+    "api": [
+      "Get Custom Reward",
+      "Get Custom Reward Redemption"
+    ],
+    "eventsub": [
+      "Channel Points Automatic Reward Redemption",
+      "Channel Points Custom Reward Add",
+      "Channel Points Custom Reward Update",
+      "Channel Points Custom Reward Remove",
+      "Channel Points Custom Reward Redemption Add",
+      "Channel Points Custom Reward Redemption Update"
+    ]
+  },
+  {
+    "name": "channel:manage:redemptions",
+    "description": "Manage Channel Points custom rewards and their redemptions on a channel.",
+    "api": [
+      "Get Custom Reward",
+      "Get Custom Reward Redemption",
+      "Create Custom Rewards",
+      "Delete Custom Reward",
+      "Update Custom Reward",
+      "Update Redemption Status"
+    ],
+    "eventsub": [
+      "Channel Points Automatic Reward Redemption",
+      "Channel Points Custom Reward Add",
+      "Channel Points Custom Reward Update",
+      "Channel Points Custom Reward Remove",
+      "Channel Points Custom Reward Redemption Add",
+      "Channel Points Custom Reward Redemption Update"
+    ]
+  },
+  {
+    "name": "channel:manage:schedule",
+    "description": "Manage a channel\u2019s stream schedule.",
+    "api": [
+      "Update Channel Stream Schedule",
+      "Create Channel Stream Schedule Segment",
+      "Update Channel Stream Schedule Segment",
+      "Delete Channel Stream Schedule Segment"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:stream_key",
+    "description": "View an authorized user\u2019s stream key.",
+    "api": [
+      "Get Stream Key"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:subscriptions",
+    "description": "View a list of all subscribers to a channel and check if a user is subscribed to a channel.",
+    "api": [
+      "Get Broadcaster Subscriptions"
+    ],
+    "eventsub": [
+      "Channel Subscribe",
+      "Channel Subscription End",
+      "Channel Subscription Gift",
+      "Channel Subscription Message"
+    ]
+  },
+  {
+    "name": "channel:manage:videos",
+    "description": "Manage a channel\u2019s videos, including deleting videos.",
+    "api": [
+      "Delete Videos"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "channel:read:vips",
+    "description": "Read the list of VIPs in your channel.",
+    "api": [
+      "Get VIPs"
+    ],
+    "eventsub": [
+      "Channel VIP Add",
+      "Channel VIP Remove"
+    ]
+  },
+  {
+    "name": "channel:manage:vips",
+    "description": "Add or remove the VIP role from users in your channel.",
+    "api": [
+      "Get VIPs",
+      "Add Channel VIP",
+      "Remove Channel VIP"
+    ],
+    "eventsub": [
+      "Channel VIP Add",
+      "Channel VIP Remove"
+    ]
+  },
+  {
+    "name": "clips:edit",
+    "description": "Manage Clips for a channel.",
+    "api": [
+      "Create Clip"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "moderation:read",
+    "description": "View a channel\u2019s moderation data including Moderators, Bans, Timeouts, and Automod settings.",
+    "api": [
+      "Check AutoMod Status",
+      "Get Banned Users",
+      "Get Moderators"
+    ],
+    "eventsub": [
+      "Channel Moderator Add",
+      "Channel Moderator Remove"
+    ]
+  },
+  {
+    "name": "moderator:manage:announcements",
+    "description": "Send announcements in channels where you have the moderator role.",
+    "api": [
+      "Send Chat Announcement"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "moderator:manage:automod",
+    "description": "Manage messages held for review by AutoMod in channels where you are a moderator.",
+    "api": [
+      "Manage Held AutoMod Messages"
+    ],
+    "eventsub": [
+      "AutoMod Message Hold",
+      "AutoMod Message Update",
+      "AutoMod Terms Update"
+    ]
+  },
+  {
+    "name": "moderator:read:automod_settings",
+    "description": "View a broadcaster\u2019s AutoMod settings.",
+    "api": [
+      "Get AutoMod Settings"
+    ],
+    "eventsub": [
+      "AutoMod Settings Update"
+    ]
+  },
+  {
+    "name": "moderator:manage:automod_settings",
+    "description": "Manage a broadcaster\u2019s AutoMod settings.",
+    "api": [
+      "Update AutoMod Settings"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "moderator:read:banned_users",
+    "description": "Read the list of bans or unbans in channels where you have the moderator role.",
+    "api": [],
+    "eventsub": [
+      "Channel Moderate",
+      "Channel Moderate v2"
+    ]
+  },
+  {
+    "name": "moderator:manage:banned_users",
+    "description": "Ban and unban users.",
+    "api": [
+      "Get Banned Users",
+      "Ban User",
+      "Unban User"
+    ],
+    "eventsub": [
+      "Channel Moderate",
+      "Channel Moderate v2"
+    ]
+  },
+  {
+    "name": "moderator:read:blocked_terms",
+    "description": "View a broadcaster\u2019s list of blocked terms.",
+    "api": [
+      "Get Blocked Terms"
+    ],
+    "eventsub": [
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:read:chat_messages",
+    "description": "Read deleted chat messages in channels where you have the moderator role.",
+    "api": [],
+    "eventsub": [
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:manage:blocked_terms",
+    "description": "Manage a broadcaster\u2019s list of blocked terms.",
+    "api": [
+      "Get Blocked Terms",
+      "Add Blocked Term",
+      "Remove Blocked Term"
+    ],
+    "eventsub": [
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:manage:chat_messages",
+    "description": "Delete chat messages in channels where you have the moderator role",
+    "api": [
+      "Delete Chat Messages"
+    ],
+    "eventsub": [
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:read:chat_settings",
+    "description": "View a broadcaster\u2019s chat room settings.",
+    "api": [
+      "Get Chat Settings"
+    ],
+    "eventsub": [
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:manage:chat_settings",
+    "description": "Manage a broadcaster\u2019s chat room settings.",
+    "api": [
+      "Update Chat Settings"
+    ],
+    "eventsub": [
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:read:chatters",
+    "description": "View the chatters in a broadcaster\u2019s chat room.",
+    "api": [
+      "Get Chatters"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "moderator:read:followers",
+    "description": "Read the followers of a broadcaster.",
+    "api": [
+      "Get Channel Followers"
+    ],
+    "eventsub": [
+      "Channel Follow"
+    ]
+  },
+  {
+    "name": "moderator:read:guest_star",
+    "description": "Read Guest Star details for channels where you are a Guest Star moderator.",
+    "api": [
+      "Get Channel Guest Star Settings",
+      "Get Guest Star Session",
+      "Get Guest Star Invites"
+    ],
+    "eventsub": [
+      "Channel Guest Star Session Begin",
+      "Channel Guest Star Session End",
+      "Channel Guest Star Guest Update",
+      "Channel Guest Star Settings Update"
+    ]
+  },
+  {
+    "name": "moderator:manage:guest_star",
+    "description": "Manage Guest Star for channels where you are a Guest Star moderator.",
+    "api": [
+      "Send Guest Star Invite",
+      "Delete Guest Star Invite",
+      "Assign Guest Star Slot",
+      "Update Guest Star Slot",
+      "Delete Guest Star Slot",
+      "Update Guest Star Slot Settings"
+    ],
+    "eventsub": [
+      "Channel Guest Star Session Begin",
+      "Channel Guest Star Session End",
+      "Channel Guest Star Guest Update",
+      "Channel Guest Star Settings Update"
+    ]
+  },
+  {
+    "name": "moderator:read:moderators",
+    "description": "Read the list of moderators in channels where you have the moderator role.",
+    "api": [],
+    "eventsub": [
+      "Channel Moderate",
+      "Channel Moderate v2"
+    ]
+  },
+  {
+    "name": "moderator:read:shield_mode",
+    "description": "View a broadcaster\u2019s Shield Mode status.",
+    "api": [
+      "Get Shield Mode Status"
+    ],
+    "eventsub": [
+      "Shield Mode Begin",
+      "Shield Mode End"
+    ]
+  },
+  {
+    "name": "moderator:manage:shield_mode",
+    "description": "Manage a broadcaster\u2019s Shield Mode status.",
+    "api": [
+      "Update Shield Mode Status"
+    ],
+    "eventsub": [
+      "Shield Mode Begin",
+      "Shield Mode End"
+    ]
+  },
+  {
+    "name": "moderator:read:shoutouts",
+    "description": "View a broadcaster\u2019s shoutouts.",
+    "api": [],
+    "eventsub": [
+      "Shoutout Create",
+      "Shoutout Received"
+    ]
+  },
+  {
+    "name": "moderator:manage:shoutouts",
+    "description": "Manage a broadcaster\u2019s shoutouts.",
+    "api": [
+      "Send a Shoutout"
+    ],
+    "eventsub": [
+      "Shoutout Create",
+      "Shoutout Received"
+    ]
+  },
+  {
+    "name": "moderator:read:suspicious_users",
+    "description": "Read chat messages from suspicious users and see users flagged as suspicious in channels where you have the moderator role.",
+    "api": [],
+    "eventsub": [
+      "Channel Suspicious User Message",
+      "Channel Suspicious User Update"
+    ]
+  },
+  {
+    "name": "moderator:read:unban_requests",
+    "description": "View a broadcaster\u2019s unban requests.",
+    "api": [
+      "Get Unban Requests"
+    ],
+    "eventsub": [
+      "Channel Unban Request Create",
+      "Channel Unban Request Resolve",
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:manage:unban_requests",
+    "description": "Manage a broadcaster\u2019s unban requests.",
+    "api": [
+      "Resolve Unban Requests"
+    ],
+    "eventsub": [
+      "Channel Unban Request Create",
+      "Channel Unban Request Resolve",
+      "Channel Moderate"
+    ]
+  },
+  {
+    "name": "moderator:read:vips",
+    "description": "Read the list of VIPs in channels where you have the moderator role.",
+    "api": [],
+    "eventsub": [
+      "Channel Moderate",
+      "Channel Moderate v2"
+    ]
+  },
+  {
+    "name": "moderator:read:warnings",
+    "description": "Read warnings in channels where you have the moderator role.",
+    "api": [],
+    "eventsub": [
+      "Channel Moderate v2",
+      "Channel Warning Acknowledge",
+      "Channel Warning Send"
+    ]
+  },
+  {
+    "name": "moderator:manage:warnings",
+    "description": "Warn users in channels where you have the moderator role.",
+    "api": [
+      "Warn Chat User"
+    ],
+    "eventsub": [
+      "Channel Moderate v2",
+      "Channel Warning Acknowledge",
+      "Channel Warning Send"
+    ]
+  },
+  {
+    "name": "user:bot",
+    "description": "Join a specified chat channel as your user and appear as a bot, and perform chat-related actions as your user.",
+    "api": [
+      "Send Chat Message"
+    ],
+    "eventsub": [
+      "Channel Chat Clear",
+      "Channel Chat Clear User Messages",
+      "Channel Chat Message",
+      "Channel Chat Message Delete",
+      "Channel Chat Notification",
+      "Channel Chat Settings Update",
+      "Channel Chat User Message Hold",
+      "Channel Chat User Message Update"
+    ]
+  },
+  {
+    "name": "user:edit",
+    "description": "Manage a user object.",
+    "api": [
+      "Update User"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:edit:broadcast",
+    "description": "View and edit a user\u2019s broadcasting configuration, including Extension configurations.",
+    "api": [
+      "Get User Extensions",
+      "Get User Active Extensions",
+      "Update User Extensions"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:blocked_users",
+    "description": "View the block list of a user.",
+    "api": [
+      "Get User Block List"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:manage:blocked_users",
+    "description": "Manage the block list of a user.",
+    "api": [
+      "Block User",
+      "Unblock User"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:broadcast",
+    "description": "View a user\u2019s broadcasting configuration, including Extension configurations.",
+    "api": [
+      "Get Stream Markers",
+      "Get User Extensions",
+      "Get User Active Extensions"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:chat",
+    "description": "Receive chatroom messages and informational notifications relating to a channel\u2019s chatroom.",
+    "api": [],
+    "eventsub": [
+      "Channel Chat Clear",
+      "Channel Chat Clear User Messages",
+      "Channel Chat Message",
+      "Channel Chat Message Delete",
+      "Channel Chat Notification",
+      "Channel Chat Settings Update",
+      "Channel Chat User Message Hold",
+      "Channel Chat User Message Update"
+    ]
+  },
+  {
+    "name": "user:manage:chat_color",
+    "description": "Update the color used for the user\u2019s name in chat.",
+    "api": [
+      "Update User Chat Color"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:email",
+    "description": "View a user\u2019s email address.",
+    "api": [
+      "Get Users",
+      "(optional)",
+      "Update User",
+      "(optional)"
+    ],
+    "eventsub": [
+      "User Update",
+      "(optional)"
+    ]
+  },
+  {
+    "name": "user:read:emotes",
+    "description": "View emotes available to a user",
+    "api": [
+      "Get User Emotes"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:follows",
+    "description": "View the list of channels a user follows.",
+    "api": [
+      "Get Followed Channels",
+      "Get Followed Streams"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:moderated_channels",
+    "description": "Read the list of channels you have moderator privileges in.",
+    "api": [
+      "Get Moderated Channels"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:subscriptions",
+    "description": "View if an authorized user is subscribed to specific channels.",
+    "api": [
+      "Check User Subscription"
+    ],
+    "eventsub": []
+  },
+  {
+    "name": "user:read:whispers",
+    "description": "Receive whispers sent to your user.",
+    "api": [],
+    "eventsub": [
+      "Whisper Received"
+    ]
+  },
+  {
+    "name": "user:manage:whispers",
+    "description": "Receive whispers sent to your user, and send whispers on your user\u2019s behalf.",
+    "api": [
+      "Send Whisper"
+    ],
+    "eventsub": [
+      "Whisper Received"
+    ]
+  },
+  {
+    "name": "user:write:chat",
+    "description": "Send chat messages to a chatroom.",
+    "api": [
+      "Send Chat Message"
+    ],
+    "eventsub": []
+  }
+]

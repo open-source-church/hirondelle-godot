@@ -14,7 +14,6 @@ func _init() -> void:
 		"next": HPortFlow.new(E.Side.INPUT),
 		"for_each": HPortFlow.new(E.Side.OUTPUT),
 		"arrays": HPortDict.new(E.Side.INPUT, {
-			"default": false,
 			"dictionary": true
 		}),
 		"index": HPortIntSlider.new(E.Side.INPUT),
@@ -39,10 +38,7 @@ func run(subroutine : String):
 			emit("for_each")
 
 func update() -> void:
-	if _last_port_changed == "operator":
-		pass
-		update_slots()
-	
+	print("Update array: ", _last_port_changed)
 	var merged := []
 	for arr in PORTS.arrays.value:
 		merged.append_array(PORTS.arrays.value[arr])

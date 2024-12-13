@@ -10,6 +10,7 @@ func _init(_side : E.Side, opt : Dictionary = {}):
 func get_component(_params) -> Control:
 	toggle = CheckButton.new()
 	toggle.flat = true
+	toggle.pressed.connect(value_changed.emit)
 	return toggle
 
 func _get_value():

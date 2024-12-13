@@ -20,7 +20,6 @@ func _init() -> void:
 	}
 
 func update() -> void:
-	error.text = ""
 	#COMPONENTS.x.visible = PORTS.operator.value == "Add"
 	if PORTS.operator.value == "Add":
 		PORTS.r.value = PORTS.a.value + PORTS.b.value
@@ -33,8 +32,10 @@ func update() -> void:
 	if PORTS.operator.value == "Divide":
 		if PORTS.b.value:
 			PORTS.r.value = PORTS.a.value / PORTS.b.value
+			show_error("")
 		else:
 			PORTS.r.value = 42
-			error.text = "Pas glop de diviser par 0."
+			show_error("Pas glop de diviser par 0.")
 	if PORTS.operator.value == "Power":
 		PORTS.r.value = PORTS.a.value ** PORTS.b.value
+	print()

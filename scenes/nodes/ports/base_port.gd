@@ -49,6 +49,7 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	hide_label = opt.get("hide_label", false)
 	is_dictionary = opt.get("dictionary", false)
 	custom_minimum_size = Vector2(0, 0)
+	value_changed.connect(_on_value_changed)
 
 func _ready() -> void:
 	update_view()
@@ -94,11 +95,24 @@ func _get_options_value() -> Variant:
 	return get_option_button_val(option_button)
 
 func _base_set_value(val):
+	val = type_cast(val)
+	var _last_val
+	if value is Dictionary or value is Array:
+		_last_val = value.duplicate()
+	else:
+		_last_val = value
+	
 	if not custom_component.is_node_ready(): return
 	if options: set_option_button_val(val, option_button)
-	else: _set_value(val)
+	if val != _last_val:
+		_set_value(val)
+		value_changed.emit()
 func _set_value(_val):
 	pass
+
+## Performs type conversion to ensure the value is in the proper type
+func type_cast(val):
+	return val
 
 ## Returns a list of all connections to that port
 func get_connections_to():
@@ -156,15 +170,15 @@ func set_option_button_val(val, btn : OptionButton):
 func get_option_button_val(btn : OptionButton):
 	return options[btn.selected].value
 
-var _last_value
-func _process(_delta: float) -> void:
-	if value != _last_value:
-		value_changed.emit()
-		_on_value_changed()
-		if value is Dictionary or value is Array:
-			_last_value = value.duplicate()
-		else:
-			_last_value = value
+#var _last_value
+#func _process(_delta: float) -> void:
+	#if value != _last_value:
+		#value_changed.emit()
+		#_on_value_changed()
+		#if value is Dictionary or value is Array:
+			#_last_value = value.duplicate()
+		#else:
+			#_last_value = value
 
 func _on_value_changed():
 	pass
@@ -185,7 +199,6 @@ func update_view():
 		left_margin.visible = not collapsed
 		add_child(left_margin)
 	
-	
 	var vbox = HBoxContainer.new()
 	add_child(vbox)
 	if not hide_label:
@@ -202,10 +215,13 @@ func update_view():
 	option_button = OptionButton.new()
 	option_button.visible = false
 	vbox.add_child(option_button)
+	option_button.item_selected.connect(value_changed.emit.unbind(1))
+	option_button.item_focused.connect(value_changed.emit.unbind(1))
 	vbox.visible = not collapsed
 	
-	if _last_value:
-		value = _last_value
+	# FIXME: why was this needed ?
+	#if _last_value:
+		#value = _last_value
 	
 	# Right Margin
 	if side in [E.Side.INPUT, E.Side.BOTH]:
@@ -216,7 +232,10 @@ func update_view():
 		right_margin.visible = not collapsed
 	
 
-## Subclass that
+## Subclass that.
+## If component is editable, then when changed don't forget to emit:
+## value_changed.emit (no arguments, so unbind if necessary)
+## for example: text_edit.text_changed.connect(value_changed.emit.unbind(1))
 func get_component(_params : Dictionary) -> Control:
 	var lbl = Label.new()
 	return lbl
