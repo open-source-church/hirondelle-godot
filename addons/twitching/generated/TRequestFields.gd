@@ -16,7 +16,7 @@ var condition: TBaseType
 var transport: TTransport
 
 ## Create is similar to _init but takes parameters. Useful for using with autocomplete in the editor.
-static func create(type: String, version: String, condition: None, transport: TTransport) -> TRequestFields:
+static func create(type: String, version: String, condition, transport: TTransport) -> TRequestFields:
 	var _new = TRequestFields.new()
 	_new.type = type
 	_new.version = version

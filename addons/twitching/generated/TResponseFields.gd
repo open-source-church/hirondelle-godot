@@ -10,7 +10,7 @@ var subscription: TSubscription
 var event: TBaseType
 
 ## Create is similar to _init but takes parameters. Useful for using with autocomplete in the editor.
-static func create(subscription: TSubscription, event: None) -> TResponseFields:
+static func create(subscription: TSubscription, event) -> TResponseFields:
 	var _new = TResponseFields.new()
 	_new.subscription = subscription
 	_new.event = event

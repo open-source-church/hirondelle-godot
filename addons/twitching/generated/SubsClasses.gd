@@ -746,3 +746,4 @@ class WhisperReceived extends Sub:
 	signal event(event: TWhisperReceivedEvent)
 	func _init(_twitching: Twitching):
 		super(_twitching, "user.whisper.message", "Whisper Received", "1", "A user receives a whisper.", TWhisperReceivedEvent, TWhisperReceivedCondition)
+

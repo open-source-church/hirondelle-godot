@@ -539,7 +539,11 @@ class_name {class_name}
             elif var.get("class_name"):
                 _var_list.append(f"{var_name}: {var["class_name"]}")
             else:
-                _var_list.append(f"{var_name}: {get_type(var["type"])}")
+                _type = get_type(var["type"])
+                if _type:
+                    _var_list.append(f"{var_name}: {_type}")
+                else:
+                    _var_list.append(f"{var_name}")
         content += f"static func create({", ".join(_var_list)}) -> {ref["class_name"]}:\n"
         content += f"\tvar _new = {ref["class_name"]}.new()\n"
         for var_name in _vars:

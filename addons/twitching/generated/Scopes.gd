@@ -248,3 +248,4 @@ static var USER_MANAGE_WHISPERS := TwitchingScopes.new("user:manage:whispers", "
 
 ## Send chat messages to a chatroom.
 static var USER_WRITE_CHAT := TwitchingScopes.new("user:write:chat", "Send chat messages to a chatroom.", ['Send Chat Message'], [])
+

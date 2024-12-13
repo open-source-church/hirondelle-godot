@@ -448,3 +448,4 @@ var USER_UPDATE : TSubs.UserUpdate
 ## A user receives a whisper.[br]
 ## See [TWhisperReceivedCondition] and [TWhisperReceivedEvent].
 var WHISPER_RECEIVED : TSubs.WhisperReceived
+

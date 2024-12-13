@@ -25,7 +25,7 @@ var condition: TBaseType
 var created_at: String
 
 ## Create is similar to _init but takes parameters. Useful for using with autocomplete in the editor.
-static func create(id: String, type: String, version: String, status: String, cost: int, condition: None, created_at: String) -> TSubscription:
+static func create(id: String, type: String, version: String, status: String, cost: int, condition, created_at: String) -> TSubscription:
 	var _new = TSubscription.new()
 	_new.id = id
 	_new.type = type
