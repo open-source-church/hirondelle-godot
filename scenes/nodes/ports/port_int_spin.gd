@@ -11,6 +11,7 @@ func get_component(_params) -> Control:
 	spinbox = SpinBox.new()
 	spinbox.allow_greater = true
 	spinbox.allow_lesser = true
+	spinbox.value_changed.connect(value_changed.emit.unbind(1))
 	return spinbox
 
 func _get_value():

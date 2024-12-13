@@ -13,6 +13,7 @@ func get_component(_params) -> Control:
 	btn = ColorPickerButton.new()
 	btn.text = "Pick"
 	hbox.add_child(btn)
+	btn.color_changed.connect(value_changed.emit.unbind(1))
 	return hbox
 
 func _get_value():

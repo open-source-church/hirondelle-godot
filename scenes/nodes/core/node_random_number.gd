@@ -31,6 +31,7 @@ func _init() -> void:
 
 func run(routine:String):
 	if routine == "rand":
+		print("New random number")
 		var r = randf_range(PORTS.min.value, PORTS.max.value)
 		if not PORTS.float.value: 
 			r = floor(r)
@@ -39,5 +40,6 @@ func run(routine:String):
 
 func update() -> void:
 	if _last_port_changed == "float":
+		print("Change port")
 		PORTS.r.type = E.CONNECTION_TYPES.INT if not PORTS.float.value else E.CONNECTION_TYPES.FLOAT
 		update_slots()

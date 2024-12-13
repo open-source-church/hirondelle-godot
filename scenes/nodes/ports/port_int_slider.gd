@@ -33,7 +33,7 @@ func get_component(_params : Dictionary) -> Control:
 	hbox.add_child(btn_reset)
 	slider.value_changed.connect(func (v): lbl_value.text = str(v))
 	btn_reset.pressed.connect(reset_value)
-	
+	slider.value_changed.connect(value_changed.emit.unbind(1))
 	return hbox
 
 func _on_params_changed():

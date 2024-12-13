@@ -25,7 +25,7 @@ func update_labels():
 	for c in hbox.get_children(): c.queue_free()
 	
 	if not dict_types: 
-		update_from_connections()
+		update_from_connections(true)
 	
 	#var sources = get_ports_connected_to()
 	for key in dict:
@@ -50,7 +50,7 @@ func update_labels():
 		
 		hbox.add_child(lbl)
 
-func update_from_connections():
+func update_from_connections(no_signal = false):
 	dict = {}
 	dict_types = {}
 	var keys = {}
@@ -63,6 +63,9 @@ func update_from_connections():
 		keys[c.from_port.name] += 1
 		dict[key] = c.from_port.value
 		dict_types[key] = c.from_port.type
+	
+	if not no_signal:
+		value_changed.emit()
 
 func _on_value_changed():
 	update_labels()

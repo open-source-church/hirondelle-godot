@@ -30,7 +30,7 @@ var PORTS := {}
 
 var warning : Label
 var error : Label
-
+var success : Label
 
 signal port_clicked(name:String)
 
@@ -91,13 +91,21 @@ func setup():
 		if p.side in [E.Side.OUTPUT, E.Side.BOTH]:
 			p.value_changed.connect(propagate_value.bind(_name)) # CONNECT_DEFERRED
 	
+	success = Label.new()
+	success.add_theme_color_override("font_color", Color.GREEN)
+	success.add_theme_font_size_override("font_size", 12)
+	add_child(success)
+	success.visible = false
+		
 	warning = Label.new()
 	warning.add_theme_color_override("font_color", Color.ORANGE)
+	warning.add_theme_font_size_override("font_size", 12)
 	add_child(warning)
 	warning.visible = false
 	
 	error = Label.new()
 	error.add_theme_color_override("font_color", Color.RED)
+	error.add_theme_font_size_override("font_size", 12)
 	add_child(error)
 	error.visible = false
 	
@@ -133,7 +141,7 @@ func update_slots() -> void:
 			if c.type == E.CONNECTION_TYPES.FLOW:
 				_icon = get_port_icon(3, 15)
 			elif c.is_dictionary:
-				_icon = get_port_icon(2, 10)
+				_icon = get_port_icon(2, 12)
 			else:
 				icon = get_port_icon(0, 10)
 			#var icon_width = 14 if c.type == E.CONNECTION_TYPES.FLOW else 10
@@ -235,9 +243,40 @@ func get_port_type(side, index : int):
 	if side == E.Side.INPUT: return get_input_port_type(index)
 	if side == E.Side.OUTPUT: return get_output_port_type(index)
 
-func _process(_delta: float) -> void:
-	error.visible = error.text != ""
-	warning.visible = warning.text != ""
+#func _process(_delta: float) -> void:
+	#error.visible = error.text != ""
+	#warning.visible = warning.text != ""
+
+func show_success(msg: String, duration := 0) -> void:
+	show_message(success, create_tween(), msg, duration)
+
+func show_warning(msg: String, duration := 0) -> void:
+	show_message(warning, create_tween(), msg, duration)
+
+func show_error(msg: String, duration := 0) -> void:
+	show_message(error, create_tween(), msg, duration)
+
+func show_message(label:Label, tween:Tween, msg: String, duration := 0.0) -> void:
+	# Nothing to do
+	if not label.text and not msg: return
+	# Actions
+	var _hide := label.text and not msg
+	var _temporary := msg and duration
+	const HIDE_DURATION = 0.3
+	# Operations
+	tween.set_parallel(false)
+	tween.tween_property(label, "visible", true, 0)
+	tween.tween_property(label, "modulate", Color.WHITE, 0)
+	if not _hide: # We directly change the message
+		tween.tween_property(label, "text", msg, 0)
+	if _hide or _temporary:
+		tween.tween_interval(duration)
+		tween.tween_property(label, "modulate", Color.TRANSPARENT, HIDE_DURATION).from(Color.WHITE).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+		#tween.set_parallel(true).tween_property(label, "position", label.position + Vector2(0, -30), HIDE_DURATION).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+		
+		tween.set_parallel(false).tween_property(label, "visible", false, 0)
+		tween.tween_method(reset_size.unbind(1), 0, 0, 0)
+		tween.tween_property(label, "text", "", 0)
 
 func save() -> Dictionary:
 	var s = {

@@ -14,6 +14,7 @@ func _init() -> void:
 		"login": HPortText.new(E.Side.OUTPUT),
 		"username": HPortText.new(E.Side.OUTPUT),
 		"message": HPortText.new(E.Side.OUTPUT),
+		"message_id": HPortText.new(E.Side.OUTPUT),
 		"color": HPortColor.new(E.Side.OUTPUT)
 	}
 	var condition = TChannelChatMessageCondition.create(G.twitch.auth.user.id, G.twitch.auth.user.id)
@@ -25,6 +26,7 @@ func _on_channel_message(event: TChannelChatMessageEvent):
 	PORTS.login.value = event.chatter_user_login
 	PORTS.username.value = event.chatter_user_name
 	PORTS.message.value = event.message.text
+	PORTS.message_id.value = event.message_id
 	if event.color:
 		PORTS.color.value = event.color
 	
