@@ -258,6 +258,7 @@ Button/styles/pressed = SubResource("StyleBoxFlat_8oufp")
 ButtonFlat/base_type = &"Button"
 ButtonFlat/colors/font_hover_color = Color(0, 1, 1, 0.462745)
 ButtonFlat/colors/font_pressed_color = Color(0, 1, 1, 1)
+ButtonFlat/colors/icon_hover_color = Color(0, 1, 1, 0.462745)
 ButtonFlat/colors/icon_pressed_color = Color(0, 1, 1, 1)
 ButtonSmall/base_type = &"Button"
 ButtonSmall/styles/hover = SubResource("StyleBoxFlat_88udh")

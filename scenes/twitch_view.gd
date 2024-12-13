@@ -30,7 +30,7 @@ extends VBoxContainer
 @onready var twitch: Twitching = $Twitching
 var connected := false
 
-var scopes : Array[TwitchingScopes.Scope] = [
+var scopes : Array[TwitchingScopes] = [
 	TwitchingScopes.USER_READ_CHAT, TwitchingScopes.USER_WRITE_CHAT,
 	TwitchingScopes.CHANNEL_READ_REDEMPTIONS, TwitchingScopes.CHANNEL_MANAGE_REDEMPTIONS
 	]
@@ -41,6 +41,7 @@ func _ready() -> void:
 	twitch.auth.tokens_changed.connect(_on_tokens_changed)
 	twitch.auth.user_changed.connect(_on_user_changed)
 	_on_tokens_changed()
+	_on_user_changed()
 	
 	# UI connections
 	btn_connect.pressed.connect(login)

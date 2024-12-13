@@ -1,0 +1,5417 @@
+[
+  {
+    "type": "Automod Message Hold",
+    "name": "automod.message.hold",
+    "version": "1",
+    "description": "A user is notified if a message is caught by automod for review.",
+    "class_name": "TAutomodMessageHold",
+    "doclink": "#automodmessagehold",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.message.hold.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-condition",
+        "id": "automod-message-hold-condition",
+        "class_name": "TAutomodMessageHoldCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
+        "id": "automod-message-hold-event",
+        "class_name": "TAutomodMessageHoldEvent"
+      }
+    ]
+  },
+  {
+    "type": "Automod Message Hold V2",
+    "name": "automod.message.hold",
+    "version": "2",
+    "description": "A user is notified if a message is caught by automod for review.  Only public blocked terms trigger notifications, not private ones.",
+    "class_name": "TAutomodMessageHoldV2",
+    "doclink": "#automodmessagehold",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.message.hold.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-condition",
+        "id": "automod-message-hold-condition",
+        "class_name": "TAutomodMessageHoldCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
+        "id": "automod-message-hold-event",
+        "class_name": "TAutomodMessageHoldEvent"
+      }
+    ]
+  },
+  {
+    "type": "Automod Message Update",
+    "name": "automod.message.update",
+    "version": "1",
+    "description": "A message in the automod queue had its status changed.",
+    "class_name": "TAutomodMessageUpdate",
+    "doclink": "#automodmessageupdate",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.message.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-update-condition",
+        "id": "automod-message-update-condition",
+        "class_name": "TAutomodMessageUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-update-event",
+        "id": "automod-message-update-event",
+        "class_name": "TAutomodMessageUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Automod Message Update V2",
+    "name": "automod.message.update",
+    "version": "2",
+    "description": "A message in the automod queue had its status changed. Only public blocked terms trigger notifications, not private ones.",
+    "class_name": "TAutomodMessageUpdateV2",
+    "doclink": "#automodmessageupdate",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.message.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-update-condition",
+        "id": "automod-message-update-condition",
+        "class_name": "TAutomodMessageUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-update-event",
+        "id": "automod-message-update-event",
+        "class_name": "TAutomodMessageUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Automod Settings Update",
+    "name": "automod.settings.update",
+    "version": "1",
+    "description": "A notification is sent when a broadcaster\u2019s automod settings are updated.",
+    "class_name": "TAutomodSettingsUpdate",
+    "doclink": "#automodsettingsupdate",
+    "scopes": [
+      "moderator:read:automod_settings"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.settings.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-settings-update-condition",
+        "id": "automod-settings-update-condition",
+        "class_name": "TAutomodSettingsUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-settings-update-event",
+        "id": "automod-settings-update-event",
+        "class_name": "TAutomodSettingsUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Automod Terms Update",
+    "name": "automod.terms.update",
+    "version": "1",
+    "description": "A notification is sent when a broadcaster\u2019s automod terms are updated. Changes to private terms are not sent.",
+    "class_name": "TAutomodTermsUpdate",
+    "doclink": "#automodtermsupdate",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.terms.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-terms-update-condition",
+        "id": "automod-terms-update-condition",
+        "class_name": "TAutomodTermsUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-terms-update-event",
+        "id": "automod-terms-update-event",
+        "class_name": "TAutomodTermsUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Update",
+    "name": "channel.update",
+    "version": "2",
+    "description": null,
+    "class_name": "TChannelUpdate",
+    "doclink": "#channelupdate",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 2.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Pass in the broadcaster_user_id for the channel you want updates for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-update-condition",
+        "id": "channel-update-condition",
+        "class_name": "TChannelUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Returns the user ID, user name, title, language, category ID, category name, and content classification labels for the given broadcaster.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-update-event",
+        "id": "channel-update-event",
+        "class_name": "TChannelUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Follow",
+    "name": "channel.follow",
+    "version": "2",
+    "description": "A specified channel receives a follow.",
+    "class_name": "TChannelFollow",
+    "doclink": "#channelfollow",
+    "scopes": [
+      "moderator:read:followers"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.follow.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 2.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-follow-condition",
+        "id": "channel-follow-condition",
+        "class_name": "TChannelFollowCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains the user ID and user name of the follower and the broadcaster user ID and broadcaster user name.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-follow-event",
+        "id": "channel-follow-event",
+        "class_name": "TChannelFollowEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Ad Break Begin",
+    "name": "channel.ad_break.begin",
+    "version": "1",
+    "description": "A midroll commercial break has started running.",
+    "class_name": "TChannelAdBreakBegin",
+    "doclink": "#channelad_breakbegin",
+    "scopes": [
+      "channel:read:ads"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.ad_break.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-ad-break-begin-condition",
+        "id": "channel-ad-break-begin-condition",
+        "class_name": "TChannelAdBreakBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-ad-break-begin-event",
+        "id": "channel-ad-break-begin-event",
+        "class_name": "TChannelAdBreakBeginEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat Clear",
+    "name": "channel.chat.clear",
+    "version": "1",
+    "description": "A moderator or bot has cleared all messages from the chat room.",
+    "class_name": "TChannelChatClear",
+    "doclink": "#channelchatclear",
+    "scopes": [
+      "user:read:chat",
+      "user:bot",
+      "channel:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.clear.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-clear-condition",
+        "id": "channel-chat-clear-condition",
+        "class_name": "TChannelChatClearCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-clear-event",
+        "id": "channel-chat-clear-event",
+        "class_name": "TChannelChatClearEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat Clear User Messages",
+    "name": "channel.chat.clear_user_messages",
+    "version": "1",
+    "description": "A moderator or bot has cleared all messages from a specific user.",
+    "class_name": "TChannelChatClearUserMessages",
+    "doclink": "#channelchatclear_user_messages",
+    "scopes": [
+      "user:read:chat",
+      "user:bot",
+      "channel:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.clear_user_messages.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-clear-user-messages-condition",
+        "id": "channel-chat-clear-user-messages-condition",
+        "class_name": "TChannelChatClearUserMessagesCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-clear-user-messages-event",
+        "id": "channel-chat-clear-user-messages-event",
+        "class_name": "TChannelChatClearUserMessagesEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat Message",
+    "name": "channel.chat.message",
+    "version": "1",
+    "description": "Any user sends a message to a specific chat room.",
+    "class_name": "TChannelChatMessage",
+    "doclink": "#channelchatmessage",
+    "scopes": [
+      "user:read:chat",
+      "user:bot",
+      "channel:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.message.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-message-condition",
+        "id": "channel-chat-message-condition",
+        "class_name": "TChannelChatMessageCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-message-event",
+        "id": "channel-chat-message-event",
+        "class_name": "TChannelChatMessageEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat Message Delete",
+    "name": "channel.chat.message_delete",
+    "version": "1",
+    "description": "A moderator has removed a specific message.",
+    "class_name": "TChannelChatMessageDelete",
+    "doclink": "#channelchatmessage_delete",
+    "scopes": [
+      "user:read:chat",
+      "user:bot",
+      "channel:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.message_delete.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-message-delete-condition",
+        "id": "channel-chat-message-delete-condition",
+        "class_name": "TChannelChatMessageDeleteCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-message-delete-event",
+        "id": "channel-chat-message-delete-event",
+        "class_name": "TChannelChatMessageDeleteEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat Notification",
+    "name": "channel.chat.notification",
+    "version": "1",
+    "description": "A notification for when an event that appears in chat has occurred.",
+    "class_name": "TChannelChatNotification",
+    "doclink": "#channelchatnotification",
+    "scopes": [
+      "user:read:chat",
+      "user:bot",
+      "channel:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.notification.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-notification-condition",
+        "id": "channel-chat-notification-condition",
+        "class_name": "TChannelChatNotificationCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-notification-event",
+        "id": "channel-chat-notification-event",
+        "class_name": "TChannelChatNotificationEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat Settings Update",
+    "name": "channel.chat_settings.update",
+    "version": "1",
+    "description": "A notification for when a broadcaster\u2019s chat settings are updated.",
+    "class_name": "TChannelChatSettingsUpdate",
+    "doclink": "#channelchat_settingsupdate",
+    "scopes": [
+      "user:read:chat",
+      "user:bot",
+      "channel:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat_settings.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-settings-update-condition",
+        "id": "channel-chat-settings-update-condition",
+        "class_name": "TChannelChatSettingsUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains information about the updated chat mode for the channel.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-settings-update-event",
+        "id": "channel-chat-settings-update-event",
+        "class_name": "TChannelChatSettingsUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat User Message Hold",
+    "name": "channel.chat.user_message_hold",
+    "version": "1",
+    "description": "A user is notified if their message is caught by automod.",
+    "class_name": "TChannelChatUserMessageHold",
+    "doclink": "#channelchatuser_message_hold",
+    "scopes": [
+      "user:read:chat",
+      "user:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.user_message_hold.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-user-message-hold-condition",
+        "id": "channel-chat-user-message-hold-condition",
+        "class_name": "TChannelChatUserMessageHoldCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-user-message-hold-event",
+        "id": "channel-chat-user-message-hold-event",
+        "class_name": "TChannelChatUserMessageHoldEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Chat User Message Update",
+    "name": "channel.chat.user_message_update",
+    "version": "1",
+    "description": "A user is notified if their message\u2019s automod status is updated.",
+    "class_name": "TChannelChatUserMessageUpdate",
+    "doclink": "#channelchatuser_message_update",
+    "scopes": [
+      "user:read:chat",
+      "user:bot"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.chat.user_message_update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-user-message-update-condition",
+        "id": "channel-chat-user-message-update-condition",
+        "class_name": "TChannelChatUserMessageUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-chat-user-message-update-event",
+        "id": "channel-chat-user-message-update-event",
+        "class_name": "TChannelChatUserMessageUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Shared Chat Session Begin",
+    "name": "channel.shared_chat.begin",
+    "version": "1",
+    "description": "A notification when a channel becomes active in an active shared chat session.",
+    "class_name": "TChannelSharedChatSessionBegin",
+    "doclink": "#channelshared_chatbegin",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.shared_chat.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-shared-chat-session-begin-condition",
+        "id": "channel-shared-chat-session-begin-condition",
+        "class_name": "TChannelSharedChatSessionBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-shared-chat-session-begin-event",
+        "id": "channel-shared-chat-session-begin-event",
+        "class_name": "TChannelSharedChatSessionBeginEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Shared Chat Session Update",
+    "name": "channel.shared_chat.update",
+    "version": "1",
+    "description": "A notification when the active shared chat session the channel is in changes.",
+    "class_name": "TChannelSharedChatSessionUpdate",
+    "doclink": "#channelshared_chatupdate",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.shared_chat.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-shared-chat-session-update-condition",
+        "id": "channel-shared-chat-session-update-condition",
+        "class_name": "TChannelSharedChatSessionUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-shared-chat-session-update-event",
+        "id": "channel-shared-chat-session-update-event",
+        "class_name": "TChannelSharedChatSessionUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Shared Chat Session End",
+    "name": "channel.shared_chat.end",
+    "version": "1",
+    "description": "A notification when a channel leaves a shared chat session or the session ends.",
+    "class_name": "TChannelSharedChatSessionEnd",
+    "doclink": "#channelshared_chatend",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.shared_chat.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-shared-chat-session-end-condition",
+        "id": "channel-shared-chat-session-end-condition",
+        "class_name": "TChannelSharedChatSessionEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-shared-chat-session-end-event",
+        "id": "channel-shared-chat-session-end-event",
+        "class_name": "TChannelSharedChatSessionEndEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Subscribe",
+    "name": "channel.subscribe",
+    "version": "1",
+    "description": "A notification is sent when a specified channel receives a subscriber. This does not include resubscribes.",
+    "class_name": "TChannelSubscribe",
+    "doclink": "#channelsubscribe",
+    "scopes": [
+      "channel:read:subscriptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.subscribe.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscribe-condition",
+        "id": "channel-subscribe-condition",
+        "class_name": "TChannelSubscribeCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains the user ID and user name of the subscriber, the broadcaster user ID and broadcaster user name, and whether the subscription is a gift.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscribe-event",
+        "id": "channel-subscribe-event",
+        "class_name": "TChannelSubscribeEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Subscription End",
+    "name": "channel.subscription.end",
+    "version": "1",
+    "description": "A notification when a subscription to the specified channel ends.",
+    "class_name": "TChannelSubscriptionEnd",
+    "doclink": "#channelsubscriptionend",
+    "scopes": [
+      "channel:read:subscriptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.subscription.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscription-end-condition",
+        "id": "channel-subscription-end-condition",
+        "class_name": "TChannelSubscriptionEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the EventSub subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains the user ID, user login, and user display name of the user whose subscription has expired, as well as the broadcaster user ID, broadcaster login, and broadcaster display name.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscription-end-event",
+        "id": "channel-subscription-end-event",
+        "class_name": "TChannelSubscriptionEndEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Subscription Gift",
+    "name": "channel.subscription.gift",
+    "version": "1",
+    "description": "A notification when a viewer gives a gift subscription to one or more users in the specified channel.",
+    "class_name": "TChannelSubscriptionGift",
+    "doclink": "#channelsubscriptiongift",
+    "scopes": [
+      "channel:read:subscriptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.subscription.gift.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscription-gift-condition",
+        "id": "channel-subscription-gift-condition",
+        "class_name": "TChannelSubscriptionGiftCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the EventSub subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains information about the user who gave the gift subscriptions, and the number and tier of subscriptions included in the gift.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscription-gift-event",
+        "id": "channel-subscription-gift-event",
+        "class_name": "TChannelSubscriptionGiftEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Subscription Message",
+    "name": "channel.subscription.message",
+    "version": "1",
+    "description": "A notification when a user sends a resubscription chat message in a specific channel.",
+    "class_name": "TChannelSubscriptionMessage",
+    "doclink": "#channelsubscriptionmessage",
+    "scopes": [
+      "channel:read:subscriptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.subscription.message.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscription-message-condition",
+        "id": "channel-subscription-message-condition",
+        "class_name": "TChannelSubscriptionMessageCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the EventSub subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains information about the user who resubscribed and their resubscription chat message.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-subscription-message-event",
+        "id": "channel-subscription-message-event",
+        "class_name": "TChannelSubscriptionMessageEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Cheer",
+    "name": "channel.cheer",
+    "version": "1",
+    "description": "A user cheers on the specified channel.",
+    "class_name": "TChannelCheer",
+    "doclink": "#channelcheer",
+    "scopes": [
+      "bits:read"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.cheer.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive cheer notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-cheer-condition",
+        "id": "channel-cheer-condition",
+        "class_name": "TChannelCheerCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains the user ID and user name of the cheering user along with the broadcaster user id and broadcaster user name.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-cheer-event",
+        "id": "channel-cheer-event",
+        "class_name": "TChannelCheerEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Raid",
+    "name": "channel.raid",
+    "version": "1",
+    "description": "A broadcaster raids another broadcaster\u2019s channel.",
+    "class_name": "TChannelRaid",
+    "doclink": "#channelraid",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.raid.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Set either the from_broadcaster_user_id or to_broadcaster_user_id condition parameter but not both. If you pass both parameters, the subscription request fails.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-raid-condition",
+        "id": "channel-raid-condition",
+        "class_name": "TChannelRaidCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains the from and to broadcaster information along with the number of viewers in the raid. Will only notify for raids that appear in chat.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-raid-event",
+        "id": "channel-raid-event",
+        "class_name": "TChannelRaidEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Ban",
+    "name": "channel.ban",
+    "version": "1",
+    "description": "A viewer is banned from the specified channel.",
+    "class_name": "TChannelBan",
+    "doclink": "#channelban",
+    "scopes": [
+      "channel:moderate"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.ban.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive ban notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-ban-condition",
+        "id": "channel-ban-condition",
+        "class_name": "TChannelBanCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Will notify on timeouts as well as bans. Contains the user ID and user name of the banned user, the broadcaster user ID and broadcaster user name, the user ID and user name of the moderator who issued the ban/timeout, the reason, and expiration time if it is a timeout.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-ban-event",
+        "id": "channel-ban-event",
+        "class_name": "TChannelBanEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Unban",
+    "name": "channel.unban",
+    "version": "1",
+    "description": "A viewer is unbanned from the specified channel.",
+    "class_name": "TChannelUnban",
+    "doclink": "#channelunban",
+    "scopes": [
+      "channel:moderate"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.unban.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive unban notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-unban-condition",
+        "id": "channel-unban-condition",
+        "class_name": "TChannelUnbanCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains the user ID and user name of the unbanned user, the broadcaster user id and broadcaster user name, as well as the user ID and user name of the moderator who issued the unban.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-unban-event",
+        "id": "channel-unban-event",
+        "class_name": "TChannelUnbanEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Unban Request Create",
+    "name": null,
+    "version": "1",
+    "description": "A user creates an unban request.",
+    "class_name": "TChannelUnbanRequestCreate",
+    "doclink": "#automodmessagehold",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.message.hold.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-condition",
+        "id": "automod-message-hold-condition",
+        "class_name": "TAutomodMessageHoldCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
+        "id": "automod-message-hold-event",
+        "class_name": "TAutomodMessageHoldEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Unban Request Resolve",
+    "name": null,
+    "version": "1",
+    "description": "An unban request has been resolved.",
+    "class_name": "TChannelUnbanRequestResolve",
+    "doclink": "#automodmessagehold",
+    "scopes": [
+      "moderator:manage:automod"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: automod.message.hold.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-condition",
+        "id": "automod-message-hold-condition",
+        "class_name": "TAutomodMessageHoldCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
+        "id": "automod-message-hold-event",
+        "class_name": "TAutomodMessageHoldEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Moderate",
+    "name": "channel.moderate",
+    "version": "1",
+    "description": "A moderator performs a moderation action in a channel.",
+    "class_name": "TChannelModerate",
+    "doclink": "#channelmoderate",
+    "scopes": [
+      "moderator:read:blocked_terms",
+      "moderator:manage:blocked_terms",
+      "moderator:read:chat_settings",
+      "moderator:manage:chat_settings",
+      "moderator:read:unban_requests",
+      "moderator:manage:unban_requests",
+      "moderator:read:banned_users",
+      "moderator:manage:banned_users",
+      "moderator:read:chat_messages",
+      "moderator:manage:chat_messages",
+      "moderator:read:moderators",
+      "moderator:read:vips"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.moderate.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-condition",
+        "id": "channel-moderate-condition",
+        "class_name": "TChannelModerateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-event",
+        "id": "channel-moderate-event",
+        "class_name": "TChannelModerateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Moderate V2",
+    "name": "channel.moderate",
+    "version": "2",
+    "description": "A moderator performs a moderation action in a channel. Includes warnings.",
+    "class_name": "TChannelModerateV2",
+    "doclink": "#channelmoderate",
+    "scopes": [
+      "moderator:read:blocked_terms",
+      "moderator:manage:blocked_terms",
+      "moderator:read:chat_settings",
+      "moderator:manage:chat_settings",
+      "moderator:read:unban_requests",
+      "moderator:manage:unban_requests",
+      "moderator:read:banned_users",
+      "moderator:manage:banned_users",
+      "moderator:read:chat_messages",
+      "moderator:manage:chat_messages",
+      "moderator:read:moderators",
+      "moderator:read:vips"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.moderate.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-condition",
+        "id": "channel-moderate-condition",
+        "class_name": "TChannelModerateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-event",
+        "id": "channel-moderate-event",
+        "class_name": "TChannelModerateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Moderator Add",
+    "name": "channel.moderator.add",
+    "version": "1",
+    "description": "Moderator privileges were added to a user on a specified channel.",
+    "class_name": "TChannelModeratorAdd",
+    "doclink": "#channelmoderatoradd",
+    "scopes": [
+      "moderation:read"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.moderator.add.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive moderator addition notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderator-add-condition",
+        "id": "channel-moderator-add-condition",
+        "class_name": "TChannelModeratorAddCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains user information of the new moderator as well as broadcaster information of the channel the event occurred on.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderator-add-event",
+        "id": "channel-moderator-add-event",
+        "class_name": "TChannelModeratorAddEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Moderator Remove",
+    "name": "channel.moderator.remove",
+    "version": "1",
+    "description": "Moderator privileges were removed from a user on a specified channel.",
+    "class_name": "TChannelModeratorRemove",
+    "doclink": "#channelmoderatorremove",
+    "scopes": [
+      "moderation:read"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.moderator.remove.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive moderator removal notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderator-remove-condition",
+        "id": "channel-moderator-remove-condition",
+        "class_name": "TChannelModeratorRemoveCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains user information of the old moderator as well as broadcaster information of the channel the event occurred on.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderator-remove-event",
+        "id": "channel-moderator-remove-event",
+        "class_name": "TChannelModeratorRemoveEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Guest Star Session Begin",
+    "name": "channel.guest_star_session.begin",
+    "version": "beta",
+    "description": "The host began a new Guest Star session.",
+    "class_name": "TChannelGuestStarSessionBegin",
+    "doclink": "#channelguest_star_sessionbegin",
+    "scopes": [
+      "channel:read:guest_star",
+      "channel:manage:guest_star",
+      "moderator:read:guest_star",
+      "moderator:manage:guest_star"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.guest_star_session.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: beta.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TChannelGuestStarSessionBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-guest-star-session-begin-event",
+        "id": "channel-guest-star-session-begin-event",
+        "class_name": "TChannelGuestStarSessionBeginEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Guest Star Session End",
+    "name": "channel.guest_star_session.end",
+    "version": "beta",
+    "description": "A running Guest Star session has ended.",
+    "class_name": "TChannelGuestStarSessionEnd",
+    "doclink": "#channelguest_star_sessionend",
+    "scopes": [
+      "channel:read:guest_star",
+      "channel:manage:guest_star",
+      "moderator:read:guest_star",
+      "moderator:manage:guest_star"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.guest_star_session.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: beta.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TChannelGuestStarSessionEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-guest-star-session-end-event",
+        "id": "channel-guest-star-session-end-event",
+        "class_name": "TChannelGuestStarSessionEndEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Guest Star Guest Update",
+    "name": "channel.guest_star_guest.update",
+    "version": "beta",
+    "description": "A guest or a slot is updated in an active Guest Star session.",
+    "class_name": "TChannelGuestStarGuestUpdate",
+    "doclink": "#channelguest_star_guestupdate",
+    "scopes": [
+      "channel:read:guest_star",
+      "channel:manage:guest_star",
+      "moderator:read:guest_star",
+      "moderator:manage:guest_star"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.guest_star_guest.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: beta.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TChannelGuestStarGuestUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-guest-star-guest-update-event",
+        "id": "channel-guest-star-guest-update-event",
+        "class_name": "TChannelGuestStarGuestUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Guest Star Settings Update",
+    "name": "channel.guest_star_settings.update",
+    "version": "beta",
+    "description": "The host preferences for Guest Star have been updated.",
+    "class_name": "TChannelGuestStarSettingsUpdate",
+    "doclink": "#channelguest_star_settingsupdate",
+    "scopes": [
+      "channel:read:guest_star",
+      "channel:manage:guest_star",
+      "moderator:read:guest_star",
+      "moderator:manage:guest_star"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.guest_star_settings.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: beta.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TChannelGuestStarSettingsUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-guest-star-settings-update-event",
+        "id": "channel-guest-star-settings-update-event",
+        "class_name": "TChannelGuestStarSettingsUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Points Automatic Reward Redemption",
+    "name": "channel.channel_points_automatic_reward_redemption.add",
+    "version": "1",
+    "description": "A viewer has redeemed an automatic channel points reward on the specified channel.",
+    "class_name": "TChannelPointsAutomaticRewardRedemption",
+    "doclink": "#channelchannel_points_automatic_reward_redemptionadd",
+    "scopes": [
+      "channel:read:redemptions",
+      "channel:manage:redemptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.channel_points_automatic_reward_redemption.add.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-automatic-reward-redemption-add-condition",
+        "id": "channel-points-automatic-reward-redemption-add-condition",
+        "class_name": "TChannelPointsAutomaticRewardRedemptionAddCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-automatic-reward-redemption-add-event",
+        "id": "channel-points-automatic-reward-redemption-add-event",
+        "class_name": "TChannelPointsAutomaticRewardRedemptionAddEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Points Custom Reward Add",
+    "name": "channel.channel_points_custom_reward.add",
+    "version": "1",
+    "description": "A custom channel points reward has been created for the specified channel.",
+    "class_name": "TChannelPointsCustomRewardAdd",
+    "doclink": "#channelchannel_points_custom_rewardadd",
+    "scopes": [
+      "channel:read:redemptions",
+      "channel:manage:redemptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.channel_points_custom_reward.add.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive channel points customer reward add notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-add-condition",
+        "id": "channel-points-custom-reward-add-condition",
+        "class_name": "TChannelPointsCustomRewardAddCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains data about the custom reward added to the broadcaster\u2019s channel.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-add-event",
+        "id": "channel-points-custom-reward-add-event",
+        "class_name": "TChannelPointsCustomRewardAddEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Points Custom Reward Update",
+    "name": "channel.channel_points_custom_reward.update",
+    "version": "1",
+    "description": "A custom channel points reward has been updated for the specified channel.",
+    "class_name": "TChannelPointsCustomRewardUpdate",
+    "doclink": "#channelchannel_points_custom_rewardupdate",
+    "scopes": [
+      "channel:read:redemptions",
+      "channel:manage:redemptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.channel_points_custom_reward.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive channel points custom reward update notifications for. You can optionally pass in a reward id to only receive notifications for a specific reward.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-update-condition",
+        "id": "channel-points-custom-reward-update-condition",
+        "class_name": "TChannelPointsCustomRewardUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains data about the custom reward updated on the broadcaster\u2019s channel.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-update-event",
+        "id": "channel-points-custom-reward-update-event",
+        "class_name": "TChannelPointsCustomRewardUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Points Custom Reward Remove",
+    "name": "channel.channel_points_custom_reward.remove",
+    "version": "1",
+    "description": "A custom channel points reward has been removed from the specified channel.",
+    "class_name": "TChannelPointsCustomRewardRemove",
+    "doclink": "#channelchannel_points_custom_rewardremove",
+    "scopes": [
+      "channel:read:redemptions",
+      "channel:manage:redemptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.channel_points_custom_reward.remove.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive channel points custom reward remove notifications for. You can optionally pass in a reward ID to only receive notifications for a specific reward.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-remove-condition",
+        "id": "channel-points-custom-reward-remove-condition",
+        "class_name": "TChannelPointsCustomRewardRemoveCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains data about the custom reward removed from the broadcaster\u2019s channel.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-remove-event",
+        "id": "channel-points-custom-reward-remove-event",
+        "class_name": "TChannelPointsCustomRewardRemoveEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Points Custom Reward Redemption Add",
+    "name": "channel.channel_points_custom_reward_redemption.add",
+    "version": "1",
+    "description": "A viewer has redeemed a custom channel points reward on the specified channel.",
+    "class_name": "TChannelPointsCustomRewardRedemptionAdd",
+    "doclink": "#channelchannel_points_custom_reward_redemptionadd",
+    "scopes": [
+      "channel:read:redemptions",
+      "channel:manage:redemptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.channel_points_custom_reward_redemption.add.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive channel points custom reward redemption notifications for. You can optionally pass in a reward id to only receive notifications for a specific reward.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-redemption-add-condition",
+        "id": "channel-points-custom-reward-redemption-add-condition",
+        "class_name": "TChannelPointsCustomRewardRedemptionAddCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains data about the redemption of the custom reward on the broadcaster\u2019s channel.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-redemption-add-event",
+        "id": "channel-points-custom-reward-redemption-add-event",
+        "class_name": "TChannelPointsCustomRewardRedemptionAddEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Points Custom Reward Redemption Update",
+    "name": "channel.channel_points_custom_reward_redemption.update",
+    "version": "1",
+    "description": "A redemption of a channel points custom reward has been updated for the specified channel.",
+    "class_name": "TChannelPointsCustomRewardRedemptionUpdate",
+    "doclink": "#channelchannel_points_custom_reward_redemptionupdate",
+    "scopes": [
+      "channel:read:redemptions",
+      "channel:manage:redemptions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.channel_points_custom_reward_redemption.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive channel points custom reward redemption update notifications for. You can optionally pass in a reward id to only receive notifications for a specific reward.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-redemption-update-condition",
+        "id": "channel-points-custom-reward-redemption-update-condition",
+        "class_name": "TChannelPointsCustomRewardRedemptionUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information. Contains data about the custom reward redemption update from the broadcaster\u2019s channel.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-points-custom-reward-redemption-update-event",
+        "id": "channel-points-custom-reward-redemption-update-event",
+        "class_name": "TChannelPointsCustomRewardRedemptionUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Poll Begin",
+    "name": "channel.poll.begin",
+    "version": "1",
+    "description": "A poll started on a specified channel.",
+    "class_name": "TChannelPollBegin",
+    "doclink": "#channelpollbegin",
+    "scopes": [
+      "channel:read:polls",
+      "channel:manage:polls"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.poll.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive poll begin notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-poll-begin-condition",
+        "id": "channel-poll-begin-condition",
+        "class_name": "TChannelPollBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-poll-begin-event",
+        "id": "channel-poll-begin-event",
+        "class_name": "TChannelPollBeginEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Poll Progress",
+    "name": "channel.poll.progress",
+    "version": "1",
+    "description": "Users respond to a poll on a specified channel.",
+    "class_name": "TChannelPollProgress",
+    "doclink": "#channelpollprogress",
+    "scopes": [
+      "channel:read:polls",
+      "channel:manage:polls"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.poll.progress.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive poll progress notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-poll-progress-condition",
+        "id": "channel-poll-progress-condition",
+        "class_name": "TChannelPollProgressCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-poll-progress-event",
+        "id": "channel-poll-progress-event",
+        "class_name": "TChannelPollProgressEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Poll End",
+    "name": "channel.poll.end",
+    "version": "1",
+    "description": "A poll ended on a specified channel.",
+    "class_name": "TChannelPollEnd",
+    "doclink": "#channelpollend",
+    "scopes": [
+      "channel:read:polls",
+      "channel:manage:polls"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.poll.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive poll end notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-poll-end-condition",
+        "id": "channel-poll-end-condition",
+        "class_name": "TChannelPollEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-poll-end-event",
+        "id": "channel-poll-end-event",
+        "class_name": "TChannelPollEndEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Prediction Begin",
+    "name": "channel.prediction.begin",
+    "version": "1",
+    "description": "A Prediction started on a specified channel.",
+    "class_name": "TChannelPredictionBegin",
+    "doclink": "#channelpredictionbegin",
+    "scopes": [
+      "channel:read:predictions",
+      "channel:manage:predictions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.prediction.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive prediction begin notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-begin-condition",
+        "id": "channel-prediction-begin-condition",
+        "class_name": "TChannelPredictionBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-begin-event",
+        "id": "channel-prediction-begin-event",
+        "class_name": "TChannelPredictionBeginEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Prediction Progress",
+    "name": "channel.prediction.progress",
+    "version": "1",
+    "description": "Users participated in a Prediction on a specified channel.",
+    "class_name": "TChannelPredictionProgress",
+    "doclink": "#channelpredictionprogress",
+    "scopes": [
+      "channel:read:predictions",
+      "channel:manage:predictions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.prediction.progress.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive prediction progress notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-progress-condition",
+        "id": "channel-prediction-progress-condition",
+        "class_name": "TChannelPredictionProgressCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-progress-event",
+        "id": "channel-prediction-progress-event",
+        "class_name": "TChannelPredictionProgressEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Prediction Lock",
+    "name": "channel.prediction.lock",
+    "version": "1",
+    "description": "A Prediction was locked on a specified channel.",
+    "class_name": "TChannelPredictionLock",
+    "doclink": "#channelpredictionlock",
+    "scopes": [
+      "channel:read:predictions",
+      "channel:manage:predictions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.prediction.lock.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive prediction lock notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-lock-condition",
+        "id": "channel-prediction-lock-condition",
+        "class_name": "TChannelPredictionLockCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-lock-event",
+        "id": "channel-prediction-lock-event",
+        "class_name": "TChannelPredictionLockEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Prediction End",
+    "name": "channel.prediction.end",
+    "version": "1",
+    "description": "A Prediction ended on a specified channel.",
+    "class_name": "TChannelPredictionEnd",
+    "doclink": "#channelpredictionend",
+    "scopes": [
+      "channel:read:predictions",
+      "channel:manage:predictions"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.prediction.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to receive prediction lock notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-end-condition",
+        "id": "channel-prediction-end-condition",
+        "class_name": "TChannelPredictionEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-prediction-end-event",
+        "id": "channel-prediction-end-event",
+        "class_name": "TChannelPredictionEndEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Suspicious User Message",
+    "name": "channel.suspicious_user.message",
+    "version": "1",
+    "description": "A chat message has been sent by a suspicious user.",
+    "class_name": "TChannelSuspiciousUserMessage",
+    "doclink": "#channelsuspicious_usermessage",
+    "scopes": [
+      "moderator:read:suspicious_users"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.suspicious_user.message.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-suspicious-user-message-condition",
+        "id": "channel-suspicious-user-message-condition",
+        "class_name": "TChannelSuspiciousUserMessageCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-suspicious-user-message-event",
+        "id": "channel-suspicious-user-message-event",
+        "class_name": "TChannelSuspiciousUserMessageEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Suspicious User Update",
+    "name": "channel.suspicious_user.update",
+    "version": "1",
+    "description": "A suspicious user has been updated.",
+    "class_name": "TChannelSuspiciousUserUpdate",
+    "doclink": "#channelsuspicious_userupdate",
+    "scopes": [
+      "moderator:read:suspicious_users"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.suspicious_user.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-suspicious-user-update-condition",
+        "id": "channel-suspicious-user-update-condition",
+        "class_name": "TChannelSuspiciousUserUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-suspicious-user-update-event",
+        "id": "channel-suspicious-user-update-event",
+        "class_name": "TChannelSuspiciousUserUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel VIP Add",
+    "name": "channel.vip.add",
+    "version": "1",
+    "description": "A VIP is added to the channel.",
+    "class_name": "TChannelVipAdd",
+    "doclink": "#channelvipadd",
+    "scopes": [
+      "channel:read:vips",
+      "channel:manage:vips"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.vip.add.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-vip-add-condition",
+        "id": "channel-vip-add-condition",
+        "class_name": "TChannelVipAddCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-vip-add-event",
+        "id": "channel-vip-add-event",
+        "class_name": "TChannelVipAddEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel VIP Remove",
+    "name": "channel.vip.remove",
+    "version": "1",
+    "description": "A VIP is removed from the channel.",
+    "class_name": "TChannelVipRemove",
+    "doclink": "#channelvipremove",
+    "scopes": [
+      "channel:read:vips",
+      "channel:manage:vips"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.vip.remove.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-vip-remove-condition",
+        "id": "channel-vip-remove-condition",
+        "class_name": "TChannelVipRemoveCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-vip-remove-event",
+        "id": "channel-vip-remove-event",
+        "class_name": "TChannelVipRemoveEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Warning Acknowledgement",
+    "name": "channel.warning.acknowledge",
+    "version": "1",
+    "description": "A user awknowledges a warning. Broadcasters and moderators can see the warning\u2019s details.",
+    "class_name": "TChannelWarningAcknowledgement",
+    "doclink": "#channelwarningacknowledge",
+    "scopes": [
+      "moderator:read:warnings",
+      "moderator:manage:warnings"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.warning.acknowledge.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-warning-acknowledge-condition",
+        "id": "channel-warning-acknowledge-condition",
+        "class_name": "TChannelWarningAcknowledgeCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains information about the warned user.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-warning-acknowledge-event",
+        "id": "channel-warning-acknowledge-event",
+        "class_name": "TChannelWarningAcknowledgeEvent"
+      }
+    ]
+  },
+  {
+    "type": "Channel Warning Send",
+    "name": "channel.warning.send",
+    "version": "1",
+    "description": "A user is sent a warning. Broadcasters and moderators can see the warning\u2019s details.",
+    "class_name": "TChannelWarningSend",
+    "doclink": "#channelwarningsend",
+    "scopes": [
+      "moderator:read:warnings",
+      "moderator:manage:warnings"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.warning.send.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-warning-send-condition",
+        "id": "channel-warning-send-condition",
+        "class_name": "TChannelWarningSendCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains information about the warning including the user, the reason for the warning, and the cited rules for reference.",
+        "link": "/docs/eventsub/eventsub-reference/#channel-warning-send-event",
+        "id": "channel-warning-send-event",
+        "class_name": "TChannelWarningSendEvent"
+      }
+    ]
+  },
+  {
+    "type": "Charity Donation",
+    "name": "channel.charity_campaign.donate",
+    "version": "1",
+    "description": "Sends an event notification when a user donates to the broadcaster\u2019s charity campaign.",
+    "class_name": "TCharityDonation",
+    "doclink": "#channelcharity_campaigndonate",
+    "scopes": [
+      "channel:read:charity"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.charity_campaign.donate.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version:\u00a01",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TCharityDonationCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The donation event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#charity-donation-event",
+        "id": "charity-donation-event",
+        "class_name": "TCharityDonationEvent"
+      }
+    ]
+  },
+  {
+    "type": "Charity Campaign Start",
+    "name": "channel.charity_campaign.start",
+    "version": "1",
+    "description": "Sends an event notification when the broadcaster starts a charity campaign.",
+    "class_name": "TCharityCampaignStart",
+    "doclink": "#channelcharity_campaignstart",
+    "scopes": [
+      "channel:read:charity"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.charity_campaign.start.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TCharityCampaignStartCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#charity-campaign-start-event",
+        "id": "charity-campaign-start-event",
+        "class_name": "TCharityCampaignStartEvent"
+      }
+    ]
+  },
+  {
+    "type": "Charity Campaign Progress",
+    "name": "channel.charity_campaign.progress",
+    "version": "1",
+    "description": "Sends an event notification when progress is made towards the campaign\u2019s goal or when the broadcaster changes the fundraising goal.",
+    "class_name": "TCharityCampaignProgress",
+    "doclink": "#channelcharity_campaignprogress",
+    "scopes": [
+      "channel:read:charity"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.charity_campaign.progress.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TCharityCampaignProgressCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#charity-campaign-progress-event",
+        "id": "charity-campaign-progress-event",
+        "class_name": "TCharityCampaignProgressEvent"
+      }
+    ]
+  },
+  {
+    "type": "Charity Campaign Stop",
+    "name": "channel.charity_campaign.stop",
+    "version": "1",
+    "description": "Sends an event notification when the broadcaster stops a charity campaign.",
+    "class_name": "TCharityCampaignStop",
+    "doclink": "#channelcharity_campaignstop",
+    "scopes": [
+      "channel:read:charity"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.charity_campaign.stop.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TCharityCampaignStopCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#charity-campaign-stop-event",
+        "id": "charity-campaign-stop-event",
+        "class_name": "TCharityCampaignStopEvent"
+      }
+    ]
+  },
+  {
+    "type": "Conduit Shard Disabled",
+    "name": "conduit.shard.disabled",
+    "version": "1",
+    "description": "Sends a notification when EventSub disables a shard due to the status of the underlying transport changing.",
+    "class_name": "TConduitShardDisabled",
+    "doclink": "#conduitsharddisabled",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name:\u00a0conduit.shard.disabled.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version:\u00a01.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Optionally pass in the conduit ID for the conduit you want to receive events for.",
+        "link": "/docs/eventsub/eventsub-reference/#conduit-shard-disabled-condition",
+        "id": "conduit-shard-disabled-condition",
+        "class_name": "TConduitShardDisabledCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference#conduit-shard-disabled-event",
+        "id": "conduit-shard-disabled-event",
+        "class_name": "TConduitShardDisabledEvent"
+      }
+    ]
+  },
+  {
+    "type": "Drop Entitlement Grant",
+    "name": "drop.entitlement.grant",
+    "version": "1",
+    "description": "An entitlement for a Drop is granted to a user.",
+    "class_name": "TDropEntitlementGrant",
+    "doclink": "#dropentitlementgrant",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: drop.entitlement.grant.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the organization_id to subscribe to all drop entitlement grant notifications for that organization.",
+        "link": "/docs/eventsub/eventsub-reference/#drop-entitlement-grant-condition",
+        "id": "drop-entitlement-grant-condition",
+        "class_name": "TDropEntitlementGrantCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      },
+      {
+        "name": "is_batching_enabled",
+        "type": "string",
+        "required": "yes",
+        "description": "Needs to be true for this subscription type.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "events",
+        "type": "event",
+        "description": "Event information. Contains Drop entitlement information.",
+        "link": "/docs/eventsub/eventsub-reference/#drop-entitlement-grant-event",
+        "id": "drop-entitlement-grant-event",
+        "class_name": "TDropEntitlementGrantEvent"
+      }
+    ]
+  },
+  {
+    "type": "Extension Bits Transaction Create",
+    "name": "extension.bits_transaction.create",
+    "version": "1",
+    "description": "A Bits transaction occurred for a specified Twitch Extension.",
+    "class_name": "TExtensionBitsTransactionCreate",
+    "doclink": "#extensionbits_transactioncreate",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: extension.bits_transaction.create.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the Extension client ID you want to receive Bits transaction notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#extension-bits-transaction-create-condition",
+        "id": "extension-bits-transaction-create-condition",
+        "class_name": "TExtensionBitsTransactionCreateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains Extension Bits transaction information.",
+        "link": "/docs/eventsub/eventsub-reference/#extension-bits-transaction-create-event",
+        "id": "extension-bits-transaction-create-event",
+        "class_name": "TExtensionBitsTransactionCreateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Goal Begin",
+    "name": "channel.goal.begin",
+    "version": "1",
+    "description": "Get notified when a broadcaster begins a goal.",
+    "class_name": "TGoalBegin",
+    "doclink": "#channelgoalbegin",
+    "scopes": [
+      "channel:read:goals"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.goal.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Set the Condition object\u2019s broadcaster_user_id field to the ID of the broadcaster whose goals you want to get notified about.",
+        "link": "/docs/eventsub/eventsub-reference/#goals-condition",
+        "id": "goals-condition",
+        "class_name": "TGoalsCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Identifies the event you subscribed to.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Contains the event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#goals-event",
+        "id": "goals-event",
+        "class_name": "TGoalsEvent"
+      }
+    ]
+  },
+  {
+    "type": "Goal Progress",
+    "name": "channel.goal.progress",
+    "version": "1",
+    "description": "Get notified when progress (either positive or negative) is made towards a broadcaster\u2019s goal.",
+    "class_name": "TGoalProgress",
+    "doclink": "#channelgoalprogress",
+    "scopes": [
+      "channel:read:goals"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.goal.progress.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Set the Condition object\u2019s broadcaster_user_id field to the ID of the broadcaster whose goals you want to get notified about.",
+        "link": "/docs/eventsub/eventsub-reference/#goals-condition",
+        "id": "goals-condition",
+        "class_name": "TGoalsCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Identifies the event you subscribed to.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Contains the event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#goals-event",
+        "id": "goals-event",
+        "class_name": "TGoalsEvent"
+      }
+    ]
+  },
+  {
+    "type": "Goal End",
+    "name": "channel.goal.end",
+    "version": "1",
+    "description": "Get notified when a broadcaster ends a goal.",
+    "class_name": "TGoalEnd",
+    "doclink": "#channelgoalend",
+    "scopes": [
+      "channel:read:goals"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.goal.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Set the Condition object\u2019s broadcaster_user_id field to the ID of the broadcaster whose goals you want to get notified about.",
+        "link": "/docs/eventsub/eventsub-reference/#goals-condition",
+        "id": "goals-condition",
+        "class_name": "TGoalsCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Identifies the event you subscribed to.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Contains the event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#goals-event",
+        "id": "goals-event",
+        "class_name": "TGoalsEvent"
+      }
+    ]
+  },
+  {
+    "type": "Hype Train Begin",
+    "name": "channel.hype_train.begin",
+    "version": "1",
+    "description": "A Hype Train begins on the specified channel.",
+    "class_name": "THypeTrainBegin",
+    "doclink": "#channelhype_trainbegin",
+    "scopes": [
+      "channel:read:hype_train"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.hype_train.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to Hype Train begin notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#hype-train-begin-condition",
+        "id": "hype-train-begin-condition",
+        "class_name": "THypeTrainBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains Hype Train information like the level, goal, top contributors, start time, and expiration time.",
+        "link": "/docs/eventsub/eventsub-reference/#hype-train-begin-event",
+        "id": "hype-train-begin-event",
+        "class_name": "THypeTrainBeginEvent"
+      }
+    ]
+  },
+  {
+    "type": "Hype Train Progress",
+    "name": "channel.hype_train.progress",
+    "version": "1",
+    "description": "A Hype Train makes progress on the specified channel.",
+    "class_name": "THypeTrainProgress",
+    "doclink": "#channelhype_trainprogress",
+    "scopes": [
+      "channel:read:hype_train"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.hype_train.progress.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to Hype Train progress notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#hype-train-progress-condition",
+        "id": "hype-train-progress-condition",
+        "class_name": "THypeTrainProgressCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains Hype Train information like the level, goal, top contributors, last contribution, start time, and expiration time.",
+        "link": "/docs/eventsub/eventsub-reference/#hype-train-progress-event",
+        "id": "hype-train-progress-event",
+        "class_name": "THypeTrainProgressEvent"
+      }
+    ]
+  },
+  {
+    "type": "Hype Train End",
+    "name": "channel.hype_train.end",
+    "version": "1",
+    "description": "A Hype Train ends on the specified channel.",
+    "class_name": "THypeTrainEnd",
+    "doclink": "#channelhype_trainend",
+    "scopes": [
+      "channel:read:hype_train"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: channel.hype_train.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to Hype Train end notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#hype-train-end-condition",
+        "id": "hype-train-end-condition",
+        "class_name": "THypeTrainEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains Hype Train information like the level, top contributors, start time, end time, and cooldown end time.",
+        "link": "/docs/eventsub/eventsub-reference/#hype-train-end-event",
+        "id": "hype-train-end-event",
+        "class_name": "THypeTrainEndEvent"
+      }
+    ]
+  },
+  {
+    "type": "Shield Mode Begin",
+    "name": "channel.shield_mode.begin",
+    "version": "1",
+    "description": "Sends a notification when the broadcaster activates Shield Mode.",
+    "class_name": "TShieldModeBegin",
+    "doclink": "#channelshield_modebegin",
+    "scopes": [
+      "moderator:read:shield_mode",
+      "moderator:manage:shield_mode"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.shield_mode.begin.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TShieldModeBeginCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#shield-mode",
+        "id": "shield-mode",
+        "class_name": "TShieldMode"
+      }
+    ]
+  },
+  {
+    "type": "Shield Mode End",
+    "name": "channel.shield_mode.end",
+    "version": "1",
+    "description": "Sends a notification when the broadcaster deactivates Shield Mode.",
+    "class_name": "TShieldModeEnd",
+    "doclink": "#channelshield_modeend",
+    "scopes": [
+      "moderator:read:shield_mode",
+      "moderator:manage:shield_mode"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.shield_mode.end.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TShieldModeEndCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference/#shield-mode",
+        "id": "shield-mode",
+        "class_name": "TShieldMode"
+      }
+    ]
+  },
+  {
+    "type": "Shoutout Create",
+    "name": "channel.shoutout.create",
+    "version": "1",
+    "description": "Sends a notification when the specified broadcaster sends a Shoutout.",
+    "class_name": "TShoutoutCreate",
+    "doclink": "#channelshoutoutcreate",
+    "scopes": [
+      "moderator:read:shoutouts",
+      "moderator:manage:shoutouts"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.shoutout.create.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TShoutoutCreateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference#shoutout-sent",
+        "id": "shoutout-sent",
+        "class_name": "TShoutoutCreate"
+      }
+    ]
+  },
+  {
+    "type": "Shoutout Received",
+    "name": "channel.shoutout.receive",
+    "version": "1",
+    "description": "Sends a notification when the specified broadcaster receives a Shoutout.",
+    "class_name": "TShoutoutReceived",
+    "doclink": "#channelshoutoutreceive",
+    "scopes": [
+      "moderator:read:shoutouts",
+      "moderator:manage:shoutouts"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The event you want to receive notifications about. Must be set to channel.shoutout.receive.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The definition of the subscription request to use. Must be set to 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "object",
+        "required": "yes",
+        "description": "An object that contains subscription-specific parameters.",
+        "link": null,
+        "id": null,
+        "class_name": "TShoutoutReceivedCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "The transport details that you want Twitch to use when sending event notifications.",
+        "link": "/docs/eventsub/eventsub-reference#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "The subscription\u2019s information.",
+        "link": "/docs/eventsub/eventsub-reference#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event\u2019s data.",
+        "link": "/docs/eventsub/eventsub-reference#shoutout-received",
+        "id": "shoutout-received",
+        "class_name": "TShoutoutReceived"
+      }
+    ]
+  },
+  {
+    "type": "Stream Online",
+    "name": "stream.online",
+    "version": "1",
+    "description": "The specified broadcaster starts a stream.",
+    "class_name": "TStreamOnline",
+    "doclink": "#streamonline",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: stream.online.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to get updates for.",
+        "link": "/docs/eventsub/eventsub-reference/#stream-online-condition",
+        "id": "stream-online-condition",
+        "class_name": "TStreamOnlineCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains the stream ID, broadcaster user ID, broadcaster user name, and the stream type.",
+        "link": "/docs/eventsub/eventsub-reference/#stream-online-event",
+        "id": "stream-online-event",
+        "class_name": "TStreamOnlineEvent"
+      }
+    ]
+  },
+  {
+    "type": "Stream Offline",
+    "name": "stream.offline",
+    "version": "1",
+    "description": "The specified broadcaster stops a stream.",
+    "class_name": "TStreamOffline",
+    "doclink": "#streamoffline",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: stream.offline.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the broadcaster user ID for the channel you want to get updates for.",
+        "link": "/docs/eventsub/eventsub-reference/#stream-offline-condition",
+        "id": "stream-offline-condition",
+        "class_name": "TStreamOfflineCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains the broadcaster user ID and broadcaster user name.",
+        "link": "/docs/eventsub/eventsub-reference/#stream-offline-event",
+        "id": "stream-offline-event",
+        "class_name": "TStreamOfflineEvent"
+      }
+    ]
+  },
+  {
+    "type": "User Authorization Grant",
+    "name": "user.authorization.grant",
+    "version": "1",
+    "description": "A user\u2019s authorization has been granted to your client id.",
+    "class_name": "TUserAuthorizationGrant",
+    "doclink": "#userauthorizationgrant",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: user.authorization.grant.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the client ID of the application you want to get user authorization grant notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#user-authorization-grant-condition",
+        "id": "user-authorization-grant-condition",
+        "class_name": "TUserAuthorizationGrantCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains your application\u2019s client ID and the user ID of the user who granted authorization to your application.",
+        "link": "/docs/eventsub/eventsub-reference/#user-authorization-grant-event",
+        "id": "user-authorization-grant-event",
+        "class_name": "TUserAuthorizationGrantEvent"
+      }
+    ]
+  },
+  {
+    "type": "User Authorization Revoke",
+    "name": "user.authorization.revoke",
+    "version": "1",
+    "description": "A user\u2019s authorization has been revoked for your client id.",
+    "class_name": "TUserAuthorizationRevoke",
+    "doclink": "#userauthorizationrevoke",
+    "scopes": [],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: user.authorization.revoke.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the client ID of the application you want to get user authorization revoke notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#user-authorization-revoke-condition",
+        "id": "user-authorization-revoke-condition",
+        "class_name": "TUserAuthorizationRevokeCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "Event information. Contains your application\u2019s client ID and the user ID of the user who revoked authorization for your application.",
+        "link": "/docs/eventsub/eventsub-reference/#user-authorization-revoke-event",
+        "id": "user-authorization-revoke-event",
+        "class_name": "TUserAuthorizationRevokeEvent"
+      }
+    ]
+  },
+  {
+    "type": "User Update",
+    "name": "user.update",
+    "version": "1",
+    "description": "A user has updated their account.",
+    "class_name": "TUserUpdate",
+    "doclink": "#userupdate",
+    "scopes": [
+      "user:read:email"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: user.update.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters. Pass in the user ID for the user you want update notifications for.",
+        "link": "/docs/eventsub/eventsub-reference/#user-update-condition",
+        "id": "user-update-condition",
+        "class_name": "TUserUpdateCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Subscription information.",
+        "link": "/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": null,
+        "link": "/docs/eventsub/eventsub-reference/#user-update-event",
+        "id": "user-update-event",
+        "class_name": "TUserUpdateEvent"
+      }
+    ]
+  },
+  {
+    "type": "Whisper Received",
+    "name": "user.whisper.message",
+    "version": "1",
+    "description": "A user receives a whisper.",
+    "class_name": "TWhisperReceived",
+    "doclink": "#userwhispermessage",
+    "scopes": [
+      "user:read:whispers",
+      "user:manage:whispers"
+    ],
+    "request": [
+      {
+        "name": "type",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type name: user.whisper.message.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "version",
+        "type": "string",
+        "required": "yes",
+        "description": "The subscription type version: 1.",
+        "link": null,
+        "id": null,
+        "class_name": null
+      },
+      {
+        "name": "condition",
+        "type": "condition",
+        "required": "yes",
+        "description": "Subscription-specific parameters.",
+        "link": "/docs/eventsub/eventsub-reference/#whisper-received-condition",
+        "id": "whisper-received-condition",
+        "class_name": "TWhisperReceivedCondition"
+      },
+      {
+        "name": "transport",
+        "type": "transport",
+        "required": "yes",
+        "description": "Transport-specific parameters.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#transport",
+        "id": "transport",
+        "class_name": "TTransport"
+      }
+    ],
+    "payload": [
+      {
+        "name": "subscription",
+        "type": "subscription",
+        "description": "Metadata about the subscription.",
+        "link": "https://dev.twitch.tv/docs/eventsub/eventsub-reference/#subscription",
+        "id": "subscription",
+        "class_name": "TSubscription"
+      },
+      {
+        "name": "event",
+        "type": "event",
+        "description": "The event information.",
+        "link": "/docs/eventsub/eventsub-reference/#whisper-received-event",
+        "id": "whisper-received-event",
+        "class_name": "TWhisperReceivedEvent"
+      }
+    ]
+  }
+]

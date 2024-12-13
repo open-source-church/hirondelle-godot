@@ -10,7 +10,7 @@ var session_id : String
 const EVENTSUB_URL = "wss://eventsub.wss.twitch.tv/ws"
 
 # Settings
-var auto_connect := false
+var auto_connect := true
 
 func _init(_twitching: Twitching):
 	twitching = _twitching
@@ -21,6 +21,8 @@ func _ready() -> void:
 	
 	if auto_connect:
 		connect_websocket()
+		
+	var b : bool
 
 func connect_websocket() -> void:
 	print("Connecting websocket")
@@ -59,17 +61,34 @@ func treat_twitch_message(msg : Dictionary):
 	
 	elif msg_type == "session_keepalive":
 		# Everything alright
-		pass
+		return
+	
+	var subscription_type = msg.metadata.get("subscription_type")
+	if not subscription_type:
+		print("[EventSub] No subscription type:")
+		print(JSON.stringify(msg, "  "))
+	
+	if subscription_type == "channel.chat.message":
+		print(JSON.stringify(msg.payload.event, "  "))
+		var m = TChannelChatMessageEvent.from_object(msg.payload.event)
+		print("Object:", m.to_object())
 	
 	else:
-		print("[EventSub] Websocket message:", msg)
+		print("[EventSub] Websocket message:", msg_type)
+		print(JSON.stringify(msg, "  "))
 
 func create_subscriptions():
 	# Unsubscribe all, because past subscriptions are still in memory
 	await subscriber.unsubscribe_all()
 	# Channel read message
-	await subscriber.subscribe("channel.chat.message", "1", {
-		"broadcaster_user_id" : "499044140",
-		"user_id": "499044140",
-	})
+	#var condition = TChannelChatMessageCondition.new()
+	#condition.broadcaster_user_id = "499044140"
+	#condition.user_id = "499044140"
+	var condition = TChannelChatMessageCondition.create("499044140", "499044140")
+	await TwitchingSubs.CHANNEL_CHAT_MESSAGE.subscribe(subscriber, condition)
+	#TwitchingSubs.CHANNEL_CHAT_MESSAGE.subscribe()
+	#await subscriber.subscribe("channel.chat.message", "1", {
+		#"broadcaster_user_id" : "499044140",
+		#"user_id": "499044140",
+	#})
 	

@@ -1,6 +1,10 @@
 extends Node
 class_name TwitchingEventSubSubscriber
-## Manages EventSub
+## Manages EventSub subscriptions
+##
+## @tutorial(Creates and EventSub subscription): https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription
+## @tutorial(Subscription types): https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types
+## @tutorial(Event sub reference): https://dev.twitch.tv/docs/eventsub/eventsub-reference
 
 # Get user id: https://www.streamweasels.com/tools/convert-twitch-username-%20to-user-id/
 # Twitch API reference: https://dev.twitch.tv/docs/api/reference/
@@ -19,13 +23,11 @@ func _ready() -> void:
 	client = HTTPRequest.new()
 	add_child(client)
 
-## Creates and EventSub subscription. Cf. https://dev.twitch.tv/docs/api/reference/#create-eventsub-subscription
-## Subscription types: https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types
-## Event sub reference: https://dev.twitch.tv/docs/eventsub/eventsub-reference
 
-func subscribe(_name : String, _version := "1", _condition := {}) -> String:
+## Create an eventsub subscription. Either use that manually, or use [TwitchingSubs.Sub].
+func subscribe(_type : String, _version := "1", _condition := {}) -> String:
 	var request = {
-		"type": _name,
+		"type": _type,
 		"version": _version,
 		"condition": _condition,
 		"transport": {

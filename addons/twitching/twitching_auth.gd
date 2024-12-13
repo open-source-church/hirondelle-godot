@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 			_last_poll = Time.get_ticks_msec()
 			_get_access_token_request()
 
-func request_access_tokens(scopes : Array[TwitchingScopes.Scope] = []) -> void:
+func request_access_tokens(scopes : Array[TwitchingScopes] = []) -> void:
 	if scopes:
 		requested_scopes = scopes
 	# Only strategy implemented
@@ -73,7 +73,7 @@ func request_access_tokens(scopes : Array[TwitchingScopes.Scope] = []) -> void:
 func DCF_authorize() -> void:
 	var url = "https://id.twitch.tv/oauth2/device?client_id=%s&scopes=%s" % [
 		twitching.CLIENT_ID,
-		format_scopes(requested_scopes)
+		TwitchingScopes.format_scopes(requested_scopes),
 	]
 	step = FlowStep.INITIALIZATION
 	client.request(url, [], HTTPClient.METHOD_POST)
@@ -81,7 +81,7 @@ func DCF_authorize() -> void:
 func _get_access_token_request():
 	var url = "https://id.twitch.tv/oauth2/token?client_id=%s&scopes=%s&device_code=%s&grant_type=%s" % [
 		twitching.CLIENT_ID,
-		format_scopes(requested_scopes),
+		TwitchingScopes.format_scopes(requested_scopes),
 		device_code,
 		"urn:ietf:params:oauth:grant-type:device_code"
 	]
@@ -97,9 +97,6 @@ func use_refresh_token() -> bool:
 	step = FlowStep.REFRESH
 	client.request(url, [], HTTPClient.METHOD_POST)
 	return await token_refreshed
-
-func format_scopes(scopes: Array):
-	return " ".join(scopes.map(func (s): return s.value)).uri_encode()
 
 func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if not result == HTTPRequest.RESULT_SUCCESS:
