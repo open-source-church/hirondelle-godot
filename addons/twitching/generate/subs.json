@@ -72,7 +72,7 @@
     "version": "2",
     "description": "A user is notified if a message is caught by automod for review.  Only public blocked terms trigger notifications, not private ones.",
     "class_name": "TAutomodMessageHoldV2",
-    "doclink": "#automodmessagehold",
+    "doclink": "#automodmessagehold-v2",
     "scopes": [
       "moderator:manage:automod"
     ],
@@ -90,7 +90,7 @@
         "name": "version",
         "type": "string",
         "required": "yes",
-        "description": "The subscription type version: 1.",
+        "description": "The subscription type version: 2.",
         "link": null,
         "id": null,
         "class_name": null
@@ -127,9 +127,9 @@
         "name": "event",
         "type": "event",
         "description": "The event information.",
-        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
-        "id": "automod-message-hold-event",
-        "class_name": "TAutomodMessageHoldEvent"
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event-v2",
+        "id": "automod-message-hold-event-v2",
+        "class_name": "TAutomodMessageHoldEventV2"
       }
     ]
   },
@@ -206,7 +206,7 @@
     "version": "2",
     "description": "A message in the automod queue had its status changed. Only public blocked terms trigger notifications, not private ones.",
     "class_name": "TAutomodMessageUpdateV2",
-    "doclink": "#automodmessageupdate",
+    "doclink": "#automodmessageupdate-v2",
     "scopes": [
       "moderator:manage:automod"
     ],
@@ -224,7 +224,7 @@
         "name": "version",
         "type": "string",
         "required": "yes",
-        "description": "The subscription type version: 1.",
+        "description": "The subscription type version: 2.",
         "link": null,
         "id": null,
         "class_name": null
@@ -261,9 +261,9 @@
         "name": "event",
         "type": "event",
         "description": "The event information.",
-        "link": "/docs/eventsub/eventsub-reference/#automod-message-update-event",
-        "id": "automod-message-update-event",
-        "class_name": "TAutomodMessageUpdateEvent"
+        "link": "/docs/eventsub/eventsub-reference/#automod-message-update-event-v2",
+        "id": "automod-message-update-event-v2",
+        "class_name": "TAutomodMessageUpdateEventV2"
       }
     ]
   },
@@ -405,7 +405,7 @@
     "type": "Channel Update",
     "name": "channel.update",
     "version": "2",
-    "description": null,
+    "description": "A broadcaster updates their channel properties e.g., category, title, content classification labels, broadcast, or language.",
     "class_name": "TChannelUpdate",
     "doclink": "#channelupdate",
     "scopes": [],
@@ -1881,20 +1881,21 @@
   },
   {
     "type": "Channel Unban Request Create",
-    "name": null,
+    "name": "channel.unban_request.create\u00a0",
     "version": "1",
     "description": "A user creates an unban request.",
     "class_name": "TChannelUnbanRequestCreate",
-    "doclink": "#automodmessagehold",
+    "doclink": "#channelunban_requestcreate",
     "scopes": [
-      "moderator:manage:automod"
+      "moderator:read:unban_requests",
+      "moderator:manage:unban_requests"
     ],
     "request": [
       {
         "name": "type",
         "type": "string",
         "required": "yes",
-        "description": "The subscription type name: automod.message.hold.",
+        "description": "The subscription type name:\u00a0channel.unban_request.create.",
         "link": null,
         "id": null,
         "class_name": null
@@ -1903,7 +1904,7 @@
         "name": "version",
         "type": "string",
         "required": "yes",
-        "description": "The subscription type version: 1.",
+        "description": "The subscription type version:\u00a01.",
         "link": null,
         "id": null,
         "class_name": null
@@ -1913,9 +1914,9 @@
         "type": "condition",
         "required": "yes",
         "description": "Subscription-specific parameters.",
-        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-condition",
-        "id": "automod-message-hold-condition",
-        "class_name": "TAutomodMessageHoldCondition"
+        "link": "/docs/eventsub/eventsub-reference/#channel-unban-request-create-condition",
+        "id": "channel-unban-request-create-condition",
+        "class_name": "TChannelUnbanRequestCreateCondition"
       },
       {
         "name": "transport",
@@ -1940,28 +1941,29 @@
         "name": "event",
         "type": "event",
         "description": "The event information.",
-        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
-        "id": "automod-message-hold-event",
-        "class_name": "TAutomodMessageHoldEvent"
+        "link": "/docs/eventsub/eventsub-reference/#channel-unban-request-create-event",
+        "id": "channel-unban-request-create-event",
+        "class_name": "TChannelUnbanRequestCreateEvent"
       }
     ]
   },
   {
     "type": "Channel Unban Request Resolve",
-    "name": null,
+    "name": "channel.unban_request.resolve\u00a0",
     "version": "1",
     "description": "An unban request has been resolved.",
     "class_name": "TChannelUnbanRequestResolve",
-    "doclink": "#automodmessagehold",
+    "doclink": "#channelunban_requestresolve",
     "scopes": [
-      "moderator:manage:automod"
+      "moderator:read:unban_requests",
+      "moderator:manage:unban_requests"
     ],
     "request": [
       {
         "name": "type",
         "type": "string",
         "required": "yes",
-        "description": "The subscription type name: automod.message.hold.",
+        "description": "The subscription type name:\u00a0channel.unban_request.resolve.",
         "link": null,
         "id": null,
         "class_name": null
@@ -1970,7 +1972,7 @@
         "name": "version",
         "type": "string",
         "required": "yes",
-        "description": "The subscription type version: 1.",
+        "description": "The subscription type version:\u00a01.",
         "link": null,
         "id": null,
         "class_name": null
@@ -1980,9 +1982,9 @@
         "type": "condition",
         "required": "yes",
         "description": "Subscription-specific parameters.",
-        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-condition",
-        "id": "automod-message-hold-condition",
-        "class_name": "TAutomodMessageHoldCondition"
+        "link": "/docs/eventsub/eventsub-reference/#channel-unban-request-resolve-condition",
+        "id": "channel-unban-request-resolve-condition",
+        "class_name": "TChannelUnbanRequestResolveCondition"
       },
       {
         "name": "transport",
@@ -2007,9 +2009,9 @@
         "name": "event",
         "type": "event",
         "description": "The event information.",
-        "link": "/docs/eventsub/eventsub-reference/#automod-message-hold-event",
-        "id": "automod-message-hold-event",
-        "class_name": "TAutomodMessageHoldEvent"
+        "link": "/docs/eventsub/eventsub-reference/#channel-unban-request-resolve-event",
+        "id": "channel-unban-request-resolve-event",
+        "class_name": "TChannelUnbanRequestResolveEvent"
       }
     ]
   },
@@ -2097,7 +2099,7 @@
     "version": "2",
     "description": "A moderator performs a moderation action in a channel. Includes warnings.",
     "class_name": "TChannelModerateV2",
-    "doclink": "#channelmoderate",
+    "doclink": "#channelmoderate-v2",
     "scopes": [
       "moderator:read:blocked_terms",
       "moderator:manage:blocked_terms",
@@ -2109,6 +2111,8 @@
       "moderator:manage:banned_users",
       "moderator:read:chat_messages",
       "moderator:manage:chat_messages",
+      "moderator:read:warnings",
+      "moderator:manage:warnings",
       "moderator:read:moderators",
       "moderator:read:vips"
     ],
@@ -2136,9 +2140,9 @@
         "type": "condition",
         "required": "yes",
         "description": "Subscription-specific parameters.",
-        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-condition",
-        "id": "channel-moderate-condition",
-        "class_name": "TChannelModerateCondition"
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-v2-condition",
+        "id": "channel-moderate-v2-condition",
+        "class_name": "TChannelModerateV2Condition"
       },
       {
         "name": "transport",
@@ -2163,9 +2167,9 @@
         "name": "event",
         "type": "event",
         "description": "The event information.",
-        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-event",
-        "id": "channel-moderate-event",
-        "class_name": "TChannelModerateEvent"
+        "link": "/docs/eventsub/eventsub-reference/#channel-moderate-event-v2",
+        "id": "channel-moderate-event-v2",
+        "class_name": "TChannelModerateEventV2"
       }
     ]
   },

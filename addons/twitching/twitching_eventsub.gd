@@ -5,6 +5,7 @@ class_name TwitchingEventSub
 var twitching : Twitching
 var socket := WebSocketPeer.new()
 var subscriber : TwitchingEventSubSubscriber
+var subs = TwitchingSubs
 var session_id : String
 
 const EVENTSUB_URL = "wss://eventsub.wss.twitch.tv/ws"
@@ -19,10 +20,11 @@ func _ready() -> void:
 	subscriber = TwitchingEventSubSubscriber.new(twitching)
 	add_child(subscriber)
 	
+	subs = TwitchingSubs.new(twitching)
+	add_child(subs)
+	
 	if auto_connect:
 		connect_websocket()
-		
-	var b : bool
 
 func connect_websocket() -> void:
 	print("Connecting websocket")
@@ -39,7 +41,7 @@ func _process(delta):
 	if state == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count():
 			var msg = JSON.parse_string(socket.get_packet().get_string_from_utf8())
-			treat_twitch_message(msg)
+			process_twitch_message(msg)
 	
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -51,9 +53,12 @@ func _process(delta):
 		session_id = ""
 		set_process(false) # Stop processing.
 
-## Treats twitch websocket messages. See https://dev.twitch.tv/docs/eventsub/handling-websocket-events/
-func treat_twitch_message(msg : Dictionary):
+## Processes twitch websocket messages. See https://dev.twitch.tv/docs/eventsub/handling-websocket-events/
+func process_twitch_message(msg : Dictionary):
 	var msg_type = msg.get("metadata", {}).get("message_type", "")
+	#print("[EventSub] Websocket message:", msg_type)
+	#print(JSON.stringify(msg, "  "))
+	
 	if msg_type == "session_welcome":
 		session_id = msg.get("payload", {}).get("session", {}).get("id", "")
 		
@@ -63,32 +68,16 @@ func treat_twitch_message(msg : Dictionary):
 		# Everything alright
 		return
 	
-	var subscription_type = msg.metadata.get("subscription_type")
-	if not subscription_type:
-		print("[EventSub] No subscription type:")
-		print(JSON.stringify(msg, "  "))
-	
-	if subscription_type == "channel.chat.message":
-		print(JSON.stringify(msg.payload.event, "  "))
-		var m = TChannelChatMessageEvent.from_object(msg.payload.event)
-		print("Object:", m.to_object())
-	
-	else:
-		print("[EventSub] Websocket message:", msg_type)
-		print(JSON.stringify(msg, "  "))
+	elif msg_type == "notification":
+		subs.parse_event(msg)
+		return
 
 func create_subscriptions():
 	# Unsubscribe all, because past subscriptions are still in memory
 	await subscriber.unsubscribe_all()
 	# Channel read message
-	#var condition = TChannelChatMessageCondition.new()
-	#condition.broadcaster_user_id = "499044140"
-	#condition.user_id = "499044140"
+	#TwitchingSubs.CHANNEL_CHAT_MESSAGE.event.connect()
+	#TwitchingSubs.event.connect()
 	var condition = TChannelChatMessageCondition.create("499044140", "499044140")
-	await TwitchingSubs.CHANNEL_CHAT_MESSAGE.subscribe(subscriber, condition)
-	#TwitchingSubs.CHANNEL_CHAT_MESSAGE.subscribe()
-	#await subscriber.subscribe("channel.chat.message", "1", {
-		#"broadcaster_user_id" : "499044140",
-		#"user_id": "499044140",
-	#})
+	await subs.CHANNEL_CHAT_MESSAGE.subscribe(condition)
 	
