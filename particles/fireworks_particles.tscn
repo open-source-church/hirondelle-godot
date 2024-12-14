@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bconrh2va6eu2"]
+[gd_scene load_steps=16 format=3 uid="uid://bconrh2va6eu2"]
 
 [ext_resource type="Script" path="res://particles/fireworks_particles.gd" id="1_rgkjd"]
 
@@ -46,17 +46,11 @@ fill_to = Vector2(0, 1)
 blend_mode = 1
 
 [sub_resource type="Curve" id="Curve_peou5"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.51479, 0.0, 0, 0]
+_data = [Vector2(0.744589, 1), 0.0, -1.00663, 0, 0, Vector2(1, 0), -13.5385, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_18p2m"]
 curve = SubResource("Curve_peou5")
-
-[sub_resource type="Gradient" id="Gradient_adrnk"]
-colors = PackedColorArray(1, 0, 0, 1, 0.901961, 0.533333, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_co1ix"]
-gradient = SubResource("Gradient_adrnk")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lket8"]
 lifetime_randomness = 1.0
@@ -68,8 +62,10 @@ initial_velocity_max = 150.0
 gravity = Vector3(0, 98, 0)
 damping_max = 100.0
 scale_min = 0.5
-color_initial_ramp = SubResource("GradientTexture1D_co1ix")
+color = Color(1, 0.2, 1, 1)
 alpha_curve = SubResource("CurveTexture_18p2m")
+hue_variation_min = -0.06
+hue_variation_max = 0.13
 
 [sub_resource type="Gradient" id="Gradient_3nfku"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -92,6 +88,7 @@ sub_emitter = NodePath("Explosion")
 process_material = SubResource("ParticleProcessMaterial_o8vra")
 texture = SubResource("GradientTexture2D_0iehh")
 lifetime = 2.0
+one_shot = true
 explosiveness = 0.59
 local_coords = true
 trail_enabled = true

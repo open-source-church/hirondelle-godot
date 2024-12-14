@@ -51,3 +51,7 @@ func update_image() -> void:
 	}
 	G.window.images[ID] = opt
 	G.window.canvas_redraw()
+
+func _exit_tree() -> void:
+	G.window.images.erase(ID)
+	G.window.canvas_redraw()

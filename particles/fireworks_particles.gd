@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+class_name HFireworksParticles
 
 @onready var trails: GPUParticles2D = %Trails
 @onready var explosion: GPUParticles2D = %Explosion

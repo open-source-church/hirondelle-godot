@@ -13,11 +13,14 @@ func _init() -> void:
 	PORTS = {
 		"show": HPortFlow.new(E.Side.INPUT),
 		"hide": HPortFlow.new(E.Side.INPUT),
-		"percentage": HPortIntSlider.new(E.Side.INPUT, { "params": { "min": 0, "max": 100 } }),
+		"value": HPortRatioSlider.new(E.Side.INPUT, { "label": true } ),
 		"pos": HPortVec2.new(E.Side.INPUT, { "default": Vector2(0, 0) }),
 		"size": HPortVec2.new(E.Side.INPUT, { "default": Vector2(500, 30) }),
 		"color": HPortColor.new(E.Side.INPUT, { "default": Color.PURPLE }),
 		"background": HPortColor.new(E.Side.INPUT, { "default": Color.GRAY }),
+		"border": HPortColor.new(E.Side.INPUT, { "default": Color.BLACK }),
+		"radius": HPortIntSpin.new(E.Side.INPUT, { "default": 0 }),
+		"border_width": HPortIntSpin.new(E.Side.INPUT, { "default": 0 }),
 		"visible": HPortBool.new(E.Side.INPUT, { "default": false }),
 	}
 	ID = randi()
@@ -30,7 +33,10 @@ func update_progressbar():
 		"height": PORTS.size.value.y,
 		"color": PORTS.color.value,
 		"bg_color": PORTS.background.value,
-		"value": PORTS.percentage.value / 100.0,
+		"border_color": PORTS.border.value,
+		"border_width": PORTS.border_width.value,
+		"radius": PORTS.radius.value,
+		"value": PORTS.value.value,
 		"visible": PORTS.visible.value
 	}
 	G.window.progress_bars[ID] = opt
@@ -45,3 +51,7 @@ func run(routine:String):
 
 func update(_last_changed: = "") -> void:
 	update_progressbar()
+
+func _exit_tree() -> void:
+	G.window.progress_bars.erase(ID)
+	G.window.canvas_redraw()
