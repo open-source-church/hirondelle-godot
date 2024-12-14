@@ -152,6 +152,7 @@ func get_headers() -> Array:
 
 ## Stores tokens encrypted in user directory
 func store_tokens():
+	print("Got new access tokens")
 	var secret_file = ConfigFile.new()
 	secret_file.load_encrypted_pass(secret_storage_path, twitching.CLIENT_ID)
 	secret_file.set_value("auth", "access_token", access_token)

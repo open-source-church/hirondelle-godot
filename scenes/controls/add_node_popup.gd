@@ -3,9 +3,11 @@ extends Popup
 @onready var txt_filter: LineEdit = %TxtFilter
 @onready var lst_nodes: ItemList = %LstNodes
 @onready var lbl_description: RichTextLabel = %LblDescription
+@onready var texture_rect: TextureRect = %TextureRect
 
 var node_list = G.NODES.duplicate()
 const VECTOR_WHITE_ICONS = preload("res://themes/kenney-game-icons/vector_whiteIcons.svg")
+
 
 signal add_node(node_type : String)
 
@@ -65,13 +67,14 @@ func select_item(idx : int) -> void:
 	var n = node_list.filter(func (_n): return _n._type == lst_nodes.get_item_metadata(idx)).front()
 	if not n: return
 	
-	var description = "[b]%s[/b]\n" % n._title
-	description += "[i]%s[/i]\n" % n._type
+	var description = "%s\n" % n._title
+	description += "[font size=\"14px\"][color=\"gray\"][i]%s[/i][/color]\n" % n._type
 	if "_description" in n:
 		description += n._description
 	lbl_description.text = description
 	var description_just_shown = not lbl_description.visible
-	lbl_description.visible = true
+	if "_icon" in n:
+		texture_rect.texture = G.get_main_icon(n._icon, 48)
 	
 	if description_just_shown:
 		await lst_nodes.resized
@@ -79,6 +82,5 @@ func select_item(idx : int) -> void:
 
 func focus_filter() -> void:
 	txt_filter.text = ""
-	lbl_description.visible = false
 	update_node_list()
 	txt_filter.grab_focus()

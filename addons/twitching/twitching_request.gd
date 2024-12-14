@@ -62,6 +62,7 @@ static func request(twitching : Twitching, url: String,
 		# Authorization invalid
 		if _response_code == 401:
 			# Trie to use the refresh token
+			print("[TwitchingRequest] Requesting refresh token...")
 			var success  = await twitching.auth.use_refresh_token()
 			# New access token, try again
 			if success:
