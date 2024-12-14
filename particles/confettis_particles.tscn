@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://biotw53ovbmso"]
+
+[ext_resource type="Script" path="res://particles/confettis_particles.gd" id="1_aih3w"]
+
+[node name="ConfettisParticles" type="Node2D"]
+script = ExtResource("1_aih3w")

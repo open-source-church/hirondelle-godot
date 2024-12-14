@@ -292,6 +292,10 @@ func save() -> Dictionary:
 		"name": name
 	}
 	for v in PORTS:
+		if PORTS[v].value is Array or PORTS[v].value is Dictionary:
+			# We don't save Arrays and Dictionnary because they are supposed to be fed by connections ?
+			# FIXME: is it always the case?
+			continue
 		if PORTS[v].type == E.CONNECTION_TYPES.VEC2:
 			s.vals[v] = { "x": PORTS[v].value.x, "y": PORTS[v].value.y }
 		elif PORTS[v].type == E.CONNECTION_TYPES.COLOR:

@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://ckdlbkl0phr6q"]
+
+[ext_resource type="Texture2D" uid="uid://cm0ae2d8oo46q" path="res://particles/confettis.svg" id="1_xegd2"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rqrh4"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_ag4s8"]
+_data = [Vector2(0, 0.747253), 0.0, 0.0, 0, 0, Vector2(0.264069, 1), 0.0, 0.0, 0, 0, Vector2(0.502164, 0.879121), 0.0, 0.0, 0, 0, Vector2(0.78355, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_5e6g6"]
+curve = SubResource("Curve_ag4s8")
+
+[sub_resource type="Curve" id="Curve_a0ffq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gpfly"]
+curve = SubResource("Curve_a0ffq")
+
+[sub_resource type="Curve" id="Curve_drl2c"]
+_data = [Vector2(0, 0.703297), 0.0, 0.0, 0, 0, Vector2(0.38961, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.07693, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ijn3b"]
+curve = SubResource("Curve_drl2c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g8hfl"]
+resource_local_to_scene = true
+lifetime_randomness = 1.0
+particle_flag_rotate_y = true
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(1, -1, 0)
+spread = 20.0
+initial_velocity_max = 437.5
+angular_velocity_min = -720.0
+angular_velocity_max = 717.3
+gravity = Vector3(0, 300, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = 100.0
+linear_accel_curve = SubResource("CurveTexture_gpfly")
+radial_accel_min = -2.23517e-06
+radial_accel_max = 55.43
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_ijn3b")
+color = Color(1, 1, 0.152941, 1)
+alpha_curve = SubResource("CurveTexture_5e6g6")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+anim_offset_max = 1.0
+turbulence_enabled = true
+turbulence_noise_strength = 0.3
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.7
+collision_use_scale = true
+
+[node name="ConfettisParticlesPart" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_rqrh4")
+position = Vector2(-50, 655)
+scale = Vector2(10, 10)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_g8hfl")
+texture = ExtResource("1_xegd2")
+lifetime = 10.0
+explosiveness = 0.92
+draw_order = 0

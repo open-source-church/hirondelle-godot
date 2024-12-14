@@ -32,6 +32,7 @@ const NODES = [
 	preload("res://scenes/nodes/window/node_window_progressbar.gd"),
 	preload("res://scenes/nodes/window/node_window_play_sound.gd"),
 	preload("res://scenes/nodes/window/node_window_fireworks.gd"),
+	preload("res://scenes/nodes/window/node_window_confettis.gd"),
 	## TWITCH
 	preload("res://scenes/nodes/twitch/twitch_channel_follow.gd"),
 	preload("res://scenes/nodes/twitch/twitch_channel_chat_message.gd"),
@@ -67,6 +68,7 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "cross-no": p = Vector2i(3, 2)
 	if icon == "twitch": p = Vector2i(7, 7)
 	if icon == "fireworks": p = Vector2i(8, 7)
+	if icon == "confettis": p = Vector2i(9, 7)
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 
 func get_node_color(node):

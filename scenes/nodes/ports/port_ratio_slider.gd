@@ -33,7 +33,7 @@ func get_component(_params : Dictionary) -> Control:
 	btn_reset.modulate = Color(1, 1, 1, 0.5)
 	btn_reset.visible = false
 	hbox.add_child(btn_reset)
-	slider.value_changed.connect(func (v): lbl_value.text = str(v))
+	slider.value_changed.connect(func (v): lbl_value.text = "%.3f" % v)
 	btn_reset.pressed.connect(reset_value)
 	slider.value_changed.connect(value_changed.emit.unbind(1))
 	return hbox
@@ -47,6 +47,9 @@ func _get_value():
 
 func _set_value(val):
 	slider.value = val
+
+func _on_value_changed():
+	btn_reset.visible = not is_equal_approx(value, default)
 
 ## Performs type conversion to ensure the value is in the proper type
 func type_cast(val):

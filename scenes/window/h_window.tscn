@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://0kw6fnk07v5x"]
+[gd_scene load_steps=4 format=3 uid="uid://0kw6fnk07v5x"]
 
 [ext_resource type="Script" path="res://scenes/window/h_window.gd" id="1_3lpn5"]
 [ext_resource type="PackedScene" uid="uid://bconrh2va6eu2" path="res://particles/fireworks_particles.tscn" id="2_tp4p8"]
+[ext_resource type="PackedScene" uid="uid://biotw53ovbmso" path="res://particles/confettis_particles.tscn" id="3_261yq"]
 
 [node name="HWindow" type="Window"]
 transparent_bg = true
@@ -17,6 +18,9 @@ content_scale_aspect = 1
 script = ExtResource("1_3lpn5")
 
 [node name="Fireworks" parent="." instance=ExtResource("2_tp4p8")]
+unique_name_in_owner = true
+
+[node name="Confettis" parent="." instance=ExtResource("3_261yq")]
 unique_name_in_owner = true
 
 [node name="canvas" type="Control" parent="."]

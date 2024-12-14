@@ -3,6 +3,7 @@ class_name HWindow
 
 @onready var fireworks: HFireworksParticles = %Fireworks
 @onready var canvas: Control = %canvas
+@onready var confettis: HConfettisParticles = %Confettis
 
 var progress_bars := {}
 var images := {}
