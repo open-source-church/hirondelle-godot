@@ -39,7 +39,6 @@ func run(routine:String):
 		PORTS.r.value = r
 
 func update() -> void:
-	if _last_port_changed == "float":
-		print("Change port")
+	if _last_port_changed in ["float", ""]:
 		PORTS.r.type = E.CONNECTION_TYPES.INT if not PORTS.float.value else E.CONNECTION_TYPES.FLOAT
 		update_slots()

@@ -19,6 +19,7 @@ func _ready() -> void:
 	# Initial settings
 	minimap_enabled = false
 	zoom_min = 0.05
+	#zoom_max = 50
 	show_menu = false
 	
 	# Setup connections
@@ -118,6 +119,7 @@ func clear():
 			c.queue_free()
 
 ## Clickable ports
+var dragging := false
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		# Ports
@@ -127,7 +129,7 @@ func _gui_input(event: InputEvent) -> void:
 			selection_rect.position = -scroll_offset + hover_port.node.position_offset * zoom + hover_port.node.get_port_position(hover_port.side, hover_port.index) * zoom - selection_rect.size / 2 * zoom
 			var color = E.connection_colors[hover_port.node.get_port_type(hover_port.side, hover_port.index)]
 			selection_rect.modulate = Color(color, 0.3)
-			mouse_default_cursor_shape = Control.CURSOR_CROSS
+			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		else:
 			mouse_default_cursor_shape = Control.CURSOR_ARROW
 		selection_rect.visible = hover_port != {}
@@ -136,17 +138,25 @@ func _gui_input(event: InputEvent) -> void:
 		var connection = get_closest_connection_at_point(event.position)
 		if connection:
 			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		
+		# Check if we are dragging (otherwise emit pointer click on node when creating connections)
+		if event.button_mask & MOUSE_BUTTON_MASK_LEFT:
+			dragging = true
 	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			# Port click
 			var hover_port = get_hover_port(event.position)
-			if hover_port:
+			if not dragging and hover_port:
 				hover_port.node.port_clicked.emit(hover_port.node.get_port_name(hover_port.side, hover_port.index))
 			
 			# Connection: remove connection
 			var connection = get_closest_connection_at_point(event.position)
 			if not hover_port and connection:
 				connections.remove_connection_godot(connection.from_node, connection.from_port, connection.to_node, connection.to_port)
+			
+			# Dragging
+			dragging = false
 
 ## Return a node's port that is hovered by `pos` (global).
 func get_hover_port(pos : Vector2) -> Dictionary:

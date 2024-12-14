@@ -13,17 +13,17 @@ func _init() -> void:
 		"text": HPortText.new(E.Side.INPUT),
 		"vars": HPortDict.new(E.Side.INPUT, { "dictionary": true }),
 		"split": HPortBool.new(E.Side.INPUT, {  "default": false }),
-		"delimiter": HPortText.new(E.Side.INPUT, { "visible": false }),
+		"delimiter": HPortText.new(E.Side.INPUT, { "collapsed": true }),
 		"trim": HPortBool.new(E.Side.INPUT, { "default": false }),
 		"r_text": HPortText.new(E.Side.OUTPUT),
 		"r_array": HPortArray.new(E.Side.OUTPUT)
 	}
 
 func update() -> void:
-	if _last_port_changed == "split":
-		PORTS.delimiter.visible = PORTS.split.value
-		PORTS.r_array.visible = PORTS.split.value
-		PORTS.r_text.visible = not PORTS.split.value
+	if _last_port_changed in ["split", ""]:
+		PORTS.delimiter.collapsed = not PORTS.split.value
+		PORTS.r_array.collapsed = not PORTS.split.value
+		PORTS.r_text.collapsed = PORTS.split.value
 		update_slots()
 	
 	var t : String = PORTS.text.value

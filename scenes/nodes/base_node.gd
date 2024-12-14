@@ -37,18 +37,20 @@ signal port_clicked(name:String)
 signal collapsed_changed(bool)
 var btn_collapse : CheckButton
 
-func _update_separation():
-	var h = 0 if btn_collapse.button_pressed else 6
-	add_theme_constant_override("separation", h)
+var collapsed := false
+func set_collapsed(val: bool):
+	collapsed = val
+	# Update separtion
+	#var h = 0 if collapsed else 6
+	#add_theme_constant_override("separation", h)
 
 func _ready() -> void:
-	
 	graph = get_parent()
-	
+	# Title box
 	var hbox = get_titlebar_hbox()
 	btn_collapse = CheckButton.new()
 	btn_collapse.flat = true
-	btn_collapse.toggled.connect(_update_separation.unbind(1))
+	btn_collapse.toggled.connect(set_collapsed)
 	btn_collapse.toggled.connect(collapsed_changed.emit, CONNECT_DEFERRED)
 	
 	if "_icon" in self:
@@ -58,9 +60,10 @@ func _ready() -> void:
 		texture.modulate = G.get_node_color(self)
 		hbox.add_child(texture)
 		hbox.move_child(texture, 0)
+	
 	hbox.add_child(btn_collapse)
 	
-	add_theme_constant_override("separation", 6)
+	add_theme_constant_override("separation", 0)
 	resizable = true
 	
 	setup()
@@ -85,7 +88,7 @@ func setup():
 		var p = PORTS[_name]
 		p.name = _name
 		add_child(p)
-		collapsed_changed.connect(p.set_collapsed)
+		collapsed_changed.connect(p.set_node_collapsed)
 		
 		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
 			p.value_changed.connect(_update.bind(_name)) # CONNECT_DEFERRED
@@ -131,13 +134,14 @@ func update_slots() -> void:
 	
 	var slot_index := 0
 	for c in get_children():
-		if c is HBasePort and c.visible:
+		if c is HBasePort and not c.collapsed:
 			set_slot_enabled_left(slot_index, c.side in [E.Side.INPUT, E.Side.BOTH])
 			set_slot_enabled_right(slot_index, c.side in [E.Side.OUTPUT, E.Side.BOTH])
 			set_slot_type_left(slot_index, c.type)
 			set_slot_type_right(slot_index, c.type)
 			set_slot_color_left(slot_index, E.connection_colors[c.type])
 			set_slot_color_right(slot_index, E.connection_colors[c.type])
+			
 			var _icon
 			if c.type == E.CONNECTION_TYPES.FLOW:
 				_icon = get_port_icon(3, 15)
@@ -145,14 +149,11 @@ func update_slots() -> void:
 				_icon = get_port_icon(2, 12)
 			else:
 				icon = get_port_icon(0, 10)
-			#var icon_width = 14 if c.type == E.CONNECTION_TYPES.FLOW else 10
-			#var icon_idx = 2 if c.is_dictionary else 0
-			#var icon = get_port_icon(icon_idx, icon_width)
 			set_slot_custom_icon_right(slot_index, _icon)
 			set_slot_custom_icon_left(slot_index, _icon)
 		
 		# Godot counts every Control children
-		if c is Control and c.visible:
+		if c is Control:
 			slot_index += 1
 	
 	# If we want to hide connections when port is hidden:
@@ -176,7 +177,10 @@ func _update(_last_changed := "") -> void:
 
 func propagate_value(_name : String) -> void:
 	for c in graph.connections.list_from_node_and_port(self, PORTS[_name]):
+		if c.from_port.type == E.CONNECTION_TYPES.FLOW: continue
+		# Update value
 		c.to_port.update_from_connections()
+		# Visual feedbacks
 		c.to_port.animate_update()
 		c.animate()
 
@@ -202,7 +206,7 @@ func emit(routine : String) -> void:
 func get_output_port(idx : int) -> Node:
 	var k := 0
 	for c in PORTS.values():
-		if c.visible and c.side in [E.Side.OUTPUT, E.Side.BOTH]:
+		if not c.collapsed and c.side in [E.Side.OUTPUT, E.Side.BOTH]:
 			if k == idx:
 				return c
 			k += 1
@@ -211,7 +215,7 @@ func get_output_port(idx : int) -> Node:
 func get_input_port(idx : int) -> Node:
 	var k := 0
 	for c in PORTS.values():
-		if c.visible and c.side in [E.Side.INPUT, E.Side.BOTH]:
+		if not c.collapsed and c.side in [E.Side.INPUT, E.Side.BOTH]:
 			if k == idx: return c
 			k += 1
 	return null
@@ -222,7 +226,7 @@ func get_port_number(port_name : String, side := E.Side.INPUT) -> int:
 	var _output = 0
 	for _name in PORTS:
 		var v = PORTS[_name]
-		if not v.visible: continue
+		if v.collapsed: continue
 		if v.name == port_name:
 			return _input if side == E.Side.INPUT else _output
 		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
@@ -237,7 +241,7 @@ func get_port_name(side, index : int) -> String:
 	var _output = 0
 	for _name in PORTS:
 		var v = PORTS[_name]
-		if not v.visible: continue
+		if v.collapsed: continue
 		if v.side in [E.Side.INPUT, E.Side.BOTH] and side == E.Side.INPUT and index == _input: return _name
 		if v.side in [E.Side.OUTPUT, E.Side.BOTH] and side == E.Side.OUTPUT and index == _output: return _name
 		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
@@ -315,6 +319,8 @@ func load(data : Dictionary) -> void:
 			PORTS[_name].value = Vector2(data.vals[_name].x, data.vals[_name].y)
 		elif PORTS[_name].type == E.CONNECTION_TYPES.COLOR:
 			PORTS[_name].value = Color(data.vals[_name])
+		elif PORTS[_name].type == E.CONNECTION_TYPES.IMAGE:
+			PORTS[_name].value = null
 		else:
 			PORTS[_name].value = data.vals[_name]
 		# Update the node with each value set to be sure it's properly displayed

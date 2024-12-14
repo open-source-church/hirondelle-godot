@@ -17,7 +17,7 @@ func _init() -> void:
 		"stop": HPortFlow.new(E.Side.INPUT),
 		"started": HPortFlow.new(E.Side.OUTPUT),
 		"finished": HPortFlow.new(E.Side.OUTPUT),
-		"source": HPortText.new(E.Side.INPUT, {
+		"source": HPortText.new(E.Side.NONE, {
 			"options": ["Local", "URL"]
 		}),
 		"file": HPortText.new(E.Side.INPUT),
@@ -61,9 +61,9 @@ func download_sound():
 		PORTS.playback.params = { "max": get_stream_length() }
 
 func update() -> void:
-	if _last_port_changed == "source":
-		PORTS.file.visible = PORTS.source.value == "Local"
-		PORTS.url.visible = PORTS.source.value == "URL"
+	if _last_port_changed in ["source", ""]:
+		PORTS.file.collapsed = not PORTS.source.value == "Local"
+		PORTS.url.collapsed = not PORTS.source.value == "URL"
 		update_slots()
 	
 	if _last_port_changed == "url":

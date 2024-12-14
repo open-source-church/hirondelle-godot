@@ -6,8 +6,6 @@ static var _category = "Window"
 static var _icon = "image"
 
 var ID : int
-var preview : TextureRect
-var downloader : HDownloader
 
 func _init() -> void:
 	title = _title
@@ -15,26 +13,12 @@ func _init() -> void:
 	PORTS = {
 		"show": HPortFlow.new(E.Side.INPUT),
 		"hide": HPortFlow.new(E.Side.INPUT),
-		"source": HPortText.new(E.Side.INPUT, {
-			"options": ["Local", "URL"]
-		}),
-		"file": HPortText.new(E.Side.INPUT),
-		"url": HPortText.new(E.Side.INPUT),
-		"source_size": HPortVec2.new(E.Side.OUTPUT),
+		"image": HPortImage.new(E.Side.INPUT),
 		"pos": HPortVec2.new(E.Side.INPUT),
 		"size": HPortVec2.new(E.Side.INPUT),
 		"visible": HPortBool.new(E.Side.BOTH),
 	}
 	ID = randi()
-	
-	preview = TextureRect.new()
-	preview.expand_mode = TextureRect.EXPAND_FIT_HEIGHT_PROPORTIONAL
-	#collapsed_changed.connect(func (v): preview.visible = not v)
-	add_child(preview)
-	
-	downloader = HDownloader.new()
-
-	add_child(downloader)
 
 func run(routine:String):
 	if routine == "show":
@@ -43,37 +27,18 @@ func run(routine:String):
 	if routine == "hide":
 		PORTS.visible.value = false
 
-func download_image():
-	show_warning("Updating image...")
-	show_error("")
-	var r = await downloader.get_url(PORTS.url.value)
-	if r is Image:
-		show_warning("")
-		preview.texture = ImageTexture.create_from_image(r)
-		PORTS.source_size.value = r.get_size()
-	else:
-		show_warning("")
-		show_error("Invalid...", 5)
-		preview.texture = null
-	reset_size()
-
 func update() -> void:
-	if _last_port_changed == "source":
-		PORTS.file.visible = PORTS.source.value == "Local"
-		PORTS.url.visible = PORTS.source.value == "URL"
-		update_slots()
-	
-	if _last_port_changed == "url":
-		download_image()
-	
 	update_image()
 
 func update_image() -> void:
 	var _size = PORTS.size.value
-	var texture = preview.texture
-	if texture:
-		var img = texture.get_image()
-		img.resize(_size.x, _size.y)
+	#var texture = preview.texture
+	var img = PORTS.image.value
+	var texture
+	if img:
+		#var img = texture.get_image()
+		if _size:
+			img.resize(_size.x, _size.y)
 		texture = ImageTexture.create_from_image(img)
 	
 	var opt = {

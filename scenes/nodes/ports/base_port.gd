@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends MarginContainer
 class_name HBasePort
 
 ## To subclass:
@@ -17,33 +17,51 @@ func _on_params_changed() -> void: pass
 
 ## Hides the name label
 var hide_label := false
-var option_button : OptionButton
-var custom_component : Control
+var option_button: OptionButton
+var custom_component: Control
 
 ## Port is holding a dictionary instead of just a single value.
 ##
 ## Dictionaries allows for multiple connections.
 var is_dictionary := false
 
-var graph : HGraphEdit
+var graph: HGraphEdit
+var main_hbox: HBoxContainer
 
+## Whether the port is collapsed. In can be changed internally by the not on a port basis.
+## This is because in [GraphNode]s, [Control] cannot really be hidded, or it messes up the whole
+## thing.[br]
+## See also [method set_node_collapsed].
 var collapsed := false:
 	set(val):
 		collapsed = val
 		main_vbox.visible = not collapsed
-		reset_size()
-		get_parent().reset_size()
-		await get_tree().process_frame
-		reset_size()
-		get_parent().reset_size()
+		var margin = 0 if collapsed else 6
+		add_theme_constant_override("margin_bottom", margin)
+		_reset_size()
 
 func set_collapsed(val: bool):
 	collapsed = val
 
+## Whether the whole node is collapsed. To keep it different than [member collapsed], we
+## hide [member main_hbox] (for node) instead of [member main_vbox] (for port specific).
+func set_node_collapsed(val: bool):
+	main_hbox.visible = not val
+	_reset_size()
+
+## Try to signal everyone that things have changed size here.
+func _reset_size() -> void:
+	# Quite ugly, but otherwise doesn't really work
+	reset_size()
+	get_parent().reset_size()
+	await get_tree().process_frame
+	reset_size()
+	get_parent().reset_size()
+
 func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) -> void:
 	side = _side
 	type = _type
-	visible = opt.get("visible", true)
+	visible = opt.get("collapsed", true)
 	options = opt.get("options", [])
 	description = opt.get("description", "")
 	default = opt.get("default", null)
@@ -52,6 +70,8 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	is_dictionary = opt.get("dictionary", false)
 	custom_minimum_size = Vector2(0, 0)
 	value_changed.connect(_on_value_changed)
+	
+	add_theme_constant_override("margin_bottom", 6)
 
 func _ready() -> void:
 	update_view()
@@ -99,7 +119,7 @@ func _get_options_value() -> Variant:
 func _base_set_value(val):
 	val = type_cast(val)
 	var _last_val
-	if value is Dictionary or value is Array:
+	if value is Dictionary or value is Array or value is Image:
 		_last_val = value.duplicate()
 	else:
 		_last_val = value
@@ -202,16 +222,19 @@ func update_view():
 	for c in get_children():
 		c.queue_free()
 	
+	main_hbox = HBoxContainer.new()
+	add_child(main_hbox)
+	
 	# Left Margin
 	if side in [E.Side.OUTPUT, E.Side.BOTH]:
 		var left_margin = Control.new()
 		left_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		#left_margin.custom_minimum_size = Vector2(50, 0)
 		left_margin.visible = not collapsed
-		add_child(left_margin)
+		main_hbox.add_child(left_margin)
 	
 	var vbox = HBoxContainer.new()
-	add_child(vbox)
+	main_hbox.add_child(vbox)
 	if not hide_label:
 		var lbl = Label.new()
 		lbl.text = "%s" % name
@@ -243,7 +266,7 @@ func update_view():
 		var right_margin = Control.new()
 		right_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		#right_margin.custom_minimum_size = Vector2(50, 0)
-		add_child(right_margin)
+		main_hbox.add_child(right_margin)
 		right_margin.visible = not collapsed
 	
 
