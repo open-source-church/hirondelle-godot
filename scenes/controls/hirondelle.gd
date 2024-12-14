@@ -100,6 +100,8 @@ func load_graphs() -> void:
 		g.load(g_data)
 		if g.name == _current_graph_name:
 			g.set_visible.call_deferred(true)
+	
+	update_graph_list()
 
 #endregion
 

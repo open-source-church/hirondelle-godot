@@ -19,6 +19,7 @@ func _ready() -> void:
 	# Initial settings
 	minimap_enabled = false
 	zoom_min = 0.05
+	show_menu = false
 	
 	# Setup connections
 	connections = HGraphConnections.new()
@@ -27,7 +28,7 @@ func _ready() -> void:
 	# Setup selection rect
 	selection_rect = TextureRect.new()
 	selection_rect.texture = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 1, 32, 32)
-	selection_rect.z_index = -1
+	selection_rect.z_index = 0
 	selection_rect.visible = false
 	add_child(selection_rect)
 	
@@ -124,7 +125,8 @@ func _gui_input(event: InputEvent) -> void:
 		if hover_port:
 			selection_rect.scale = Vector2.ONE * zoom
 			selection_rect.position = -scroll_offset + hover_port.node.position_offset * zoom + hover_port.node.get_port_position(hover_port.side, hover_port.index) * zoom - selection_rect.size / 2 * zoom
-			selection_rect.modulate = E.connection_colors[hover_port.node.get_port_type(hover_port.side, hover_port.index)]
+			var color = E.connection_colors[hover_port.node.get_port_type(hover_port.side, hover_port.index)]
+			selection_rect.modulate = Color(color, 0.3)
 			mouse_default_cursor_shape = Control.CURSOR_CROSS
 		else:
 			mouse_default_cursor_shape = Control.CURSOR_ARROW

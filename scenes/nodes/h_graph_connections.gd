@@ -78,14 +78,19 @@ class Connection:
 			do_animation()
 			await graph.get_tree().create_timer(0.1).timeout
 	
+	func get_connection_line() -> PackedVector2Array:
+		var _c = to_godot()
+		var from = from_node.position_offset + from_node.get_output_port_position(_c.from_port)
+		var to = to_node.position_offset + to_node.get_input_port_position(_c.to_port)
+		var points = Array(graph.get_connection_line(from, to))
+		points = points.map(func (p): return graph.local_to_graph(p))
+		return PackedVector2Array(points)
+	
 	func do_animation() -> void:
 		var flow = from_port.type == E.CONNECTION_TYPES.FLOW
 		var duration = 0.5 if flow else 0.3
 		var size = 16 if flow else 10
-		var _c = to_godot()
-		var from = from_node.position_offset + from_node.get_output_port_position(_c.from_port)
-		var to = to_node.position_offset + to_node.get_input_port_position(_c.to_port)
-		var points := graph.get_connection_line(from, to)
+		var points := get_connection_line()
 		var _size = size * graph.zoom
 		var img := TextureRect.new()
 		var _atlas_x = 3 if flow else 0
@@ -99,7 +104,7 @@ class Connection:
 		img.z_index = 120
 		path.curve = Curve2D.new()
 		for p in points:
-			path.curve.add_point(graph.local_to_graph(p))
+			path.curve.add_point(p)
 		var follow = PathFollow2D.new()
 		path.add_child(follow)
 		follow.add_child(img)
@@ -125,6 +130,9 @@ class Connection:
 
 ## A reference to the [HGraphEdit] those connections belong to.
 var graph : HGraphEdit
+
+func list() -> Array[Connection]:
+	return connections
 
 func list_from_node(node : HBaseNode) -> Array[Connection]:
 	return connections.filter( func(c): return c.from_node == node)

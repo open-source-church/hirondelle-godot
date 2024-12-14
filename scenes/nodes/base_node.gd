@@ -193,7 +193,6 @@ func animate_run() -> void:
 	tween.tween_property(self, "self_modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
 
 func emit(routine : String) -> void:
-	print("Emit: ", routine)
 	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
 		c.to_node.run.call_deferred(c.to_port.name)
 		c.animate()
