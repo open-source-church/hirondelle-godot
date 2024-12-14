@@ -164,10 +164,10 @@ func get_hover_port(pos : Vector2) -> Dictionary:
 	for node in get_nodes():
 		for i in node.get_input_port_count():
 			if (node.position_offset + node.get_input_port_position(i) - _pos).length() < 10:
-				return { "node": node, "side": HBaseNode.INPUT, "index": i }
+				return { "node": node, "side": E.Side.INPUT, "index": i }
 		for i in node.get_output_port_count():
 			if (node.position_offset + node.get_output_port_position(i) - _pos).length() < 10:
-				return { "node": node, "side": HBaseNode.OUTPUT, "index": i }
+				return { "node": node, "side": E.Side.OUTPUT, "index": i }
 	return {}
 
 

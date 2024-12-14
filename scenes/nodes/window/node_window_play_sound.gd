@@ -60,16 +60,16 @@ func download_sound():
 		PORTS.length.value = get_stream_length()
 		PORTS.playback.params = { "max": get_stream_length() }
 
-func update() -> void:
-	if _last_port_changed in ["source", ""]:
+func update(_last_changed: = "") -> void:
+	if _last_changed in ["source", ""]:
 		PORTS.file.collapsed = not PORTS.source.value == "Local"
 		PORTS.url.collapsed = not PORTS.source.value == "URL"
 		update_slots()
 	
-	if _last_port_changed == "url":
+	if _last_changed == "url":
 		download_sound()
 	
-	if _last_port_changed == "pitch" and audio.stream:
+	if _last_changed == "pitch" and audio.stream:
 		PORTS.length.value = get_stream_length()
 
 func _process(_delta: float) -> void:

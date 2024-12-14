@@ -39,7 +39,7 @@ func run(routine:String):
 	if routine == "stop":
 		timer.stop()
 
-func update() -> void:
+func update(_last_changed := "") -> void:
 	PORTS.elapsed.params = { "min": 0, "max": PORTS.time.value }
 
 func _process(_delta: float) -> void:

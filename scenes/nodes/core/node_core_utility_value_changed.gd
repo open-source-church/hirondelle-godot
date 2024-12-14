@@ -14,7 +14,7 @@ func _init() -> void:
 	}
 
 var _last_value
-func update() -> void:
+func update(_last_changed := "") -> void:
 	print("Update: ", _last_value, " ", PORTS.watch.value)
 	if PORTS.watch.value != _last_value:
 		emit("changed")

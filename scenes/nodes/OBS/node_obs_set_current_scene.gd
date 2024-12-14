@@ -29,6 +29,3 @@ func run(routine:String):
 		G.OBS.send_request("SetCurrentProgramScene", { "sceneName" : PORTS.program.value })
 	if routine == "set_preview":
 		G.OBS.send_request("SetCurrentPreviewScene", { "sceneName" : PORTS.preview.value })
-
-func update() -> void:
-	pass

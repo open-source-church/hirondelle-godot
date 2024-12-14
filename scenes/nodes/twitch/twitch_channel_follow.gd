@@ -27,6 +27,3 @@ func _on_channel_follow(event: TChannelFollowEvent):
 	PORTS.follow_at.value = event.followed_at
 	
 	emit("new_follow")
-
-func update() -> void:
-	pass

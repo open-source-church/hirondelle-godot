@@ -19,7 +19,7 @@ func _init() -> void:
 		"r": HPortIntSpin.new(E.Side.OUTPUT, { "default": 0 })
 	}
 
-func update() -> void:
+func update(_last_changed: = "") -> void:
 	if PORTS.operator.value == "Add":
 		PORTS.r.value = PORTS.a.value + PORTS.b.value
 	if PORTS.operator.value == "Substract":

@@ -22,9 +22,9 @@ func _init() -> void:
 		"o_a": HPortIntSpin.new(E.Side.OUTPUT),
 	}
 
-func update() -> void:
+func update(_last_changed := "") -> void:
 	# INPUT
-	if _last_port_changed == "input":
+	if _last_changed == "input":
 		PORTS.r.value = PORTS.input.value.r8
 		PORTS.g.value = PORTS.input.value.g8
 		PORTS.b.value = PORTS.input.value.b8

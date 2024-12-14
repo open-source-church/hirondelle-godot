@@ -26,5 +26,5 @@ func run(routine:String):
 	if routine == "deactivate":
 		G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : false })
 
-func update() -> void:
+func update(_last_changed: = "") -> void:
 	G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : PORTS.enabled.value })

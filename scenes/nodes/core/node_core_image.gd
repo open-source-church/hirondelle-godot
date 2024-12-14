@@ -67,12 +67,10 @@ func download_image():
 		show_error("Invalid...", 5)
 		update_image(null)
 
-func update() -> void:
-	print("Update Image", name, " last: ", _last_port_changed)
-	print(PORTS.operator.value)
+func update(_last_changed := "") -> void:
 	var operator = PORTS.operator.value
 	var mode = PORTS.mode.value
-	if _last_port_changed in ["operator", "", "mode"]:
+	if _last_changed in ["operator", "", "mode"]:
 		PORTS.file.collapsed = not operator == "Local"
 		PORTS.url.collapsed = not operator == "Download"
 		PORTS.image.collapsed = not operator in ["Resize", "Crop", "Flip", "Rotate"]
@@ -86,7 +84,7 @@ func update() -> void:
 		PORTS.rotate.collapsed = not operator == "Rotate"
 		update_slots()
 	
-	if _last_port_changed in ["url", "operator"] and operator == "Download":
+	if _last_changed in ["url", "operator"] and operator == "Download":
 		download_image()
 	
 	if operator == "Local":

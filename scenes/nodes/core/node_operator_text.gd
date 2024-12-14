@@ -19,8 +19,8 @@ func _init() -> void:
 		"r_array": HPortArray.new(E.Side.OUTPUT)
 	}
 
-func update() -> void:
-	if _last_port_changed in ["split", ""]:
+func update(_last_changed: = "") -> void:
+	if _last_changed in ["split", ""]:
 		PORTS.delimiter.collapsed = not PORTS.split.value
 		PORTS.r_array.collapsed = not PORTS.split.value
 		PORTS.r_text.collapsed = PORTS.split.value

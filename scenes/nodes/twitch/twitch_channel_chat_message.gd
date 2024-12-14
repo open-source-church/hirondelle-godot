@@ -31,6 +31,3 @@ func _on_channel_message(event: TChannelChatMessageEvent):
 		PORTS.color.value = event.color
 	
 	emit("new_message")
-
-func update() -> void:
-	pass

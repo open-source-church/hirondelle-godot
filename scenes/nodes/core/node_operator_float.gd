@@ -19,7 +19,7 @@ func _init() -> void:
 		"r": HPortFloat.new(E.Side.INPUT, { "default": 0 })
 	}
 
-func update() -> void:
+func update(_last_changed: = "") -> void:
 	error.text = ""
 	if PORTS.operator.value == "Add":
 		PORTS.r.value = PORTS.a.value + PORTS.b.value

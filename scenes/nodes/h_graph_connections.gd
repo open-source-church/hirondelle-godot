@@ -213,6 +213,7 @@ func clear():
 # HIDE AND SHOW
 
 ## Hides or shows connections when port visibility change.
+## FIXME: probably buggy.
 func update_node_slots_visibility(node : HBaseNode) -> void:
 	for port in node.PORTS.values():
 		for c in list_to_and_from_port(port):
@@ -227,7 +228,7 @@ func update_node_slots_visibility(node : HBaseNode) -> void:
 func remove_connections_to_hidden_slots(node : HBaseNode):
 	for port in node.PORTS.values():
 		for c in list_to_and_from_port(port):
-			if not port.visible:
+			if port.collapsed:
 				remove_connection(c, true)
 
 # LOAD AND SAVE

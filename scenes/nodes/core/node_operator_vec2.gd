@@ -19,9 +19,8 @@ func _init() -> void:
 		"r": HPortVec2.new(E.Side.OUTPUT),
 	}
 
-func update() -> void:
+func update(_last_changed := "") -> void:
 	error.text = ""
-	#COMPONENTS.x.visible = PORTS.operator.value == "Add"
 	if PORTS.operator.value == "Add":
 		PORTS.r.value = PORTS.a.value + PORTS.b.value
 	if PORTS.operator.value == "Substract":

@@ -8,41 +8,43 @@ class_name HBaseNode
 ## * func update: called when on of the input vars change
 ## * fun run: called with "flow" node, for main actions
 
-enum { INPUT, OUTPUT, BOTH, NONE }
-
-#var _title = ""
-#var _type = ""
-var category = ""
-var icon = ""
-var description = ""
-
+## Reference to [HGraphEdit]
 var graph : HGraphEdit
+
+# Metadata
 
 ## Unique identifier for node type
 var type = ""
+## Category
+var category = ""
+## Icon
+var icon = ""
+## Description
+var description = ""
 
-## Unique identifier for node. Unique in the whole graph.
-#var id : String
-# Use name instead
-
-#var COMPONENTS := {}
+# Where we keep track of port's compontent
+# FIXME: less hacky way, with types ?
 var PORTS := {}
 
+# Child components
+
+# Labels for warnings
 var warning : Label
 var error : Label
 var success : Label
-
-signal port_clicked(name:String)
-
-signal collapsed_changed(bool)
+# Collapse button in title bar
 var btn_collapse : CheckButton
+
+# Signals
+
+## Emitted on port clicked
+signal port_clicked(name:String)
+## Emitted when the node collapse status has changed
+signal collapsed_changed(bool)
 
 var collapsed := false
 func set_collapsed(val: bool):
 	collapsed = val
-	# Update separtion
-	#var h = 0 if collapsed else 6
-	#add_theme_constant_override("separation", h)
 
 func _ready() -> void:
 	graph = get_parent()
@@ -68,18 +70,7 @@ func _ready() -> void:
 	
 	setup()
 
-
-# FIXME: _draw_port seems buggy ..?
-#func _draw_port(slot_index: int, position: Vector2i, left: bool, color: Color) -> void:
-	#var port = get_children().filter(func (c): return c is HBasePort)[slot_index]
-	#if port:
-		#print(" * ", left, ": ", slot_index, " ", E.CONNECTION_TYPES.keys()[port.type], " at ", position)
-		#if port.type == E.CONNECTION_TYPES.FLOW:
-			#draw_circle(position, 7, color)
-		#else:
-			#draw_circle(position, 5, color)
-
-## Generate internal nodes and stuff based on COMPONENTS instructions.
+## Generate internal nodes and stuff
 func setup():
 	print("Setting up: ", name)
 	clear_all_slots()
@@ -90,17 +81,20 @@ func setup():
 		add_child(p)
 		collapsed_changed.connect(p.set_node_collapsed)
 		
+		# Update node on input value change
 		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
-			p.value_changed.connect(_update.bind(_name)) # CONNECT_DEFERRED
+			p.value_changed.connect(_update.bind(_name))
+		# Propagate values on ouput value change
 		if p.side in [E.Side.OUTPUT, E.Side.BOTH]:
-			p.value_changed.connect(propagate_value.bind(_name)) # CONNECT_DEFERRED
+			p.value_changed.connect(propagate_value.bind(_name))
 	
+	# Labels
 	success = Label.new()
 	success.add_theme_color_override("font_color", Color.GREEN)
 	success.add_theme_font_size_override("font_size", 12)
 	add_child(success)
 	success.visible = false
-		
+	
 	warning = Label.new()
 	warning.add_theme_color_override("font_color", Color.ORANGE)
 	warning.add_theme_font_size_override("font_size", 12)
@@ -115,18 +109,17 @@ func setup():
 	
 	port_clicked.connect(on_port_clicked)
 	
+	# Initial update
 	update()
 	update_slots()
 
 func on_port_clicked(port_name : String) -> void:
 	var val = PORTS[port_name]
+	# Clicking on a Flow Port: on input, run node. On output: emit signal to run other nodes.
 	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.INPUT:
 		run(port_name)
 	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.OUTPUT:
 		emit(port_name)
-
-func get_port_icon(n := 0, width := 10) -> Texture2D:
-	return G.get_icon_from_atlas(G.PORTS_TEXTURE, n, 0, 32, width)
 
 ## Turn on and off slots and give them the proper color
 func update_slots() -> void:
@@ -144,11 +137,11 @@ func update_slots() -> void:
 			
 			var _icon
 			if c.type == E.CONNECTION_TYPES.FLOW:
-				_icon = get_port_icon(3, 15)
+				_icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 3, 0, 32, 15)
 			elif c.is_dictionary:
-				_icon = get_port_icon(2, 12)
+				_icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 2, 0, 32, 12)
 			else:
-				icon = get_port_icon(0, 10)
+				icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 0, 32, 10)
 			set_slot_custom_icon_right(slot_index, _icon)
 			set_slot_custom_icon_left(slot_index, _icon)
 		
@@ -156,25 +149,25 @@ func update_slots() -> void:
 		if c is Control:
 			slot_index += 1
 	
+	# How to handle connections to hidden/collapsed slots ?
+	
 	# If we want to hide connections when port is hidden:
 	#graph.connections.update_node_slots_visibility(self)
+	
 	# If we want to remove connections when port is hidden:
 	graph.connections.remove_connections_to_hidden_slots(self)
 	
 	reset_size()
 
-var _last_port_changed := ""
 func _update(_last_changed := "") -> void:
-	#await get_tree().process_frame
-	#print(Time.get_ticks_msec(), " _UPDATE")
-	
 	# Process node values
-	_last_port_changed = _last_changed
-	update()
-	
-	# If necessary
-	#update_slots()
+	update(_last_changed)
 
+## Virtual. Called when input value changed.
+func update(_last_changed := "") -> void:
+	pass
+
+## Propagates values, following connections
 func propagate_value(_name : String) -> void:
 	for c in graph.connections.list_from_node_and_port(self, PORTS[_name]):
 		if c.from_port.type == E.CONNECTION_TYPES.FLOW: continue
@@ -184,25 +177,23 @@ func propagate_value(_name : String) -> void:
 		c.to_port.animate_update()
 		c.animate()
 
-## Virtual. Called when input value changed.
-func update() -> void:
-	pass
-
 ## Virtual. Called when a subroutine (input FLOW port) is activated.
 func run(_routine : String) -> void:
 	pass
 
-func animate_run() -> void:
-	var tween = create_tween()
-	tween.tween_property(self, "self_modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
-
+## Calls node connected by FLOW to this node.
 func emit(routine : String) -> void:
 	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
 		c.to_node.run.call_deferred(c.to_port.name)
 		c.animate()
 		c.to_node.animate_run()
 
-## Adapts get_output_port_slot to take into account invisible slots
+## Visual feedback when the node is being run
+func animate_run() -> void:
+	var tween = create_tween()
+	tween.tween_property(self, "self_modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
+
+## Adapts get_output_port_slot to take into account invisible/collapsed slots
 func get_output_port(idx : int) -> Node:
 	var k := 0
 	for c in PORTS.values():
@@ -212,6 +203,7 @@ func get_output_port(idx : int) -> Node:
 			k += 1
 	return null
 
+## Adapts get_input_port_slot to take into account invisible/collapsed slots
 func get_input_port(idx : int) -> Node:
 	var k := 0
 	for c in PORTS.values():
@@ -256,9 +248,7 @@ func get_port_type(side, index : int):
 	if side == E.Side.INPUT: return get_input_port_type(index)
 	if side == E.Side.OUTPUT: return get_output_port_type(index)
 
-#func _process(_delta: float) -> void:
-	#error.visible = error.text != ""
-	#warning.visible = warning.text != ""
+# Labels
 
 func show_success(msg: String, duration := 0) -> void:
 	show_message(success, msg, duration)
@@ -292,6 +282,8 @@ func show_message(label:Label, msg: String, duration := 0.0) -> void:
 		tween.tween_method(reset_size.unbind(1), 0, 0, 0)
 		tween.tween_property(label, "text", "", 0)
 
+# Save and Load
+
 func save() -> Dictionary:
 	var s = {
 		"type": type,
@@ -324,5 +316,4 @@ func load(data : Dictionary) -> void:
 		else:
 			PORTS[_name].value = data.vals[_name]
 		# Update the node with each value set to be sure it's properly displayed
-		_last_port_changed = _name
-		update()
+		update(_name)

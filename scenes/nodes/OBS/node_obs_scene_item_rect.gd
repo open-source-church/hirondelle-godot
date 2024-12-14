@@ -26,24 +26,24 @@ func _update_scene_list(scenes : Array):
 	scenes.reverse()
 	PORTS.scene.options = scenes.map(func (s): return s.sceneName)
 
-func update() -> void:
+func update(_last_changed: = "") -> void:
 	#if not G.OBS.is_connected: 
 		#return
 	
 	# Update scene items
 	var r = await G.OBS.send_request("GetSceneItemList", { "sceneName": PORTS.scene.value })
 	
-	if r and (_last_port_changed == "scene" or not PORTS.source.options):
+	if r and (_last_changed == "scene" or not PORTS.source.options):
 		PORTS.source.options = r.sceneItems.map(func (s): return s.sourceName )
 		PORTS.itemId.options = r.sceneItems.map(func (s): return s.sceneItemId )
 	
 	# Sync sourceName and sceneItemId
-	if r and _last_port_changed == "source":
+	if r and _last_changed == "source":
 		PORTS.itemId.value = r.sceneItems.filter(func (i): return i.sourceName == PORTS.source.value).front().sceneItemId
-	elif r and r.sceneItems and _last_port_changed == "itemId":
+	elif r and r.sceneItems and _last_changed == "itemId":
 		PORTS.source.value = r.sceneItems.filter(func (i): return i.sceneItemId == PORTS.itemId.value).front().sourceName
 	
-	if _last_port_changed in ["pos", "size"]:
+	if _last_changed in ["pos", "size"]:
 		pass
 	else:
 		var rect = await G.OBS.send_request("GetSceneItemTransform", { "sceneName": PORTS.scene.value, "sceneItemId": PORTS.itemId.value })

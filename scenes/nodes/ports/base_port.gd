@@ -7,7 +7,34 @@ class_name HBasePort
 ## * get_component
 ## * _on_params_changed if needed
 
+# Controls
+
+## Option button, to use with [member options]
+var option_button: OptionButton
+## The custom component that is returned by subclasses
+var custom_component: Control
+## References to the [HGraphEdit] this port belongs to
+var graph: HGraphEdit
+## Containers.[br]
+## [ Margin [ HBox [ VBox [ ] ] ] ]
+var main_hbox: HBoxContainer
+var main_vbox : HBoxContainer
+
+# Props
+
+## Port is holding a dictionary instead of just a single value.[br]
+## Dictionaries allows for multiple connections.
+var is_dictionary := false
+
+## Ports default value
 var default : Variant
+
+## Set [member value] to [member default].
+func reset_value() -> void:
+	if default != null: value = default
+
+## Ports params. Allow for customization depending on the port type.[br]
+## As of now, params include: min/max for sliders, ... #FIXME
 var params : Dictionary:
 	set(val):
 		params = val
@@ -15,18 +42,35 @@ var params : Dictionary:
 		_on_params_changed()
 func _on_params_changed() -> void: pass
 
-## Hides the name label
+## Hides the name label in the port
 var hide_label := false
-var option_button: OptionButton
-var custom_component: Control
 
-## Port is holding a dictionary instead of just a single value.
-##
-## Dictionaries allows for multiple connections.
-var is_dictionary := false
+## The side(s) of the port. INPUT, OUTPUT, BOTH, NONE.
+var side := E.Side.INPUT:
+	set(val):
+		side = val
+		update_view()
 
-var graph: HGraphEdit
-var main_hbox: HBoxContainer
+## The type of connection this port accepts
+var type : E.CONNECTION_TYPES:
+	set(val):
+		type = val
+		update_view()
+
+## Description
+var description : String:
+	set(val):
+		description = val
+		update_view()
+
+## Customizes the behavior of [method Object.set].[br]
+## When name is changed, we update the view to display the new name
+func _set(prop : StringName, val: Variant) -> bool:
+	if prop == "name": 
+		name = val
+		update_view()
+		return true
+	return false
 
 ## Whether the port is collapsed. In can be changed internally by the not on a port basis.
 ## This is because in [GraphNode]s, [Control] cannot really be hidded, or it messes up the whole
@@ -77,32 +121,6 @@ func _ready() -> void:
 	update_view()
 	reset_value()
 
-## Set [member value] to [member default].
-func reset_value() -> void:
-	if default != null: value = default
-
-var side := E.Side.INPUT:
-	set(val):
-		side = val
-		update_view()
-		
-var type : E.CONNECTION_TYPES:
-	set(val):
-		type = val
-		update_view()
-
-var description : String:
-	set(val):
-		description = val
-		update_view()
-
-func _set(prop : StringName, val: Variant) -> bool:
-	if prop == "name": 
-		name = val
-		update_view()
-		return true
-	return false
-
 signal value_changed
 
 var value: get=_base_get_value, set=_base_set_value
@@ -136,29 +154,30 @@ func _set_value(_val):
 func type_cast(val):
 	return val
 
-## Returns a list of all connections to that port
-func get_connections_to():
-	var node = get_parent() as HBaseNode
-	return node.graph.connections.list_to_port(self)
-
 ## Subclass to implement comportement from multiple connections
 func update_from_connections():
 	for c in get_connections_to():
 		value = c.from_port.value
 
+## Returns a list of all connections to that port
+func get_connections_to():
+	var node = get_parent() as HBaseNode
+	return node.graph.connections.list_to_port(self)
+
+## Provides visual feedback when the value is updated.
 func animate_update() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
 
 var options:Array : set=_set_options
 
-## _options is either an Array of value, or an Array of Dictionary { "label": lbl, "value": val }
+## Performs transformation on options, to allow for different inputs:[br]
+## _options can be either an Array of value, or an Array of Dictionary { "label": lbl, "value": val }
 func _set_options(_options):
 	if not is_node_ready(): await ready
-	
 	var _value = value
-	
 	if _options and _options[0] is Dictionary:
+		# Already a dictionary, nothing to do
 		pass
 	elif _options and _options[0]:
 		_options = _options.map(func (o): return { "label": o, "value": o })
@@ -169,22 +188,20 @@ func _set_options(_options):
 		return
 	
 	options = _options
-	
 	_on_options_changed(_value)
 
 func _on_options_changed(_last_val) -> void:
+	# Hide or shows the custom component and option button, if there are options
 	custom_component.visible = options.size() == 0
 	option_button.visible = options.size() > 0
 	populate_option_button(option_button)
 	set_option_button_val(_last_val, option_button)
 
-## Helper function to populate an option button
+## Populates an option button
 func populate_option_button(btn : OptionButton):
 	btn.clear()
 	for o in options:
 		btn.add_item(str(o.label))
-	
-	#update_view()
 
 ## Helper function to set the val on an option button
 func set_option_button_val(val, btn : OptionButton):
@@ -196,24 +213,15 @@ func set_option_button_val(val, btn : OptionButton):
 func get_option_button_val(btn : OptionButton):
 	return options[btn.selected].value
 
-#var _last_value
-#func _process(_delta: float) -> void:
-	#if value != _last_value:
-		#value_changed.emit()
-		#_on_value_changed()
-		#if value is Dictionary or value is Array:
-			#_last_value = value.duplicate()
-		#else:
-			#_last_value = value
-
+## Can be subclassed to implement custom port behaviors.
 func _on_value_changed():
 	pass
 
-var main_vbox : HBoxContainer
 ## Creates the proper nodes for the port.
 func update_view():
 	if not is_node_ready(): return
 	
+	# Keep track of value
 	var _value
 	if custom_component:
 		_value = value
@@ -255,9 +263,7 @@ func update_view():
 	option_button.item_focused.connect(value_changed.emit.unbind(1))
 	vbox.visible = not collapsed
 	
-	# FIXME: why was this needed ?
-	#if _last_value:
-	#	value = _last_value
+	# Put value back
 	if _value:
 		value = _value
 	
@@ -268,7 +274,7 @@ func update_view():
 		#right_margin.custom_minimum_size = Vector2(50, 0)
 		main_hbox.add_child(right_margin)
 		right_margin.visible = not collapsed
-	
+
 
 ## Subclass that.
 ## If component is editable, then when changed don't forget to emit:

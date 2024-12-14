@@ -43,5 +43,5 @@ func run(routine:String):
 	if routine == "hide":
 		PORTS.visible.value = false
 
-func update() -> void:
+func update(_last_changed: = "") -> void:
 	update_progressbar()

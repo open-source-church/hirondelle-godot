@@ -18,9 +18,9 @@ func _init() -> void:
 		"o_y": HPortFloat.new(E.Side.OUTPUT),
 	}
 
-func update() -> void:
+func update(_last_changed := "") -> void:
 	# INPUT
-	if _last_port_changed == "vec":
+	if _last_changed == "vec":
 		PORTS.x.value = PORTS.vec.value.x
 		PORTS.y.value = PORTS.vec.value.y
 	else:

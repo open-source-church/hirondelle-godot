@@ -28,6 +28,3 @@ func _program_scene_changed(new_name, _uuid):
 func _preview_scene_changed(new_name, _uuid):
 	PORTS.preview.value = new_name
 	emit("changed")
-
-func update() -> void:
-	pass

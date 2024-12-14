@@ -26,7 +26,7 @@ func _init() -> void:
 		"bool": HPortBool.new(E.Side.INPUT),
 	}
 
-func update() -> void:
+func update(_last_changed := "") -> void:
 	if PORTS.int.value == 14:
 		PORTS.text_options.options = ["Albert", "Le vert"]
 	else:

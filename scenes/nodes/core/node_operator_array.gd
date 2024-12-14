@@ -37,8 +37,7 @@ func run(subroutine : String):
 			PORTS.index.value = 0
 			emit("for_each")
 
-func update() -> void:
-	print("Update array: ", _last_port_changed)
+func update(_last_changed: = "") -> void:
 	var merged := []
 	for arr in PORTS.arrays.value:
 		merged.append_array(PORTS.arrays.value[arr])

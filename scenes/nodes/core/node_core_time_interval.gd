@@ -34,8 +34,7 @@ func run(routine:String):
 		timer.stop()
 		PORTS.active.value = false
 
-func update() -> void:
-	print(_last_port_changed)
-	if _last_port_changed == "active":
+func update(_last_changed: = "") -> void:
+	if _last_changed == "active":
 		if PORTS.active.value: timer.start(PORTS.time.value / 1000.0)
 		else: timer.stop()
