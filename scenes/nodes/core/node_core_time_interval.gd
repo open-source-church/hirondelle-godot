@@ -21,7 +21,7 @@ func _init() -> void:
 		"active": HPortBool.new(E.Side.BOTH, { "default": false }),
 	}
 	timer = Timer.new()
-	add_child(timer)
+	add_child(timer, false, Node.INTERNAL_MODE_BACK)
 	timer.one_shot = false
 	timer.timeout.connect(emit.bind("ping"))
 

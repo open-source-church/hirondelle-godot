@@ -18,3 +18,7 @@ func _get_value():
 
 func _set_value(val):
 	line.text = str(val)
+
+## Performs type conversion to ensure the value is in the proper type
+func type_cast(val):
+	return float(val)

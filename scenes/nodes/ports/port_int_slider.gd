@@ -43,7 +43,11 @@ func _on_params_changed():
 	lbl_value.visible = params.get("label", false)
 
 func _get_value():
-	return slider.value
+	return int(slider.value)
 
 func _set_value(val):
 	slider.value = val
+
+## Performs type conversion to ensure the value is in the proper type
+func type_cast(val):
+	return int(val)

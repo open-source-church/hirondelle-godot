@@ -16,7 +16,7 @@ func _init() -> void:
 		} ),
 		"a": HPortFloat.new(E.Side.INPUT, { "default": 0 }),
 		"b": HPortFloat.new(E.Side.INPUT, { "default": 0 }),
-		"r": HPortFloat.new(E.Side.INPUT, { "default": 0 })
+		"r": HPortFloat.new(E.Side.OUTPUT, { "default": 0 })
 	}
 
 func update(_last_changed: = "") -> void:

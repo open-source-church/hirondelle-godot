@@ -15,7 +15,11 @@ func get_component(_params) -> Control:
 	return spinbox
 
 func _get_value():
-	return spinbox.value
+	return int(spinbox.value)
 
 func _set_value(val):
 	spinbox.value = val
+
+## Performs type conversion to ensure the value is in the proper type
+func type_cast(val):
+	return int(val)

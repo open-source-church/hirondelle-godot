@@ -10,12 +10,14 @@ func _init() -> void:
 	type = _type
 	PORTS = {
 		"changed": HPortFlow.new(E.Side.OUTPUT),
-		"watch": HBasePort.new(E.Side.INPUT, E.CONNECTION_TYPES.VARIANT),
+		"watch": HPortArray.new(E.Side.INPUT, { 
+			"type": E.CONNECTION_TYPES.VARIANT,
+			"dictionary": true
+		})
 	}
 
 var _last_value
 func update(_last_changed := "") -> void:
-	print("Update: ", _last_value, " ", PORTS.watch.value)
 	if PORTS.watch.value != _last_value:
 		emit("changed")
-		_last_value = PORTS.watch.value
+		_last_value = PORTS.watch.value.duplicate()

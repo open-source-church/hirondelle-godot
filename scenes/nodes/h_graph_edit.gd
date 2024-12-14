@@ -8,12 +8,16 @@ var connections : HGraphConnections
 func _ready() -> void:
 	# Setup valid connections
 	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT)
+	add_valid_connection_type(E.CONNECTION_TYPES.TEXT, E.CONNECTION_TYPES.FLOAT)
+	add_valid_connection_type(E.CONNECTION_TYPES.FLOAT, E.CONNECTION_TYPES.INT)
+	add_valid_connection_type(E.CONNECTION_TYPES.TEXT, E.CONNECTION_TYPES.INT)
 	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.VARIANT)
 	add_valid_connection_type(E.CONNECTION_TYPES.FLOAT, E.CONNECTION_TYPES.VARIANT)
 	add_valid_connection_type(E.CONNECTION_TYPES.BOOL, E.CONNECTION_TYPES.VARIANT)
 	add_valid_connection_type(E.CONNECTION_TYPES.VEC2, E.CONNECTION_TYPES.VARIANT)
 	add_valid_connection_type(E.CONNECTION_TYPES.TEXT, E.CONNECTION_TYPES.VARIANT)
 	add_valid_connection_type(E.CONNECTION_TYPES.COLOR, E.CONNECTION_TYPES.VARIANT)
+	add_valid_connection_type(E.CONNECTION_TYPES.IMAGE, E.CONNECTION_TYPES.VARIANT)
 	popup_request.connect(show_popup) # FIXME: see comment in show_popup
 	
 	# Initial settings

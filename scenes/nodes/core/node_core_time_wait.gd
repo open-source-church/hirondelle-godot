@@ -27,7 +27,7 @@ func _init() -> void:
 		"running": HPortBool.new(E.Side.OUTPUT)
 	}
 	timer = Timer.new()
-	add_child(timer)
+	add_child(timer, false, Node.INTERNAL_MODE_BACK)
 	timer.one_shot = true
 	timer.timeout.connect(emit.bind("finished"))
 

@@ -80,8 +80,9 @@ var collapsed := false:
 	set(val):
 		collapsed = val
 		main_vbox.visible = not collapsed
-		var margin = 0 if collapsed else 6
+		var margin = 0 if collapsed else 3
 		add_theme_constant_override("margin_bottom", margin)
+		add_theme_constant_override("margin_top", margin)
 		_reset_size()
 
 func set_collapsed(val: bool):
@@ -115,7 +116,8 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	custom_minimum_size = Vector2(0, 0)
 	value_changed.connect(_on_value_changed)
 	
-	add_theme_constant_override("margin_bottom", 6)
+	add_theme_constant_override("margin_bottom", 3)
+	add_theme_constant_override("margin_top", 3)
 
 func _ready() -> void:
 	update_view()
@@ -136,6 +138,7 @@ func _get_options_value() -> Variant:
 
 func _base_set_value(val):
 	val = type_cast(val)
+	
 	var _last_val
 	if value is Dictionary or value is Array or value is Image:
 		_last_val = value.duplicate()
@@ -144,9 +147,11 @@ func _base_set_value(val):
 	
 	if not custom_component.is_node_ready(): return
 	if options: set_option_button_val(val, option_button)
-	if val != _last_val:
+	
+	if typeof(val) != typeof(_last_val) or val != _last_val:
 		_set_value(val)
 		value_changed.emit()
+
 func _set_value(_val):
 	pass
 

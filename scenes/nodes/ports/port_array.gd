@@ -44,5 +44,12 @@ func update_labels():
 		
 		hbox.add_child(lbl)
 
+func update_from_connections():
+	array.clear()
+	for c in get_connections_to():
+		array.append(c.from_port.value)
+	value_changed.emit()
+	update_labels()
+
 func _on_value_changed():
 	update_labels()
