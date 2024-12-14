@@ -309,7 +309,7 @@ func load(data : Dictionary) -> void:
 	position_offset = Vector2(data.pos.x, data.pos.y)
 	for _name in data.vals:
 		if not _name in PORTS: 
-			print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [name, type])
+			print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [_name, type])
 			continue
 		if PORTS[_name].type == E.CONNECTION_TYPES.VEC2:
 			PORTS[_name].value = Vector2(data.vals[_name].x, data.vals[_name].y)

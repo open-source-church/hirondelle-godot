@@ -17,7 +17,9 @@ func _init() -> void:
 			"options": ["Local", "Download", "Resize", "Crop", "Flip", "Rotate"],
 		}),
 		# Local
-		"file": HPortText.new(E.Side.INPUT),
+		"file": HPortFile.new(E.Side.INPUT, { "params": { 
+			"filters": ["*.jpg,*.jpeg,*.png,*.webp,*.svg,*.bmp;Images"]
+			}}),
 		# Download
 		"url": HPortText.new(E.Side.INPUT),
 		# Input image
@@ -67,6 +69,16 @@ func download_image():
 		show_error("Invalid...", 5)
 		update_image(null)
 
+func open_image():
+	print("Trying to open: ", PORTS.file.value)
+	var img = Image.load_from_file(PORTS.file.value)
+	if not img:
+		show_error("File can't be openend :(", 5)
+		update_image(null)
+		return
+	show_error("")
+	update_image(img)
+
 func update(_last_changed := "") -> void:
 	var operator = PORTS.operator.value
 	var mode = PORTS.mode.value
@@ -87,17 +99,14 @@ func update(_last_changed := "") -> void:
 	if _last_changed in ["url", "operator"] and operator == "Download":
 		download_image()
 	
-	if operator == "Local":
-		show_warning("Not implemented yet...")
-	else:
-		show_warning("")
+	if _last_changed in ["file", "operator"] and operator == "Local":
+		open_image()
 	
 	if operator in ["Resize", "Crop", "Flip", "Rotate"]:
 		resize_image()
 
 func update_image(img: Image = null) -> void:
 	if img:
-		print("New image: ", img.get_size())
 		PORTS.o_image.value = img
 		PORTS.o_size.value = img.get_size()
 	else:
@@ -106,7 +115,6 @@ func update_image(img: Image = null) -> void:
 	reset_size()
 
 func resize_image() -> void:
-	print("Resize")
 	var img = PORTS.image.value as Image
 	if not img:
 		show_warning("Please attach an image", 5)

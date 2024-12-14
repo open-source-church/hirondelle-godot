@@ -27,7 +27,6 @@ func _get_value():
 	return image
 
 func _set_value(val: Image):
-	print("[Image %s] Set value: " % get_parent().name, val)
 	image = val
 	if image:
 		preview.texture = ImageTexture.create_from_image(value)

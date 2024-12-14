@@ -20,7 +20,7 @@ func _init() -> void:
 		"source": HPortText.new(E.Side.NONE, {
 			"options": ["Local", "URL"]
 		}),
-		"file": HPortText.new(E.Side.INPUT),
+		"file": HPortFile.new(E.Side.INPUT, { "params": { "filters": ["*.mp3,*.wav,*.ogg;Fichier audio"] }}),
 		"url": HPortText.new(E.Side.INPUT),
 		"length": HPortIntSpin.new(E.Side.OUTPUT),
 		"playback": HPortIntSlider.new(E.Side.OUTPUT),
@@ -37,10 +37,10 @@ func _init() -> void:
 	
 	audio = AudioStreamPlayer.new()
 	audio.finished.connect(emit.bind("finished"))
-	add_child(audio)
+	add_child(audio, false, Node.INTERNAL_MODE_FRONT)
 	
 	downloader = HDownloader.new()
-	add_child(downloader)
+	add_child(downloader, false, Node.INTERNAL_MODE_FRONT)
 
 func run(routine:String):
 	if routine == "play":
@@ -56,9 +56,25 @@ func run(routine:String):
 func download_sound():
 	var r = await downloader.get_url(PORTS.url.value)
 	if r is AudioStream:
-		audio.stream = r
-		PORTS.length.value = get_stream_length()
-		PORTS.playback.params = { "max": get_stream_length() }
+		set_stream(r)
+
+func open_sound():
+	var filename: String = PORTS.file.value
+	var file = FileAccess.open(filename, FileAccess.READ)
+	var stream: AudioStream
+	if filename.ends_with(".mp3"):
+		stream = AudioStreamMP3.new()
+	if filename.ends_with(".ogg"):
+		stream = AudioStreamOggVorbis.new()
+	if filename.ends_with(".wav"):
+		stream = AudioStreamWAV.new()
+	stream.data = file.get_buffer(file.get_length())
+	set_stream(stream)
+	
+func set_stream(stream: AudioStream):
+	audio.stream = stream
+	PORTS.length.value = get_stream_length()
+	PORTS.playback.params = { "max": get_stream_length() }
 
 func update(_last_changed: = "") -> void:
 	if _last_changed in ["source", ""]:
@@ -66,8 +82,11 @@ func update(_last_changed: = "") -> void:
 		PORTS.url.collapsed = not PORTS.source.value == "URL"
 		update_slots()
 	
-	if _last_changed == "url":
+	if _last_changed in ["source", "url"] and PORTS.source.value == "URL":
 		download_sound()
+	
+	if _last_changed in ["source", "file"] and PORTS.source.value == "Local":
+		open_sound()
 	
 	if _last_changed == "pitch" and audio.stream:
 		PORTS.length.value = get_stream_length()
