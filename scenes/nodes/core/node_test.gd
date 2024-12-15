@@ -24,9 +24,11 @@ func _init() -> void:
 		}),
 		"vec2": HPortVec2.new(E.Side.BOTH),
 		"bool": HPortBool.new(E.Side.INPUT),
+		"float": HPortFloat.new(E.Side.BOTH),
 	}
 
 func update(_last_changed := "") -> void:
+	return
 	if PORTS.int.value == 14:
 		PORTS.text_options.options = ["Albert", "Le vert"]
 	else:

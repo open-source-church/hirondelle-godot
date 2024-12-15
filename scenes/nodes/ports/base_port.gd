@@ -72,7 +72,7 @@ func _set(prop : StringName, val: Variant) -> bool:
 		return true
 	return false
 
-## Whether the port is collapsed. In can be changed internally by the not on a port basis.
+## Whether the port is collapsed. In can be changed internally on a port basis.
 ## This is because in [GraphNode]s, [Control] cannot really be hidded, or it messes up the whole
 ## thing.[br]
 ## See also [method set_node_collapsed].
@@ -106,8 +106,13 @@ func _reset_size() -> void:
 func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) -> void:
 	side = _side
 	type = _type
-	visible = opt.get("collapsed", true)
+	#collapsed = opt.get("collapsed", false)
 	options = opt.get("options", [])
+	options_enum = opt.get("options_enum", {})
+	options_labels = opt.get("options_labels", [])
+	if options_enum and options_labels:
+		print("INIT OPTIONS")
+		set_options_from_enum(options_enum, options_labels)
 	description = opt.get("description", "")
 	default = opt.get("default", null)
 	params = opt.get("params", {})
@@ -194,6 +199,21 @@ func _set_options(_options):
 	
 	options = _options
 	_on_options_changed(_value)
+
+var options_enum: Dictionary
+var options_labels: Array
+# Enum can be used for options. For the labels, an array with the same number of values must be provided.
+func set_options_from_enum(_enum: Dictionary, _labels: Array):
+	if not _enum: return
+	if _enum.size() != _labels.size():
+		push_error("_enum and _labels don't have the same number of values")
+	var _options = []
+	for i in _enum.size():
+		_options.append({
+			"label": _labels[i],
+			"value": _enum.values()[i]
+		})
+	options = _options
 
 func _on_options_changed(_last_val) -> void:
 	# Hide or shows the custom component and option button, if there are options

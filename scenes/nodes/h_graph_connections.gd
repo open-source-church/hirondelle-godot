@@ -60,8 +60,9 @@ class Connection:
 		if use_last: c = _last_godot_values
 		graph.disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
 		# Check if port is dictionary to update
-		if to_port.is_multiple:
-			to_port.update_from_connections()
+		#if to_port.is_multiple: (Doesn't work with HDictPort with single value)
+		# FIXME: Update anyway ? Is it a bad idea?
+		to_port.update_from_connections()
 	
 	## [param use_last]: dont query for new godot values, but use last. Useful when port visibility has change.
 	func hide(use_last := false):
@@ -90,6 +91,9 @@ class Connection:
 		var flow = from_port.type == E.CONNECTION_TYPES.FLOW
 		var duration = 0.5 if flow else 0.3
 		var size = 16 if flow else 10
+		# Adapts a bit size to zoom
+		if graph.zoom > 1:
+			size = size / (graph.zoom + 1) * 2.0
 		var points := get_connection_line()
 		var _size = size * graph.zoom
 		var img := TextureRect.new()
@@ -115,8 +119,8 @@ class Connection:
 		tween1.set_parallel(true).tween_property(img, "modulate", modulate_to, duration)
 		
 		#tween.set_parallel(true).tween_property(img, "scale", Vector2.ONE * 2, duration)
-		tween2.tween_property(path, "modulate", Color(1, 1, 1, 0.2), duration / 2.0).from(Color.WHITE)
-		tween2.tween_property(path, "modulate", Color.WHITE, duration / 2.0).from(Color(1, 1, 1, 0.2))
+		tween2.tween_property(path, "modulate", Color(1, 1, 1, 0.5), duration / 2.0).from(Color.WHITE)
+		tween2.tween_property(path, "modulate", Color.WHITE, duration / 2.0).from(Color(1, 1, 1, 0.5))
 		#tween2.tween_property(img, "scale", Vector2.ONE * 0.8, duration / 2).from(Vector2.ONE * 1.0)
 		#tween2.tween_property(img, "scale", Vector2.ONE * 1.0, duration / 2).from(Vector2.ONE * 0.8)
 		await tween1.finished

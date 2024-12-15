@@ -41,7 +41,6 @@ func update_labels():
 		var lbl = Label.new()
 		lbl.mouse_filter = Control.MOUSE_FILTER_PASS
 		
-		print("Showing values ?", params.get("show_value"))
 		if params.get("show_value", false):
 			lbl.tooltip_text = "Key: %s" % str(key)
 			lbl.text = str(dict[key])

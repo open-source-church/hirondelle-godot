@@ -22,6 +22,7 @@ const NODES = [
 	preload("res://scenes/nodes/core/node_color.gd"),
 	preload("res://scenes/nodes/core/node_core_image.gd"),
 	preload("res://scenes/nodes/core/node_operator_bool.gd"),
+	preload("res://scenes/nodes/core/node_core_test.gd"),
 	## OBS
 	preload("res://scenes/nodes/OBS/node_obs_current_scene_changed.gd"),
 	preload("res://scenes/nodes/OBS/node_obs_studio_mode.gd"),

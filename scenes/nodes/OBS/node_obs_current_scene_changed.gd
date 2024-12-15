@@ -21,6 +21,14 @@ func _init() -> void:
 	_scene = await G.OBS.send_request("GetCurrentPreviewScene")
 	if _scene:
 		PORTS.program.value = _scene.sceneName
+	G.OBS.scene_list_changed.connect(_update_scene_list)
+	var r = await G.OBS.send_request("GetSceneList")
+	_update_scene_list(r.scenes)
+
+func _update_scene_list(scenes : Array):
+	scenes.reverse()
+	PORTS.program.options = scenes.map(func (s): return s.sceneName)
+	PORTS.preview.options = scenes.map(func (s): return s.sceneName)
 
 func _program_scene_changed(new_name, _uuid):
 	PORTS.program.value = new_name
