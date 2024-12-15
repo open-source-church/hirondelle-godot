@@ -21,6 +21,7 @@ const NODES = [
 	preload("res://scenes/nodes/core/node_operator_vec2.gd"),
 	preload("res://scenes/nodes/core/node_color.gd"),
 	preload("res://scenes/nodes/core/node_core_image.gd"),
+	preload("res://scenes/nodes/core/node_operator_bool.gd"),
 	## OBS
 	preload("res://scenes/nodes/OBS/node_obs_current_scene_changed.gd"),
 	preload("res://scenes/nodes/OBS/node_obs_studio_mode.gd"),
@@ -72,6 +73,7 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "twitch": p = Vector2i(7, 7)
 	if icon == "fireworks": p = Vector2i(8, 7)
 	if icon == "confettis": p = Vector2i(9, 7)
+	if icon == "bool": p = Vector2i(10, 7)
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 
 func get_node_color(node):

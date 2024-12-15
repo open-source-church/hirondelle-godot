@@ -13,7 +13,7 @@ func _init() -> void:
 		"text": HPortText.new(E.Side.INPUT),
 		"vars": HPortDict.new(E.Side.INPUT, { 
 			"type": E.CONNECTION_TYPES.VARIANT, 
-			"dictionary": true
+			"multiple": true
 		}),
 		"split": HPortBool.new(E.Side.INPUT, {  "default": false }),
 		"delimiter": HPortText.new(E.Side.INPUT, { "collapsed": true }),

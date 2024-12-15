@@ -24,7 +24,7 @@ var main_vbox : HBoxContainer
 
 ## Port is holding a dictionary instead of just a single value.[br]
 ## Dictionaries allows for multiple connections.
-var is_dictionary := false
+var is_multiple := false
 
 ## Ports default value
 var default : Variant
@@ -112,7 +112,7 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	default = opt.get("default", null)
 	params = opt.get("params", {})
 	hide_label = opt.get("hide_label", false)
-	is_dictionary = opt.get("dictionary", false)
+	is_multiple = opt.get("multiple", false)
 	custom_minimum_size = Vector2(0, 0)
 	value_changed.connect(_on_value_changed)
 	

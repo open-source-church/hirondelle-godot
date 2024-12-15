@@ -60,7 +60,7 @@ class Connection:
 		if use_last: c = _last_godot_values
 		graph.disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
 		# Check if port is dictionary to update
-		if to_port.is_dictionary:
+		if to_port.is_multiple:
 			to_port.update_from_connections()
 	
 	## [param use_last]: dont query for new godot values, but use last. Useful when port visibility has change.

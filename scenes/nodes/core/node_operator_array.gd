@@ -14,7 +14,7 @@ func _init() -> void:
 		"next": HPortFlow.new(E.Side.INPUT),
 		"for_each": HPortFlow.new(E.Side.OUTPUT),
 		"arrays": HPortDict.new(E.Side.INPUT, {
-			"dictionary": true
+			"multiple": true
 		}),
 		"index": HPortIntSlider.new(E.Side.INPUT),
 		"loop": HPortBool.new(E.Side.INPUT, { "default": false }),

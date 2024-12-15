@@ -101,7 +101,7 @@ func _on_connection_request(from_node: StringName, from_port: int, to_node: Stri
 	var _to_port = _to_node.get_input_port(to_port)
 	
 	# Clear existing connections if needed
-	if _to_port.type != E.CONNECTION_TYPES.FLOW and not _to_port.is_dictionary:
+	if _to_port.type != E.CONNECTION_TYPES.FLOW and not _to_port.is_multiple:
 		for c in connections.list_to_node_and_port(_to_node, _to_port):
 			connections.remove_connection(c)
 	

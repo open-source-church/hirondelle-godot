@@ -128,7 +128,10 @@ func update_slots() -> void:
 	
 	var slot_index := 0
 	for c in get_children():
-		if c is HBasePort and not c.collapsed:
+		if c is HBasePort and c.collapsed:
+			set_slot_enabled_left(slot_index, false)
+			set_slot_enabled_right(slot_index, false)
+		elif c is HBasePort and not c.collapsed:
 			set_slot_enabled_left(slot_index, c.side in [E.Side.INPUT, E.Side.BOTH])
 			set_slot_enabled_right(slot_index, c.side in [E.Side.OUTPUT, E.Side.BOTH])
 			set_slot_type_left(slot_index, c.type)
@@ -139,10 +142,10 @@ func update_slots() -> void:
 			var _icon
 			if c.type == E.CONNECTION_TYPES.FLOW:
 				_icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 3, 0, 32, 15)
-			elif c.is_dictionary:
+			elif c.is_multiple:
 				_icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 2, 0, 32, 12)
 			else:
-				icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 0, 32, 10)
+				_icon = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 0, 32, 10)
 			set_slot_custom_icon_right(slot_index, _icon)
 			set_slot_custom_icon_left(slot_index, _icon)
 		

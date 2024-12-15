@@ -12,7 +12,7 @@ func _init() -> void:
 		"changed": HPortFlow.new(E.Side.OUTPUT),
 		"watch": HPortArray.new(E.Side.INPUT, { 
 			"type": E.CONNECTION_TYPES.VARIANT,
-			"dictionary": true
+			"multiple": true
 		})
 	}
 

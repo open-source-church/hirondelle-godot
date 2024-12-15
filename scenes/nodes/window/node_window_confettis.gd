@@ -13,7 +13,7 @@ func _init() -> void:
 	PORTS = {
 		"start": HPortFlow.new(E.Side.INPUT),
 		"amount": HPortIntSpin.new(E.Side.INPUT, { "default": 20, "description": "The amount of confettis per color and per side." }),
-		"colors": HPortArray.new(E.Side.INPUT, { "type": E.CONNECTION_TYPES.COLOR, "dictionary": true, "description": "Attach as many color as you want. If you dont provide color, 3 basic colors will be used." }),
+		"colors": HPortArray.new(E.Side.INPUT, { "type": E.CONNECTION_TYPES.COLOR, "multiple": true, "description": "Attach as many color as you want. If you dont provide color, 3 basic colors will be used." }),
 		"color_variation": HPortRatioSlider.new(E.Side.INPUT, { "default": 0.1, "params": { 
 				"label": true, "reset": true }
 			}),

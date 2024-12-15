@@ -1,12 +1,19 @@
 extends HBasePort
 class_name HPortDict
 
+## Displays a Dict
+##
+## Params:
+## * show_value (default: false): displays the value instead of the name
+
 var hbox : HFlowContainer
 @onready var dict : Dictionary = {}
 @onready var dict_types : Dictionary = {}
 
 func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.VARIANT_ARRAY)
+	if not "multiple" in opt:
+		opt.multiple = true
 	super(_side, _type, opt)
 
 func get_component(_params) -> Control:
@@ -33,8 +40,14 @@ func update_labels():
 		
 		var lbl = Label.new()
 		lbl.mouse_filter = Control.MOUSE_FILTER_PASS
-		lbl.tooltip_text = "Val: %s" % str(dict[key])
-		lbl.text = key
+		
+		print("Showing values ?", params.get("show_value"))
+		if params.get("show_value", false):
+			lbl.tooltip_text = "Key: %s" % str(key)
+			lbl.text = str(dict[key])
+		else:
+			lbl.tooltip_text = "Val: %s" % str(dict[key])
+			lbl.text = key
 		
 		var stylebox = StyleBoxFlat.new()
 		stylebox.bg_color = E.connection_colors[dict_types[key]].darkened(0.0)
@@ -50,6 +63,8 @@ func update_labels():
 		lbl.add_theme_stylebox_override("normal", stylebox)
 		
 		hbox.add_child(lbl)
+	
+	_reset_size()
 
 func update_from_connections(no_signal = false):
 	dict = {}
@@ -70,4 +85,6 @@ func update_from_connections(no_signal = false):
 
 func _on_value_changed():
 	update_labels()
-	
+
+func _on_params_changed() -> void:
+	update_labels()
