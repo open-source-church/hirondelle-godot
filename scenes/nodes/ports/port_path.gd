@@ -1,5 +1,5 @@
 extends HBasePort
-class_name HPortFile
+class_name HPortPath
 
 var line : LineEdit
 var hbox: HBoxContainer
@@ -31,6 +31,8 @@ func get_component(_params) -> Control:
 	add_child(dialog)
 	dialog.file_selected.connect(line.set_text)
 	dialog.file_selected.connect(value_changed.emit.unbind(1))
+	dialog.dir_selected.connect(line.set_text)
+	dialog.dir_selected.connect(value_changed.emit.unbind(1))
 	btn.pressed.connect(dialog.popup_centered_clamped)
 	
 	return hbox
@@ -39,6 +41,7 @@ func _on_params_changed():
 	var filters = params.get("filters", [])
 	if filters:
 		dialog.filters = filters
+	dialog.file_mode = params.get("file_mode", FileDialog.FILE_MODE_OPEN_FILE)
 
 func _get_value():
 	return line.text

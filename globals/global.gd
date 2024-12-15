@@ -36,7 +36,10 @@ const NODES = [
 	## TWITCH
 	preload("res://scenes/nodes/twitch/twitch_channel_follow.gd"),
 	preload("res://scenes/nodes/twitch/twitch_channel_chat_message.gd"),
-	preload("res://scenes/nodes/twitch/twitch_send_chat_message.gd")
+	preload("res://scenes/nodes/twitch/twitch_send_chat_message.gd"),
+	## SYSTEM
+	preload("res://scenes/nodes/system/node_system_directory_watcher.gd"),
+	preload("res://scenes/nodes/system/node_system_file_watcher.gd")
 ]
 
 func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, icon_width : int) -> Texture2D:

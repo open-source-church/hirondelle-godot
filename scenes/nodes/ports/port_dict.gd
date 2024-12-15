@@ -1,7 +1,7 @@
 extends HBasePort
 class_name HPortDict
 
-var hbox : HBoxContainer
+var hbox : HFlowContainer
 @onready var dict : Dictionary = {}
 @onready var dict_types : Dictionary = {}
 
@@ -10,7 +10,8 @@ func _init(_side : E.Side, opt : Dictionary = {}):
 	super(_side, _type, opt)
 
 func get_component(_params) -> Control:
-	hbox = HBoxContainer.new()
+	hbox = HFlowContainer.new()
+	hbox.custom_minimum_size = Vector2(300, 0)
 	return hbox
 
 func _get_value():

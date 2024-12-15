@@ -172,7 +172,7 @@ func get_connections_to():
 ## Provides visual feedback when the value is updated.
 func animate_update() -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
+	tween.tween_property(self, "modulate", Color.WHITE, 0.5).from(Color(0.2, 1.0, 0.2))
 
 var options:Array : set=_set_options
 

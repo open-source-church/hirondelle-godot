@@ -17,7 +17,7 @@ func _init() -> void:
 			"options": ["Local", "Download", "Resize", "Crop", "Flip", "Rotate"],
 		}),
 		# Local
-		"file": HPortFile.new(E.Side.INPUT, { "params": { 
+		"file": HPortPath.new(E.Side.INPUT, { "params": { 
 			"filters": ["*.jpg,*.jpeg,*.png,*.webp,*.svg,*.bmp;Images"]
 			}}),
 		# Download

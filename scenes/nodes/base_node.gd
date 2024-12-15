@@ -118,6 +118,7 @@ func on_port_clicked(port_name : String) -> void:
 	# Clicking on a Flow Port: on input, run node. On output: emit signal to run other nodes.
 	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.INPUT:
 		run(port_name)
+		val.animate_update()
 	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.OUTPUT:
 		emit(port_name)
 
@@ -183,6 +184,7 @@ func run(_routine : String) -> void:
 
 ## Calls node connected by FLOW to this node.
 func emit(routine : String) -> void:
+	PORTS[routine].animate_update()
 	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
 		c.to_node.run.call_deferred(c.to_port.name)
 		c.animate()
@@ -249,17 +251,33 @@ func get_port_type(side, index : int):
 	if side == E.Side.OUTPUT: return get_output_port_type(index)
 
 # Labels
+func hide_messages():
+	show_message(success, "", 0, true)
+	show_message(warning, "", 0, true)
+	show_message(error, "", 0, true)
 
-func show_success(msg: String, duration := 0) -> void:
+func show_success(msg: String, duration := 0, hide_others := true) -> void:
+	if hide_others: hide_messages()
 	show_message(success, msg, duration)
 
-func show_warning(msg: String, duration := 0) -> void:
+func show_warning(msg: String, duration := 0, hide_others := true) -> void:
+	if hide_others: hide_messages()
 	show_message(warning, msg, duration)
 
-func show_error(msg: String, duration := 0) -> void:
+func show_error(msg: String, duration := 0, hide_others := true) -> void:
+	if hide_others: hide_messages()
 	show_message(error, msg, duration)
 
-func show_message(label:Label, msg: String, duration := 0.0) -> void:
+var _label_tweens := []
+func show_message(label:Label, msg: String, duration := 0.0, immediate := false) -> void:
+	if immediate:
+		for t: Tween in _label_tweens:
+			t.kill()
+		_label_tweens = []
+		label.text = msg
+		label.visible = msg != ""
+		reset_size()
+		return
 	# Nothing to do
 	if not label.text and not msg: return
 	# Actions
@@ -268,6 +286,7 @@ func show_message(label:Label, msg: String, duration := 0.0) -> void:
 	const HIDE_DURATION = 0.3
 	# Operations
 	var tween = create_tween()
+	_label_tweens.append(tween)
 	tween.set_parallel(false)
 	tween.tween_property(label, "visible", true, 0)
 	tween.tween_property(label, "modulate", Color.WHITE, 0)
@@ -281,6 +300,7 @@ func show_message(label:Label, msg: String, duration := 0.0) -> void:
 		tween.set_parallel(false).tween_property(label, "visible", false, 0)
 		tween.tween_method(reset_size.unbind(1), 0, 0, 0)
 		tween.tween_property(label, "text", "", 0)
+	tween.tween_callback(_label_tweens.erase.bind(tween))
 
 # Save and Load
 

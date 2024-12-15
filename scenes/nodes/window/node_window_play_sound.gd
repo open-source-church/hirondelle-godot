@@ -20,7 +20,7 @@ func _init() -> void:
 		"source": HPortText.new(E.Side.NONE, {
 			"options": ["Local", "URL"]
 		}),
-		"file": HPortFile.new(E.Side.INPUT, { "params": { "filters": ["*.mp3,*.wav,*.ogg;Fichier audio"] }}),
+		"file": HPortPath.new(E.Side.INPUT, { "params": { "filters": ["*.mp3,*.wav,*.ogg;Fichier audio"] }}),
 		"url": HPortText.new(E.Side.INPUT),
 		"length": HPortIntSpin.new(E.Side.OUTPUT),
 		"playback": HPortIntSlider.new(E.Side.OUTPUT),
