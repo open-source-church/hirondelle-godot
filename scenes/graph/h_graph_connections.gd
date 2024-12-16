@@ -169,7 +169,7 @@ func create_connection_from_godot(from_node_name: StringName, from_port_number: 
 func create_connection_from_names(from_node_name: String, from_port_name: String, to_node_name: String, to_port_name: String, visible := true) -> Connection:
 	var _from_node := graph.get_node_by_id(from_node_name)
 	var _to_node := graph.get_node_by_id(to_node_name)
-	return Connection.new(graph, _from_node, _from_node.PORTS[from_port_name], _to_node, _to_node.PORTS[to_port_name], visible)
+	return Connection.new(graph, _from_node, _from_node.port(from_port_name), _to_node, _to_node.port(to_port_name), visible)
 
 func create_connection(from_node: HBaseNode, from_port: HBasePort, to_node: HBaseNode, to_port: HBasePort, visible := true) -> Connection:
 	return Connection.new(graph, from_node, from_port, to_node, to_port, visible)
@@ -190,7 +190,7 @@ func add_connection(connection : Connection):
 	# Update graph edit internal
 	connection.connect_in_graph()
 	# Propagate value
-	connection.from_node.propagate_value(connection.from_port.name)
+	connection.from_port.propagate_value()
 
 # DISCONNECT
 
@@ -219,7 +219,7 @@ func clear():
 ## Hides or shows connections when port visibility change.
 ## FIXME: probably buggy.
 func update_node_slots_visibility(node : HBaseNode) -> void:
-	for port in node.PORTS.values():
+	for port in node.ports.list():
 		for c in list_to_and_from_port(port):
 			if port.visible and not c.visible:
 				# Port just turned visible
@@ -230,7 +230,7 @@ func update_node_slots_visibility(node : HBaseNode) -> void:
 
 ## Remove all connections to slots that are hidden
 func remove_connections_to_hidden_slots(node : HBaseNode):
-	for port in node.PORTS.values():
+	for port in node.ports.list():
 		for c in list_to_and_from_port(port):
 			if port.collapsed:
 				remove_connection(c, true)

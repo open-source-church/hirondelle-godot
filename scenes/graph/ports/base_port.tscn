@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://clrxesv0w4k2o"]
 
-[ext_resource type="Script" path="res://scenes/nodes/ports/base_port.gd" id="1_df8d5"]
+[ext_resource type="Script" path="res://scenes/graph/ports/base_port.gd" id="1_df8d5"]
 
 [node name="BasePort" type="HBoxContainer"]
 anchors_preset = 15

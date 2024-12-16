@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7qloskqot1g4"]
 
-[ext_resource type="Script" path="res://scenes/nodes/base_node.gd" id="1_q8k7a"]
+[ext_resource type="Script" path="res://scenes/graph/base_node.gd" id="1_q8k7a"]
 
 [node name="TestNode" type="GraphNode"]
 offset_right = 183.0

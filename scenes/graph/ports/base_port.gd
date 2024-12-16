@@ -13,6 +13,8 @@ class_name HBasePort
 var option_button: OptionButton
 ## The custom component that is returned by subclasses
 var custom_component: Control
+## References to the [HBaseNode] this port belongs to
+var node: HBaseNode
 ## References to the [HGraphEdit] this port belongs to
 var graph: HGraphEdit
 ## Containers.[br]
@@ -98,10 +100,10 @@ func set_node_collapsed(val: bool):
 func _reset_size() -> void:
 	# Quite ugly, but otherwise doesn't really work
 	reset_size()
-	get_parent().reset_size()
+	node.reset_size()
 	await get_tree().process_frame
 	reset_size()
-	get_parent().reset_size()
+	node.reset_size()
 
 func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) -> void:
 	side = _side
@@ -125,6 +127,8 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	add_theme_constant_override("margin_top", 3)
 
 func _ready() -> void:
+	node = get_parent()
+	graph = node.graph
 	update_view()
 	reset_value()
 
@@ -164,6 +168,24 @@ func _set_value(_val):
 func type_cast(val):
 	return val
 
+## Calls node connected by FLOW to this port.
+func emit():
+	animate_update()
+	for c in graph.connections.list_from_node_and_port(node, self):
+		c.to_node.run.call_deferred(c.to_port)
+		c.animate()
+		c.to_node.animate_run()
+
+## Propagates values, following connections
+func propagate_value() -> void:
+	for c in graph.connections.list_from_node_and_port(node, self):
+		if c.from_port.type == E.CONNECTION_TYPES.FLOW: continue
+		# Update value
+		c.to_port.update_from_connections()
+		# Visual feedbacks
+		c.to_port.animate_update()
+		c.animate()
+
 ## Subclass to implement comportement from multiple connections
 func update_from_connections():
 	for c in get_connections_to():
@@ -171,7 +193,6 @@ func update_from_connections():
 
 ## Returns a list of all connections to that port
 func get_connections_to():
-	var node = get_parent() as HBaseNode
 	return node.graph.connections.list_to_port(self)
 
 ## Provides visual feedback when the value is updated.

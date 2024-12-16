@@ -6,106 +6,106 @@ static var _type = "core/color"
 static var _category = "Core"
 static var _icon = "color"
 
+
+var operator := HPortText.new(E.Side.NONE, {
+	"options": ["Compose", "Decompose", "Blend", "Lerp", "Lighten", "Darken"]
+})
+var c1 := HPortColor.new(E.Side.INPUT, { "default": Color.CYAN })
+var c2 := HPortColor.new(E.Side.INPUT, { "default": Color.MAGENTA })
+var r := HPortIntSpin.new(E.Side.INPUT, { "default": 255 })
+var g := HPortIntSpin.new(E.Side.INPUT, { "default": 255 })
+var b := HPortIntSpin.new(E.Side.INPUT, { "default": 255 })
+var a := HPortIntSpin.new(E.Side.INPUT, { "default": 255 })
+var html := HPortText.new(E.Side.INPUT, { "default": "" })
+var value := HPortIntSlider.new(E.Side.INPUT)
+		# Output
+var o_color := HPortColor.new(E.Side.OUTPUT)
+var o_r := HPortIntSpin.new(E.Side.OUTPUT)
+var o_g := HPortIntSpin.new(E.Side.OUTPUT)
+var o_b := HPortIntSpin.new(E.Side.OUTPUT)
+var o_a := HPortIntSpin.new(E.Side.OUTPUT)
+var o_html := HPortText.new(E.Side.OUTPUT)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"operator": HPortText.new(E.Side.NONE, {
-			"options": ["Compose", "Decompose", "Blend", "Lerp", "Lighten", "Darken"]
-		}),
-		"c1": HPortColor.new(E.Side.INPUT, { "default": Color.CYAN }),
-		"c2": HPortColor.new(E.Side.INPUT, { "default": Color.MAGENTA }),
-		"r": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
-		"g": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
-		"b": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
-		"a": HPortIntSpin.new(E.Side.INPUT, { "default": 255 }),
-		"html": HPortText.new(E.Side.INPUT, { "default": "" }),
-		"value": HPortIntSlider.new(E.Side.INPUT),
-		# Output
-		"o_color": HPortColor.new(E.Side.OUTPUT),
-		"o_r": HPortIntSpin.new(E.Side.OUTPUT),
-		"o_g": HPortIntSpin.new(E.Side.OUTPUT),
-		"o_b": HPortIntSpin.new(E.Side.OUTPUT),
-		"o_a": HPortIntSpin.new(E.Side.OUTPUT),
-		"o_html": HPortText.new(E.Side.OUTPUT),
-	}
+	
 
-func update(_last_changed := "") -> void:
-	var operator = PORTS.operator.value
-	if _last_changed in ["operator", ""]:
-		PORTS.c1.collapsed = operator in ["Compose"]
-		PORTS.c2.collapsed = operator in ["Compose", "Decompose", "Lighten", "Darken"]
-		PORTS.r.collapsed = not operator in ["Compose"]
-		PORTS.g.collapsed = not operator in ["Compose"]
-		PORTS.b.collapsed = not operator in ["Compose"]
-		PORTS.a.collapsed = not operator in ["Compose"]
-		PORTS.html.collapsed = not operator in ["Compose"]
-		PORTS.value.collapsed = operator in ["Compose", "Decompose", "Blend"]
-		PORTS.o_color.collapsed = operator in ["Decompose"]
-		PORTS.o_r.collapsed = not operator in ["Decompose"]
-		PORTS.o_g.collapsed = not operator in ["Decompose"]
-		PORTS.o_b.collapsed = not operator in ["Decompose"]
-		PORTS.o_a.collapsed = not operator in ["Decompose"]
-		PORTS.o_html.collapsed = not operator in ["Decompose"]
+func update(_last_changed: HBasePort = null) -> void:
+	if _last_changed in [operator, null]:
+		c1.collapsed = operator.value in ["Compose"]
+		c2.collapsed = operator.value in ["Compose", "Decompose", "Lighten", "Darken"]
+		r.collapsed = not operator.value in ["Compose"]
+		g.collapsed = not operator.value in ["Compose"]
+		b.collapsed = not operator.value in ["Compose"]
+		a.collapsed = not operator.value in ["Compose"]
+		html.collapsed = not operator.value in ["Compose"]
+		value.collapsed = operator.value in ["Compose", "Decompose", "Blend"]
+		o_color.collapsed = operator.value in ["Decompose"]
+		o_r.collapsed = not operator.value in ["Decompose"]
+		o_g.collapsed = not operator.value in ["Decompose"]
+		o_b.collapsed = not operator.value in ["Decompose"]
+		o_a.collapsed = not operator.value in ["Decompose"]
+		o_html.collapsed = not operator.value in ["Decompose"]
 		update_slots()
 	
 	# INPUT
-	if operator == "Compose":
-		if _last_changed == "html":
-			var color = Color(PORTS.html.value)
-			PORTS.o_color.value = color
-			PORTS.r.value = color.r8
-			PORTS.g.value = color.g8
-			PORTS.b.value = color.b8
-			PORTS.a.value = color.a8
+	if operator.value == "Compose":
+		if _last_changed == html:
+			var color = Color(html.value)
+			o_color.value = color
+			r.value = color.r8
+			g.value = color.g8
+			b.value = color.b8
+			a.value = color.a8
 		else:
 			var color = Color()
-			color.r8 = PORTS.r.value
-			color.g8 = PORTS.g.value
-			color.b8 = PORTS.b.value
-			color.a8 = PORTS.a.value
-			PORTS.html.value = color.to_html()
-			PORTS.o_color.value = color
-	if operator == "Decompose":
-		var color = Color(PORTS.c1.value)
-		PORTS.o_color.value = color
-		PORTS.o_r.value = color.r8
-		PORTS.o_g.value = color.g8
-		PORTS.o_b.value = color.b8
-		PORTS.o_a.value = color.a8
-		PORTS.o_html.value = color.to_html()
-	if operator == "Blend":
-		var color = Color(PORTS.c1.value)
-		color = color.blend(PORTS.c2.value)
-		PORTS.o_color.value = color
-	if operator == "Lerp":
-		var color = Color(PORTS.c1.value)
-		color = color.lerp(PORTS.c2.value, PORTS.value.value / 100.0)
-		PORTS.o_color.value = color
-	if operator == "Lighten":
-		var color = Color(PORTS.c1.value)
-		color = color.lightened(PORTS.value.value / 100.0)
-		PORTS.o_color.value = color
-	if operator == "Darken":
-		var color = Color(PORTS.c1.value)
-		color = color.darkened(PORTS.value.value / 100.0)
-		PORTS.o_color.value = color
-	#if _last_changed == "input":
-		#PORTS.r.value = PORTS.input.value.r8
-		#PORTS.g.value = PORTS.input.value.g8
-		#PORTS.b.value = PORTS.input.value.b8
-		#PORTS.a.value = PORTS.input.value.a8
+			color.r8 = r.value
+			color.g8 = g.value
+			color.b8 = b.value
+			color.a8 = a.value
+			html.value = color.to_html()
+			o_color.value = color
+	if operator.value == "Decompose":
+		var color = Color(c1.value)
+		o_color.value = color
+		o_r.value = color.r8
+		o_g.value = color.g8
+		o_b.value = color.b8
+		o_a.value = color.a8
+		o_html.value = color.to_html()
+	if operator.value == "Blend":
+		var color = Color(c1.value)
+		color = color.blend(c2.value)
+		o_color.value = color
+	if operator.value == "Lerp":
+		var color = Color(c1.value)
+		color = color.lerp(c2.value, value.value / 100.0)
+		o_color.value = color
+	if operator.value == "Lighten":
+		var color = Color(c1.value)
+		color = color.lightened(value.value / 100.0)
+		o_color.value = color
+	if operator.value == "Darken":
+		var color = Color(c1.value)
+		color = color.darkened(value.value / 100.0)
+		o_color.value = color
+	#if _last_changed == input:
+		#r.value = input.value.r8
+		#g.value = input.value.g8
+		#b.value = input.value.b8
+		#a.value = input.value.a8
 	#else:
 		#var color = Color()
-		#color.r8 = PORTS.r.value
-		#color.g8 = PORTS.g.value
-		#color.b8 = PORTS.b.value
-		#color.a8 = PORTS.a.value
-		#PORTS.input.value = color
+		#color.r8 = r.value
+		#color.g8 = g.value
+		#color.b8 = b.value
+		#color.a8 = a.value
+		#input.value = color
 	
 	# OUTPUT
-	#PORTS.o_color.value = PORTS.input.value
-	#PORTS.o_r.value = PORTS.input.value.r8
-	#PORTS.o_g.value = PORTS.input.value.g8
-	#PORTS.o_b.value = PORTS.input.value.b8
-	#PORTS.o_a.value = PORTS.input.value.a8
+	#o_color.value = input.value
+	#o_r.value = input.value.r8
+	#o_g.value = input.value.g8
+	#o_b.value = input.value.b8
+	#o_a.value = input.value.a8

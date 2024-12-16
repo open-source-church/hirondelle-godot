@@ -7,33 +7,34 @@ static var _icon = "image"
 
 var ID : int
 
+
+var show_ := HPortFlow.new(E.Side.INPUT)
+var hide_ := HPortFlow.new(E.Side.INPUT)
+var image := HPortImage.new(E.Side.INPUT)
+var pos := HPortVec2.new(E.Side.INPUT)
+var size_ := HPortVec2.new(E.Side.INPUT)
+var visible_ := HPortBool.new(E.Side.BOTH)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"show": HPortFlow.new(E.Side.INPUT),
-		"hide": HPortFlow.new(E.Side.INPUT),
-		"image": HPortImage.new(E.Side.INPUT),
-		"pos": HPortVec2.new(E.Side.INPUT),
-		"size": HPortVec2.new(E.Side.INPUT),
-		"visible": HPortBool.new(E.Side.BOTH),
-	}
+	
 	ID = randi()
 
-func run(routine:String):
-	if routine == "show":
-		PORTS.visible.value = true
+func run(_port : HBasePort) -> void:
+	if _port == show_:
+		visible_.value = true
 
-	if routine == "hide":
-		PORTS.visible.value = false
+	if _port == hide_:
+		visible_.value = false
 
-func update(_last_changed: = "") -> void:
+func update(_last_changed: HBasePort = null) -> void:
 	update_image()
 
 func update_image() -> void:
-	var _size = PORTS.size.value
+	var _size = size_.value
 	#var texture = preview.texture
-	var img = PORTS.image.value
+	var img = image.value
 	var texture
 	if img:
 		#var img = texture.get_image()
@@ -42,12 +43,12 @@ func update_image() -> void:
 		texture = ImageTexture.create_from_image(img)
 	
 	var opt = {
-		"position": PORTS.pos.value,
-		"size": PORTS.size.value,
-		"width": PORTS.size.value.x,
-		"height": PORTS.size.value.y,
+		"position": pos.value,
+		"size": size_.value,
+		"width": size_.value.x,
+		"height": size_.value.y,
 		"texture": texture,
-		"visible": PORTS.visible.value
+		"visible": visible_.value
 	}
 	G.window.images[ID] = opt
 	G.window.canvas_redraw()

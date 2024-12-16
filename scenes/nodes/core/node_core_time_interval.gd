@@ -7,34 +7,35 @@ static var _icon = "time"
 
 var timer : Timer
 
+
+var start := HPortFlow.new(E.Side.INPUT)
+var stop := HPortFlow.new(E.Side.INPUT)
+var ping := HPortFlow.new(E.Side.OUTPUT)
+var time := HPortIntSpin.new(E.Side.INPUT, {
+	"default": 1000, 
+	"description": "Time in milisecond"
+})
+var active := HPortBool.new(E.Side.BOTH, { "default": false })
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"start": HPortFlow.new(E.Side.INPUT),
-		"stop": HPortFlow.new(E.Side.INPUT),
-		"ping": HPortFlow.new(E.Side.OUTPUT),
-		"time": HPortIntSpin.new(E.Side.INPUT, {
-			"default": 1000, 
-			"description": "Time in milisecond"
-		}),
-		"active": HPortBool.new(E.Side.BOTH, { "default": false }),
-	}
+	
 	timer = Timer.new()
 	add_child(timer, false, Node.INTERNAL_MODE_BACK)
 	timer.one_shot = false
-	timer.timeout.connect(emit.bind("ping"))
+	timer.timeout.connect(ping.emit)
 
-func run(routine:String):
-	if routine == "start":
-		timer.start(PORTS.time.value / 1000.0)
-		PORTS.active.value = true
+func run(_port : HBasePort) -> void:
+	if _port == start:
+		timer.start(time.value / 1000.0)
+		active.value = true
 
-	if routine == "stop":
+	if _port == stop:
 		timer.stop()
-		PORTS.active.value = false
+		active.value = false
 
-func update(_last_changed: = "") -> void:
-	if _last_changed == "active":
-		if PORTS.active.value: timer.start(PORTS.time.value / 1000.0)
+func update(_last_changed: HBasePort = null) -> void:
+	if _last_changed == active:
+		if active.value: timer.start(time.value / 1000.0)
 		else: timer.stop()

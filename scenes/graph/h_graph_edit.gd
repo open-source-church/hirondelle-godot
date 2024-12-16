@@ -152,7 +152,8 @@ func _gui_input(event: InputEvent) -> void:
 			# Port click
 			var hover_port = get_hover_port(event.position)
 			if not dragging and hover_port:
-				hover_port.node.port_clicked.emit(hover_port.node.get_port_name(hover_port.side, hover_port.index))
+				var _port = hover_port.node.get_port(hover_port.side, hover_port.index)
+				hover_port.node.port_clicked.emit(hover_port.node.get_port(hover_port.index, hover_port.side))
 			
 			# Connection: remove connection
 			var connection = get_closest_connection_at_point(event.position)

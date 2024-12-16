@@ -9,6 +9,7 @@ var twitch: Twitching
 
 const NODES = [
 	preload("res://scenes/nodes/core/node_test.gd"),
+	preload("res://scenes/nodes/core/node_test_2.gd"),
 	## Core
 	preload("res://scenes/nodes/core/node_operator_float.gd"),
 	preload("res://scenes/nodes/core/node_operator_int.gd"),

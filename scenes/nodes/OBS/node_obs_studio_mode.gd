@@ -5,26 +5,27 @@ static var _type = "obs/studio_mode"
 static var _category = "OBS"
 static var _icon = "obs"
 
+
+var activate := HPortFlow.new(E.Side.INPUT)
+var deactivate := HPortFlow.new(E.Side.INPUT)
+var changed := HPortFlow.new(E.Side.OUTPUT)
+var enabled := HPortBool.new(E.Side.BOTH)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"activate": HPortFlow.new(E.Side.INPUT),
-		"deactivate": HPortFlow.new(E.Side.INPUT),
-		"changed": HPortFlow.new(E.Side.OUTPUT),
-		"enabled": HPortBool.new(E.Side.BOTH)
-	}
+	
 	G.OBS.studio_mode_state_changed.connect(_state_changed)
 
 func _state_changed(_enabled):
-	PORTS.enabled.value = _enabled
-	emit("changed")
+	enabled.value = _enabled
+	changed.emit()
 
-func run(routine:String):
-	if routine == "activate":
+func run(_port : HBasePort) -> void:
+	if _port == activate:
 		G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : true })
-	if routine == "deactivate":
+	if _port == deactivate:
 		G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : false })
 
-func update(_last_changed: = "") -> void:
-	G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : PORTS.enabled.value })
+func update(_last_changed: HBasePort = null) -> void:
+	G.OBS.send_request("SetStudioModeEnabled", { "studioModeEnabled" : enabled.value })

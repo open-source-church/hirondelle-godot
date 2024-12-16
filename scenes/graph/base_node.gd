@@ -23,8 +23,10 @@ var icon = ""
 var description = ""
 
 # Where we keep track of port's compontent
-# FIXME: less hacky way, with types ?
-var PORTS := {}
+var ports: HPortsManager
+## Get port by name
+func port(_name: String) -> HBasePort:
+	return ports.get_by_name(_name)
 
 # Child components
 
@@ -38,7 +40,7 @@ var btn_collapse : CheckButton
 # Signals
 
 ## Emitted on port clicked
-signal port_clicked(name:String)
+signal port_clicked(port: HBasePort)
 ## Emitted when the node collapse status has changed
 signal collapsed_changed(bool)
 
@@ -48,6 +50,10 @@ func set_collapsed(val: bool):
 
 func _ready() -> void:
 	graph = get_parent()
+	
+	ports = HPortsManager.new(self)
+	add_child(ports, false, Node.INTERNAL_MODE_FRONT)
+	
 	# Title box
 	var hbox = get_titlebar_hbox()
 	btn_collapse = CheckButton.new()
@@ -75,19 +81,6 @@ func setup():
 	print("Setting up: ", name)
 	clear_all_slots()
 	
-	for _name in PORTS:
-		var p = PORTS[_name]
-		p.name = _name
-		add_child(p)
-		collapsed_changed.connect(p.set_node_collapsed)
-		
-		# Update node on input value change
-		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
-			p.value_changed.connect(_update.bind(_name))
-		# Propagate values on ouput value change
-		if p.side in [E.Side.OUTPUT, E.Side.BOTH]:
-			p.value_changed.connect(propagate_value.bind(_name))
-	
 	# Labels
 	success = Label.new()
 	success.add_theme_color_override("font_color", Color.GREEN)
@@ -113,14 +106,14 @@ func setup():
 	update()
 	update_slots()
 
-func on_port_clicked(port_name : String) -> void:
-	var val = PORTS[port_name]
+func on_port_clicked(_port : HBasePort) -> void:
+	print(_port, " ", _port.name)
 	# Clicking on a Flow Port: on input, run node. On output: emit signal to run other nodes.
-	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.INPUT:
-		run(port_name)
-		val.animate_update()
-	if val.type == E.CONNECTION_TYPES.FLOW and val.side == E.Side.OUTPUT:
-		emit(port_name)
+	if _port.type == E.CONNECTION_TYPES.FLOW and _port.side == E.Side.INPUT:
+		run(_port)
+		_port.animate_update()
+	if _port.type == E.CONNECTION_TYPES.FLOW and _port.side == E.Side.OUTPUT:
+		_port.emit()
 
 ## Turn on and off slots and give them the proper color
 func update_slots() -> void:
@@ -163,45 +156,29 @@ func update_slots() -> void:
 	
 	reset_size()
 
-func _update(_last_changed := "") -> void:
-	# Process node values
-	update(_last_changed)
-
 ## Virtual. Called when input value changed.
-func update(_last_changed := "") -> void:
+func update(_last_changed: HBasePort = null) -> void:
 	pass
-
-## Propagates values, following connections
-func propagate_value(_name : String) -> void:
-	for c in graph.connections.list_from_node_and_port(self, PORTS[_name]):
-		if c.from_port.type == E.CONNECTION_TYPES.FLOW: continue
-		# Update value
-		c.to_port.update_from_connections()
-		# Visual feedbacks
-		c.to_port.animate_update()
-		c.animate()
 
 ## Virtual. Called when a subroutine (input FLOW port) is activated.
-func run(_routine : String) -> void:
+func run(_port : HBasePort) -> void:
 	pass
-
-## Calls node connected by FLOW to this node.
-func emit(routine : String) -> void:
-	PORTS[routine].animate_update()
-	for c in graph.connections.list_from_node_and_port(self, PORTS[routine]):
-		c.to_node.run.call_deferred(c.to_port.name)
-		c.animate()
-		c.to_node.animate_run()
 
 ## Visual feedback when the node is being run
 func animate_run() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "self_modulate", Color.WHITE, 0.3).from(Color(0.2, 1.0, 0.2))
 
+func get_port(idx: int, side := E.Side.INPUT) -> HBasePort:
+	if side == E.Side.INPUT:
+		return get_input_port(idx)
+	else:
+		return get_output_port(idx)
+
 ## Adapts get_output_port_slot to take into account invisible/collapsed slots
-func get_output_port(idx : int) -> Node:
+func get_output_port(idx : int) -> HBasePort:
 	var k := 0
-	for c in PORTS.values():
+	for c in ports.list():
 		if not c.collapsed and c.side in [E.Side.OUTPUT, E.Side.BOTH]:
 			if k == idx:
 				return c
@@ -209,9 +186,9 @@ func get_output_port(idx : int) -> Node:
 	return null
 
 ## Adapts get_input_port_slot to take into account invisible/collapsed slots
-func get_input_port(idx : int) -> Node:
+func get_input_port(idx : int) -> HBasePort:
 	var k := 0
-	for c in PORTS.values():
+	for c in ports.list():
 		if not c.collapsed and c.side in [E.Side.INPUT, E.Side.BOTH]:
 			if k == idx: return c
 			k += 1
@@ -221,29 +198,14 @@ func get_input_port(idx : int) -> Node:
 func get_port_number(port_name : String, side := E.Side.INPUT) -> int:
 	var _input = 0
 	var _output = 0
-	for _name in PORTS:
-		var v = PORTS[_name]
-		if v.collapsed: continue
-		if v.name == port_name:
+	for p in ports.list():
+		if p.collapsed: continue
+		if p.name == port_name:
 			return _input if side == E.Side.INPUT else _output
-		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
-		if v.side in [E.Side.OUTPUT, E.Side.BOTH]: _output += 1
+		if p.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
+		if p.side in [E.Side.OUTPUT, E.Side.BOTH]: _output += 1
 	
 	return -1
-
-## Return the name of the given port.
-## FIXME: might not work on "BOTH" side.
-func get_port_name(side, index : int) -> String:
-	var _input = 0
-	var _output = 0
-	for _name in PORTS:
-		var v = PORTS[_name]
-		if v.collapsed: continue
-		if v.side in [E.Side.INPUT, E.Side.BOTH] and side == E.Side.INPUT and index == _input: return _name
-		if v.side in [E.Side.OUTPUT, E.Side.BOTH] and side == E.Side.OUTPUT and index == _output: return _name
-		if v.side in [E.Side.INPUT, E.Side.BOTH]: _input += 1
-		if v.side in [E.Side.OUTPUT, E.Side.BOTH]: _output += 1
-	return ""
 
 # Helper functions
 func get_port_position(side, index : int):
@@ -314,33 +276,34 @@ func save() -> Dictionary:
 		"pos": { "x": position_offset.x, "y": position_offset.y },
 		"name": name
 	}
-	for v in PORTS:
-		if PORTS[v].value is Array or PORTS[v].value is Dictionary:
+	for p in ports.list():
+		if p.value is Array or p.value is Dictionary:
 			# We don't save Arrays and Dictionnary because they are supposed to be fed by connections ?
 			# FIXME: is it always the case?
 			continue
-		if PORTS[v].type == E.CONNECTION_TYPES.VEC2:
-			s.vals[v] = { "x": PORTS[v].value.x, "y": PORTS[v].value.y }
-		elif PORTS[v].type == E.CONNECTION_TYPES.COLOR:
-			s.vals[v] = PORTS[v].value.to_html()
-		else:
-			s.vals[v] = PORTS[v].value
+		if p.type == E.CONNECTION_TYPES.VEC2:
+			s.vals[p.name] = { "x": p.value.x, "y": p.value.y }
+		elif p.type == E.CONNECTION_TYPES.COLOR:
+			s.vals[p.name] = p.value.to_html()
+		elif p.type != E.CONNECTION_TYPES.FLOW:
+			s.vals[p.name] = p.value
 	
 	return s
 
 func load(data : Dictionary) -> void:
 	position_offset = Vector2(data.pos.x, data.pos.y)
 	for _name in data.vals:
-		if not _name in PORTS: 
+		var _port = port(_name)
+		if not _port: 
 			print("Found value of '%s' in the save file while loading node '%s', but it's not in the node definition. This should not happen." % [_name, type])
 			continue
-		if PORTS[_name].type == E.CONNECTION_TYPES.VEC2:
-			PORTS[_name].value = Vector2(data.vals[_name].x, data.vals[_name].y)
-		elif PORTS[_name].type == E.CONNECTION_TYPES.COLOR:
-			PORTS[_name].value = Color(data.vals[_name])
-		elif PORTS[_name].type == E.CONNECTION_TYPES.IMAGE:
-			PORTS[_name].value = null
+		if _port.type == E.CONNECTION_TYPES.VEC2:
+			_port.value = Vector2(data.vals[_name].x, data.vals[_name].y)
+		elif _port.type == E.CONNECTION_TYPES.COLOR:
+			_port.value = Color(data.vals[_name])
+		elif _port.type == E.CONNECTION_TYPES.IMAGE:
+			_port.value = null
 		else:
-			PORTS[_name].value = data.vals[_name]
+			_port.value = data.vals[_name]
 		# Update the node with each value set to be sure it's properly displayed
-		update(_name)
+		update(_port)

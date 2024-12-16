@@ -13,74 +13,74 @@ var NumberLabels = ["Equals", "Less than", "More than", "Is between"]
 enum BoolOp { AND, OR, XOR, EQUALS }
 var BoolLabels = [ "AND", "OR", "XOR", "Equals"]
 
+
+var test := HPortFlow.new(E.Side.INPUT)
+var on_true := HPortFlow.new(E.Side.OUTPUT)
+var on_false := HPortFlow.new(E.Side.OUTPUT)
+var var_ := HPortDict.new(E.Side.INPUT, { "type": E.CONNECTION_TYPES.VARIANT, "multiple": false, "params": { "show_value": true } })
+var operator := HPortIntSpin.new(E.Side.INPUT)
+var ignore_case := HPortBool.new(E.Side.INPUT, { "default": true })
+var text := HPortText.new(E.Side.INPUT)
+var int_ := HPortIntSpin.new(E.Side.INPUT)
+var intb := HPortIntSpin.new(E.Side.INPUT)
+var float_ := HPortFloat.new(E.Side.INPUT)
+var floatb := HPortFloat.new(E.Side.INPUT)
+var bool_ := HPortBool.new(E.Side.INPUT)
+var result := HPortBool.new(E.Side.OUTPUT)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"test": HPortFlow.new(E.Side.INPUT),
-		"true": HPortFlow.new(E.Side.OUTPUT),
-		"false": HPortFlow.new(E.Side.OUTPUT),
-		"var": HPortDict.new(E.Side.INPUT, { "type": E.CONNECTION_TYPES.VARIANT, "multiple": false, "params": { "show_value": true } }),
-		"operator": HPortIntSpin.new(E.Side.INPUT),
-		"ignore_case": HPortBool.new(E.Side.INPUT, { "default": true }),
-		"text": HPortText.new(E.Side.INPUT),
-		"int": HPortIntSpin.new(E.Side.INPUT),
-		"intb": HPortIntSpin.new(E.Side.INPUT),
-		"float": HPortFloat.new(E.Side.INPUT),
-		"floatb": HPortFloat.new(E.Side.INPUT),
-		"bool": HPortBool.new(E.Side.INPUT),
-		"result": HPortBool.new(E.Side.OUTPUT),
-	}
+	
 
-func run(routine:String):
-	if routine == "test":
-		if PORTS.result.value:
-			emit("true")
+func run(_port : HBasePort) -> void:
+	if _port == test:
+		if result.value:
+			on_true.emit()
 		else:
-			emit("false")
+			on_false.emit()
 
-func update(_last_changed := "") -> void:
+func update(_last_changed: HBasePort = null) -> void:
 	# Get source port
 	var var_port: HBasePort
-	for c in PORTS.var.get_connections_to():
+	for c in var_.get_connections_to():
 		var_port = c.from_port
-	var operator = PORTS.operator.value
 	
 	# Upate visibility
-	if _last_changed in ["", "operator", "var"]:
-		PORTS.operator.collapsed = not var_port
-		PORTS.text.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.TEXT
-		PORTS.ignore_case.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.TEXT
-		PORTS.int.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.INT
-		PORTS.float.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.FLOAT
-		PORTS.bool.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.BOOL
-		PORTS.intb.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.INT \
-							   or not operator == NumberOp.BETWEEN
-		PORTS.floatb.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.FLOAT \
-								 or not operator == NumberOp.BETWEEN
+	if _last_changed in [null, operator, var_]:
+		operator.collapsed = not var_port
+		text.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.TEXT
+		ignore_case.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.TEXT
+		int_.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.INT
+		float_.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.FLOAT
+		bool_.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.BOOL
+		intb.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.INT \
+							   or not operator.value == NumberOp.BETWEEN
+		floatb.collapsed = not var_port or not var_port.type == E.CONNECTION_TYPES.FLOAT \
+								 or not operator.value == NumberOp.BETWEEN
 		update_slots()
 	
 	# Update operator options
-	if _last_changed in ["var", "operator"] and PORTS.var.value:
+	if _last_changed in [var_, operator] and var_.value:
 		if var_port.type == E.CONNECTION_TYPES.TEXT:
-			PORTS.operator.set_options_from_enum(TextOp, TextLabels)
+			operator.set_options_from_enum(TextOp, TextLabels)
 			# Show options if possible
-			if operator == TextOp.EQUALS and var_port.options:
-				PORTS.text.options = var_port.options
+			if operator.value == TextOp.EQUALS and var_port.options:
+				text.options = var_port.options
 			else:
-				PORTS.text.options = []
+				text.options = []
 			
 		elif var_port.type in [E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT]:
-			PORTS.operator.set_options_from_enum(NumberOp, NumberLabels)
+			operator.set_options_from_enum(NumberOp, NumberLabels)
 			# Show options if possible
-			if operator == NumberOp.EQUALS and var_port.options:
-				PORTS.int.options = var_port.options
-				PORTS.float.options = var_port.options
+			if operator.value == NumberOp.EQUALS and var_port.options:
+				int_.options = var_port.options
+				float_.options = var_port.options
 			else:
-				PORTS.float.options = []
+				float_.options = []
 			
 		elif var_port.type == E.CONNECTION_TYPES.BOOL:
-			PORTS.operator.set_options_from_enum(BoolOp, BoolLabels)
+			operator.set_options_from_enum(BoolOp, BoolLabels)
 	
 	if not var_port: return
 	
@@ -88,24 +88,24 @@ func update(_last_changed := "") -> void:
 	var source = var_port.value
 	var r: bool
 	if var_port.type == E.CONNECTION_TYPES.TEXT:
-		var text = PORTS.text.value
+		var _text = text.value
 		# Ignore case?
-		if PORTS.ignore_case.value:
+		if ignore_case.value:
 			source = source.to_lower()
-			if operator != TextOp.REGEX:
-				text = text.to_lower()
+			if operator.value != TextOp.REGEX:
+				_text = _text.to_lower()
 		# Equals
-		if operator == TextOp.EQUALS:
-			r = source == text
+		if operator.value == TextOp.EQUALS:
+			r = source == _text
 		# Regex
-		if operator == TextOp.REGEX:
+		if operator.value == TextOp.REGEX:
 			# Match line by adding ^ and $
-			if text and text[0] != "^": text = "^" + text
-			if text and text[-1] != "$": text = text + "$"
-			if not text: text = "^$"
-			if PORTS.ignore_case.value:
-				text = "(?i)" + text
-			var reg = RegEx.create_from_string(text)
+			if _text and _text[0] != "^": _text = "^" + _text
+			if _text and _text[-1] != "$": _text = _text + "$"
+			if not _text: _text = "^$"
+			if ignore_case.value:
+				_text = "(?i)" + _text
+			var reg = RegEx.create_from_string(_text)
 			if not reg.is_valid():
 				show_error("RegEx is not valid. See PCRE2 specs if needed.", 5)
 				return
@@ -113,52 +113,51 @@ func update(_last_changed := "") -> void:
 			var m = reg.search(source)
 			r = m != null
 		# Contains
-		if operator == TextOp.CONTAINS:
-			r = text in source
+		if operator.value == TextOp.CONTAINS:
+			r = _text in source
 		# Is contained in
-		if operator == TextOp.IS_CONTAINED:
-			r = source in text
+		if operator.value == TextOp.IS_CONTAINED:
+			r = source in _text
 	
 	# Numbers
 	if var_port.type in [E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT]:
 		var number
 		var number2
 		if var_port.type == E.CONNECTION_TYPES.INT:
-			number = PORTS.int.value
-			number2 = PORTS.intb.value
+			number = int_.value
+			number2 = intb.value
 		else:
-			number = PORTS.float.value
-			number2 = PORTS.floatb.value
+			number = float_.value
+			number2 = floatb.value
 		# Equals
-		if operator == NumberOp.EQUALS:
+		if operator.value == NumberOp.EQUALS:
 			r = is_equal_approx(source, number)
 		# Less than
-		if operator == NumberOp.LESS:
-			print(source, number, source < number)
+		if operator.value == NumberOp.LESS:
 			r = source < number
 		# More than
-		if operator == NumberOp.MORE:
+		if operator.value == NumberOp.MORE:
 			r = source > number
 		# Between
-		if operator == NumberOp.BETWEEN:
+		if operator.value == NumberOp.BETWEEN:
 			r = (number < source and source < number2) or (number2 < source and source < number)
 	
 	# Bool
 	# Only Equals 
 	if var_port.type == E.CONNECTION_TYPES.BOOL:
 		# AND
-		if operator == BoolOp.AND:
-			r = PORTS.bool.value and source
+		if operator.value == BoolOp.AND:
+			r = bool_.value and source
 		# OR
-		if operator == BoolOp.OR:
-			r = PORTS.bool.value or source
+		if operator.value == BoolOp.OR:
+			r = bool_.value or source
 		# XOR
-		if operator == BoolOp.XOR:
-			r = (PORTS.bool.value and not source) or (not PORTS.bool.value and source)
+		if operator.value == BoolOp.XOR:
+			r = (bool_.value and not source) or (not bool_.value and source)
 		# Equals
-		if operator == BoolOp.EQUALS:
-			r = PORTS.bool.value == source
+		if operator.value == BoolOp.EQUALS:
+			r = bool_.value == source
 	
-	PORTS.result.value = r
+	result.value = r
 	
 	

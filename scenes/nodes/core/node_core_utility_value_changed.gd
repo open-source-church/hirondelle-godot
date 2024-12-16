@@ -5,19 +5,20 @@ static var _type = "core/utility_value_changed"
 static var _category = "Core"
 static var _icon = "eye"
 
+
+var changed := HPortFlow.new(E.Side.OUTPUT)
+var watch := HPortArray.new(E.Side.INPUT, { 
+	"type": E.CONNECTION_TYPES.VARIANT,
+	"multiple": true
+})
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"changed": HPortFlow.new(E.Side.OUTPUT),
-		"watch": HPortArray.new(E.Side.INPUT, { 
-			"type": E.CONNECTION_TYPES.VARIANT,
-			"multiple": true
-		})
-	}
+	
 
 var _last_value
-func update(_last_changed := "") -> void:
-	if PORTS.watch.value != _last_value:
-		emit("changed")
-		_last_value = PORTS.watch.value.duplicate()
+func update(_last_changed: HBasePort = null) -> void:
+	if watch.value != _last_value:
+		changed.emit()
+		_last_value = watch.value.duplicate()

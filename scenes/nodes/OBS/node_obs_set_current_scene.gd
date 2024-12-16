@@ -5,15 +5,16 @@ static var _type = "obs/set_current_scene"
 static var _category = "OBS"
 static var _icon = "obs"
 
+
+var set_program := HPortFlow.new(E.Side.INPUT)
+var set_preview := HPortFlow.new(E.Side.INPUT)
+var program := HPortText.new(E.Side.INPUT)
+var preview := HPortText.new(E.Side.INPUT)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"set_program": HPortFlow.new(E.Side.INPUT),
-		"set_preview": HPortFlow.new(E.Side.INPUT),
-		"program": HPortText.new(E.Side.INPUT),
-		"preview": HPortText.new(E.Side.INPUT),
-	}
+	
 	
 	G.OBS.scene_list_changed.connect(_update_scene_list)
 	var r = await G.OBS.send_request("GetSceneList")
@@ -21,11 +22,11 @@ func _init() -> void:
 
 func _update_scene_list(scenes : Array):
 	scenes.reverse()
-	PORTS.program.options = scenes.map(func (s): return s.sceneName)
-	PORTS.preview.options = scenes.map(func (s): return s.sceneName)
+	program.options = scenes.map(func (s): return s.sceneName)
+	preview.options = scenes.map(func (s): return s.sceneName)
 
-func run(routine:String):
-	if routine == "set_program":
-		G.OBS.send_request("SetCurrentProgramScene", { "sceneName" : PORTS.program.value })
-	if routine == "set_preview":
-		G.OBS.send_request("SetCurrentPreviewScene", { "sceneName" : PORTS.preview.value })
+func run(_port : HBasePort) -> void:
+	if _port == set_program:
+		G.OBS.send_request("SetCurrentProgramScene", { "sceneName" : program.value })
+	if _port == set_preview:
+		G.OBS.send_request("SetCurrentPreviewScene", { "sceneName" : preview.value })

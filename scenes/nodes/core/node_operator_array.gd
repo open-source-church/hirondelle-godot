@@ -6,48 +6,49 @@ static var _type = "core/op/array"
 static var _category = "Core"
 static var _icon = "array"
 
+
+var start_loop := HPortFlow.new(E.Side.INPUT)
+var next := HPortFlow.new(E.Side.INPUT)
+var for_each := HPortFlow.new(E.Side.OUTPUT)
+var arrays := HPortDict.new(E.Side.INPUT, {
+	"multiple": true
+})
+var index := HPortIntSlider.new(E.Side.INPUT)
+var loop := HPortBool.new(E.Side.INPUT, { "default": false })
+var merged := HPortArray.new(E.Side.OUTPUT)
+var value := HPortText.new(E.Side.OUTPUT)
+var idx := HPortIntSpin.new(E.Side.OUTPUT)
+var count := HPortIntSpin.new(E.Side.OUTPUT)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"start_loop": HPortFlow.new(E.Side.INPUT),
-		"next": HPortFlow.new(E.Side.INPUT),
-		"for_each": HPortFlow.new(E.Side.OUTPUT),
-		"arrays": HPortDict.new(E.Side.INPUT, {
-			"multiple": true
-		}),
-		"index": HPortIntSlider.new(E.Side.INPUT),
-		"loop": HPortBool.new(E.Side.INPUT, { "default": false }),
-		"merged": HPortArray.new(E.Side.OUTPUT),
-		"value": HPortText.new(E.Side.OUTPUT),
-		"idx": HPortIntSpin.new(E.Side.OUTPUT),
-		"count": HPortIntSpin.new(E.Side.OUTPUT)
-	}
-
-func run(subroutine : String):
-	if subroutine == "start_loop":
-		PORTS.index.value = 0
-		emit("for_each")
-	if subroutine == "next":
-		var i = PORTS.index.value + 1
-		if i < PORTS.count.value:
-			PORTS.index.value = i
-			emit("for_each")
-		elif PORTS.loop.value:
-			PORTS.index.value = 0
-			emit("for_each")
-
-func update(_last_changed: = "") -> void:
-	var merged := []
-	for arr in PORTS.arrays.value:
-		merged.append_array(PORTS.arrays.value[arr])
 	
-	PORTS.index.params = { "min": 0, "max": len(merged) - 1 }
+
+func run(_port: HBasePort):
+	if _port == start_loop:
+		index.value = 0
+		for_each.emit()
+	if _port == next:
+		var i = index.value + 1
+		if i < count.value:
+			index.value = i
+			for_each.emit()
+		elif loop.value:
+			index.value = 0
+			for_each.emit()
+
+func update(_last_changed: HBasePort = null) -> void:
+	var _merged := []
+	for arr in arrays.value:
+		_merged.append_array(arrays.value[arr])
+	
+	index.params = { "min": 0, "max": len(_merged) - 1 }
 	
 	# Get Value
-	if merged:
-		PORTS.merged.value = merged
-		PORTS.value.value = merged[PORTS.index.value]
-		PORTS.idx.value = PORTS.index.value
-		PORTS.count.value = len(merged)
+	if _merged:
+		merged.value = _merged
+		value.value = _merged[index.value]
+		idx.value = index.value
+		count.value = len(_merged)
 		

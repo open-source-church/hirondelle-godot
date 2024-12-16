@@ -6,43 +6,44 @@ static var _type = "core/op/text"
 static var _category = "Core"
 static var _icon = "text"
 
+
+var text := HPortText.new(E.Side.INPUT)
+var vars := HPortDict.new(E.Side.INPUT, { 
+	"type": E.CONNECTION_TYPES.VARIANT, 
+	"multiple": true
+})
+var split := HPortBool.new(E.Side.INPUT, {  "default": false })
+var delimiter := HPortText.new(E.Side.INPUT, { "collapsed": true })
+var trim := HPortBool.new(E.Side.INPUT, { "default": false })
+var r_text := HPortText.new(E.Side.OUTPUT)
+var r_array := HPortArray.new(E.Side.OUTPUT)
+
 func _init() -> void:
 	title = _title
 	type = _type
-	PORTS = {
-		"text": HPortText.new(E.Side.INPUT),
-		"vars": HPortDict.new(E.Side.INPUT, { 
-			"type": E.CONNECTION_TYPES.VARIANT, 
-			"multiple": true
-		}),
-		"split": HPortBool.new(E.Side.INPUT, {  "default": false }),
-		"delimiter": HPortText.new(E.Side.INPUT, { "collapsed": true }),
-		"trim": HPortBool.new(E.Side.INPUT, { "default": false }),
-		"r_text": HPortText.new(E.Side.OUTPUT),
-		"r_array": HPortArray.new(E.Side.OUTPUT)
-	}
+	
 
-func update(_last_changed: = "") -> void:
-	if _last_changed in ["split", ""]:
-		PORTS.delimiter.collapsed = not PORTS.split.value
-		PORTS.r_array.collapsed = not PORTS.split.value
-		PORTS.r_text.collapsed = PORTS.split.value
+func update(_last_changed: HBasePort = null) -> void:
+	if _last_changed in [split, null]:
+		delimiter.collapsed = not split.value
+		r_array.collapsed = not split.value
+		r_text.collapsed = split.value
 		update_slots()
 	
-	var t : String = PORTS.text.value
-	for _name in PORTS.vars.value:
-		t = t.replace("[%s]" % _name, str(PORTS.vars.value[_name]))
-	if PORTS.trim.value:
+	var t : String = text.value
+	for _name in vars.value:
+		t = t.replace("[%s]" % _name, str(vars.value[_name]))
+	if trim.value:
 		t = t.strip_edges()
 	
 	# Normal text
-	if not PORTS.split.value:
-		PORTS.r_text.value = t
+	if not split.value:
+		r_text.value = t
 	
 	# Split
 	else:
-		var r = t.split(PORTS.delimiter.value)
-		if PORTS.trim.value: 
+		var r = t.split(delimiter.value)
+		if trim.value: 
 			for i in r.size():
 				r[i] = r[i].strip_edges()
-		PORTS.r_array.value = Array(r)
+		r_array.value = Array(r)
