@@ -291,7 +291,7 @@ func update_view():
 	main_hbox.add_child(vbox)
 	if not hide_label:
 		var lbl = Label.new()
-		lbl.text = "%s" % name
+		lbl.text = "%s" % name.replace("_", " ").strip_edges()
 		lbl.add_theme_font_size_override("font_size", 12)
 		lbl.add_theme_color_override("font_color", Color.GRAY)
 		lbl.tooltip_text = description

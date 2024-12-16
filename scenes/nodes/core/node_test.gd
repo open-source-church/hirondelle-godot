@@ -26,7 +26,10 @@ var float_v := HPortFloat.new(E.Side.BOTH)
 func _init() -> void:
 	title = _title
 	type = _type
-	
+
+func run(_port : HBasePort) -> void:
+	if _port == input_flow:
+		output_flow.emit()
 
 func update(_last_changed: HBasePort = null) -> void:
 	return

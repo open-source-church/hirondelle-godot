@@ -14,7 +14,7 @@ func get_component(_params) -> Control:
 	label_name = Label.new()
 	label_parenthesis = Label.new()
 	label_parenthesis.add_theme_color_override("font_color", Color.DARK_GRAY)
-	label_name.text = name
+	label_name.text = name.replace("_", " ").strip_edges()
 	label_parenthesis.text = "()"
 	label_name.tooltip_text = description
 	label_name.mouse_filter = Control.MOUSE_FILTER_PASS

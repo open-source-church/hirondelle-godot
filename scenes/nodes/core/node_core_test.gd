@@ -15,8 +15,8 @@ var BoolLabels = [ "AND", "OR", "XOR", "Equals"]
 
 
 var test := HPortFlow.new(E.Side.INPUT)
-var on_true := HPortFlow.new(E.Side.OUTPUT)
-var on_false := HPortFlow.new(E.Side.OUTPUT)
+var true_ := HPortFlow.new(E.Side.OUTPUT)
+var false_ := HPortFlow.new(E.Side.OUTPUT)
 var var_ := HPortDict.new(E.Side.INPUT, { "type": E.CONNECTION_TYPES.VARIANT, "multiple": false, "params": { "show_value": true } })
 var operator := HPortIntSpin.new(E.Side.INPUT)
 var ignore_case := HPortBool.new(E.Side.INPUT, { "default": true })
@@ -36,9 +36,9 @@ func _init() -> void:
 func run(_port : HBasePort) -> void:
 	if _port == test:
 		if result.value:
-			on_true.emit()
+			true_.emit()
 		else:
-			on_false.emit()
+			false_.emit()
 
 func update(_last_changed: HBasePort = null) -> void:
 	# Get source port

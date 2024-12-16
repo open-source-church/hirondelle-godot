@@ -107,7 +107,6 @@ func setup():
 	update_slots()
 
 func on_port_clicked(_port : HBasePort) -> void:
-	print(_port, " ", _port.name)
 	# Clicking on a Flow Port: on input, run node. On output: emit signal to run other nodes.
 	if _port.type == E.CONNECTION_TYPES.FLOW and _port.side == E.Side.INPUT:
 		run(_port)
