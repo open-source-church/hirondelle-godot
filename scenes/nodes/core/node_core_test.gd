@@ -6,8 +6,8 @@ static var _category = "Core"
 static var _icon = ""
 static var _description = "Test, compare and all that kind of stuff."
 
-enum TextOp { EQUALS, REGEX, CONTAINS, IS_CONTAINED }
-var TextLabels = ["Equals", "RegExp match", "Contains", "Is contained in"]
+enum TextOp { EQUALS, REGEX, CONTAINS, IS_CONTAINED, EMPTY }
+var TextLabels = ["Equals", "RegExp match", "Contains", "Is contained in", "Is empty"]
 enum NumberOp { EQUALS, LESS, MORE, BETWEEN }
 var NumberLabels = ["Equals", "Less than", "More than", "Is between"]
 enum BoolOp { AND, OR, XOR, EQUALS }
@@ -118,6 +118,9 @@ func update(_last_changed: HBasePort = null) -> void:
 		# Is contained in
 		if operator.value == TextOp.IS_CONTAINED:
 			r = source in _text
+		# Is contained in
+		if operator.value == TextOp.EMPTY:
+			r = len(source) == 0
 	
 	# Numbers
 	if var_port.type in [E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT]:
