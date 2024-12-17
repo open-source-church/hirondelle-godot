@@ -206,18 +206,18 @@ icon = SubResource("AtlasTexture_v6sye")
 [node name="MenuTabs" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes"]
 layout_mode = 2
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="GraphContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tabs_visible = false
 metadata/_tab_index = 0
 
 [node name="Settings" type="MarginContainer" parent="MarginContainer/VBoxContainer/Nodes/MenuTabs"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12

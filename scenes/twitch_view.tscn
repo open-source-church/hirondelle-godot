@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcvur7e3q0vkc"]
+[gd_scene load_steps=7 format=3 uid="uid://dcvur7e3q0vkc"]
 
 [ext_resource type="Script" path="res://scenes/twitch_view.gd" id="1_hc5d4"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="2_op73w"]
@@ -8,6 +8,10 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_scjle"]
 atlas = ExtResource("2_op73w")
 region = Rect2(384, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxknw"]
+atlas = ExtResource("2_op73w")
+region = Rect2(448, 128, 64, 64)
 
 [node name="Twitch" type="VBoxContainer"]
 anchors_preset = 15
@@ -151,21 +155,45 @@ columns = 2
 layout_mode = 2
 text = "Access:"
 
-[node name="TxtAccessToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="TxtAccessToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
+secret = true
+
+[node name="BtnShowAccessToken" type="Button" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonFlat"
+toggle_mode = true
+icon = SubResource("AtlasTexture_qxknw")
+flat = true
 
 [node name="Label2" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Refresh:"
 
-[node name="TxtRefreshToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="TxtRefreshToken" type="LineEdit" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
+secret = true
+
+[node name="BtnShowRefreshToken" type="Button" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonFlat"
+toggle_mode = true
+icon = SubResource("AtlasTexture_qxknw")
+flat = true
 
 [node name="Label3" type="Label" parent="AccessTokenContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2

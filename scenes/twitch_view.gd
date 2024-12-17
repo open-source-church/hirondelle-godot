@@ -17,6 +17,8 @@ extends VBoxContainer
 @onready var txt_scopes_token: LineEdit = %TxtScopesToken
 @onready var btn_refresh_token: Button = %BtnRefreshToken
 @onready var lbl_valid_token: Label = %LblValidToken
+@onready var btn_show_access_token: Button = %BtnShowAccessToken
+@onready var btn_show_refresh_token: Button = %BtnShowRefreshToken
 
 # Logged
 @onready var logged_container: HBoxContainer = %LoggedContainer
@@ -51,6 +53,11 @@ func _ready() -> void:
 	btn_open_browser_for_code.pressed.connect(_open_browser_for_code_verification)
 	device_code_pannel.visible = false
 	btn_show_tokens.toggled.connect(access_token_container.set_visible)
+	btn_show_tokens.toggled.connect(func (_v): txt_access_token.secret = true)
+	btn_show_tokens.toggled.connect(func (_v): txt_refresh_token.secret = true)
+	btn_show_access_token.toggled.connect(func (v): txt_access_token.secret = not v)
+	btn_show_refresh_token.toggled.connect(func (v): txt_refresh_token.secret = not v)
+	
 	access_token_container.visible = false
 	btn_refresh_token.pressed.connect(twitch.auth.use_refresh_token)
 	btn_disconnect.pressed.connect(twitch.logout)
