@@ -266,6 +266,15 @@ func show_message(label:Label, msg: String, duration := 0.0, immediate := false)
 		tween.tween_property(label, "text", "", 0)
 	tween.tween_callback(_label_tweens.erase.bind(tween))
 
+# Utility
+
+func get_ports_in_group(group: String) -> Array[HBasePort]:
+	var r: Array[HBasePort] = []
+	for n in get_tree().get_nodes_in_group(group):
+		if n is HBasePort and is_ancestor_of(n):
+			r.append(n)
+	return r
+
 # Save and Load
 
 func save() -> Dictionary:

@@ -77,6 +77,7 @@ func _set(prop : StringName, val: Variant) -> bool:
 ## Whether the port is collapsed. In can be changed internally on a port basis.
 ## This is because in [GraphNode]s, [Control] cannot really be hidded, or it messes up the whole
 ## thing.[br]
+## A collapsed port cannot have connections.[br]
 ## See also [method set_node_collapsed].
 var collapsed := false:
 	set(val):
@@ -113,7 +114,7 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	options_enum = opt.get("options_enum", {})
 	options_labels = opt.get("options_labels", [])
 	if options_enum and options_labels:
-		print("INIT OPTIONS")
+		print("Setting option enum")
 		set_options_from_enum(options_enum, options_labels)
 	description = opt.get("description", "")
 	default = opt.get("default", null)
@@ -122,6 +123,8 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	is_multiple = opt.get("multiple", false)
 	custom_minimum_size = Vector2(0, 0)
 	value_changed.connect(_on_value_changed)
+	if opt.get("group"):
+		add_to_group(opt.group)
 	
 	add_theme_constant_override("margin_bottom", 3)
 	add_theme_constant_override("margin_top", 3)
@@ -202,6 +205,13 @@ func animate_update() -> void:
 
 var options:Array : set=_set_options
 
+func create_options_button():
+	option_button = OptionButton.new()
+	option_button.visible = false
+	main_vbox.add_child(option_button)
+	option_button.item_selected.connect(value_changed.emit.unbind(1))
+	option_button.item_focused.connect(value_changed.emit.unbind(1))
+
 ## Performs transformation on options, to allow for different inputs:[br]
 ## _options can be either an Array of value, or an Array of Dictionary { "label": lbl, "value": val }
 func _set_options(_options):
@@ -214,6 +224,9 @@ func _set_options(_options):
 		_options = _options.map(func (o): return { "label": o, "value": o })
 	else:
 		_options = []
+	
+	if _options and not option_button:
+		create_options_button()
 	
 	if _options == options:
 		return
@@ -277,6 +290,7 @@ func update_view():
 		c.queue_free()
 	
 	main_hbox = HBoxContainer.new()
+	main_hbox.name = "MainHBox"
 	add_child(main_hbox)
 	
 	# Left Margin
@@ -287,8 +301,9 @@ func update_view():
 		left_margin.visible = not collapsed
 		main_hbox.add_child(left_margin)
 	
-	var vbox = HBoxContainer.new()
-	main_hbox.add_child(vbox)
+	main_vbox = HBoxContainer.new()
+	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	main_hbox.add_child(main_vbox)
 	if not hide_label:
 		var lbl = Label.new()
 		lbl.text = "%s" % name.replace("_", " ").strip_edges()
@@ -296,18 +311,14 @@ func update_view():
 		lbl.add_theme_color_override("font_color", Color.GRAY)
 		lbl.tooltip_text = description
 		lbl.mouse_filter = Control.MOUSE_FILTER_PASS
-		vbox.add_child(lbl)
-	main_vbox = vbox
+		main_vbox.add_child(lbl)
 	
 	# Custom component
 	custom_component = get_component(params)
-	vbox.add_child(custom_component)
-	option_button = OptionButton.new()
-	option_button.visible = false
-	vbox.add_child(option_button)
-	option_button.item_selected.connect(value_changed.emit.unbind(1))
-	option_button.item_focused.connect(value_changed.emit.unbind(1))
-	vbox.visible = not collapsed
+	main_vbox.add_child(custom_component)
+	if options:
+		create_options_button()
+	main_vbox.visible = not collapsed
 	
 	# Put value back
 	if _value:
@@ -320,7 +331,6 @@ func update_view():
 		#right_margin.custom_minimum_size = Vector2(50, 0)
 		main_hbox.add_child(right_margin)
 		right_margin.visible = not collapsed
-
 
 ## Subclass that.
 ## If component is editable, then when changed don't forget to emit:

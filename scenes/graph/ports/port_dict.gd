@@ -19,6 +19,8 @@ func _init(_side : E.Side, opt : Dictionary = {}):
 func get_component(_params) -> Control:
 	hbox = HFlowContainer.new()
 	hbox.custom_minimum_size = Vector2(300, 0)
+	if side == E.Side.OUTPUT:
+		hbox.alignment = FlowContainer.ALIGNMENT_END
 	return hbox
 
 func _get_value():
@@ -32,7 +34,7 @@ func update_labels():
 	# Clear labels
 	for c in hbox.get_children(): c.queue_free()
 	
-	if not dict_types: 
+	if side == E.Side.INPUT and not dict_types: 
 		update_from_connections(true)
 	
 	#var sources = get_ports_connected_to()
@@ -49,7 +51,8 @@ func update_labels():
 			lbl.text = key
 		
 		var stylebox = StyleBoxFlat.new()
-		stylebox.bg_color = E.connection_colors[dict_types[key]].darkened(0.0)
+		if dict_types.has(key):
+			stylebox.bg_color = E.connection_colors[dict_types[key]].darkened(0.0)
 		stylebox.bg_color.a = 0.3
 		stylebox.content_margin_bottom = 3
 		stylebox.content_margin_left = 6

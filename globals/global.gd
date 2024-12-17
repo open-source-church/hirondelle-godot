@@ -42,7 +42,9 @@ const NODES = [
 	preload("res://scenes/nodes/twitch/twitch_send_chat_message.gd"),
 	## SYSTEM
 	preload("res://scenes/nodes/system/node_system_directory_watcher.gd"),
-	preload("res://scenes/nodes/system/node_system_file_watcher.gd")
+	preload("res://scenes/nodes/system/node_system_file_watcher.gd"),
+	## Discord
+	preload("res://scenes/nodes/discord/node_discord_webhook.gd"),
 ]
 
 func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, icon_width : int) -> Texture2D:
@@ -76,6 +78,12 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "fireworks": p = Vector2i(8, 7)
 	if icon == "confettis": p = Vector2i(9, 7)
 	if icon == "bool": p = Vector2i(10, 7)
+	if icon == "discord": p = Vector2i(11, 7)
+	if icon == "carret_right": p = Vector2i(5, 0)
+	if icon == "carret_left": p = Vector2i(6, 0)
+	if icon == "carret_up": p = Vector2i(7, 0)
+	if icon == "carret_down": p = Vector2i(8, 0)
+	
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 
 func get_node_color(node):

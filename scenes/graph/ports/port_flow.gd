@@ -18,6 +18,10 @@ func get_component(_params) -> Control:
 	label_parenthesis.text = "()"
 	label_name.tooltip_text = description
 	label_name.mouse_filter = Control.MOUSE_FILTER_PASS
+	if side == E.Side.OUTPUT:
+		box.alignment = BoxContainer.ALIGNMENT_END
+		box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		#box.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	box.add_child(label_name)
 	box.add_child(label_parenthesis)
 	return box

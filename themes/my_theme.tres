@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=33 format=3 uid="uid://ytq3vmqj18ky"]
+[gd_resource type="Theme" load_steps=35 format=3 uid="uid://ytq3vmqj18ky"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru3g6"]
 content_margin_left = 8.0
@@ -223,6 +223,24 @@ bg_color = Color(0.0768359, 0.0768358, 0.0768358, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ncufk"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(1, 1, 1, 0.0784314)
+border_width_bottom = 1
+border_color = Color(0, 0.91136, 0.925155, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tvtvb"]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color(1, 1, 1, 0.0784314)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1q3pq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_70b6t"]
@@ -294,6 +312,8 @@ TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_4f88t")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_o0ps8")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_nb3ef")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_ymfmn")
+TextEdit/styles/focus = SubResource("StyleBoxFlat_ncufk")
+TextEdit/styles/normal = SubResource("StyleBoxFlat_tvtvb")
 Tree/constants/h_separation = 12
 Tree/styles/focus = SubResource("StyleBoxEmpty_1q3pq")
 Tree/styles/panel = SubResource("StyleBoxFlat_70b6t")
