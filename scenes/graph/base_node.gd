@@ -48,6 +48,28 @@ var collapsed := false
 func set_collapsed(val: bool):
 	collapsed = val
 
+# Sources
+
+var sources: Array[HBaseSource] = []
+var inactive_icon: TextureRect
+signal sources_got_active
+signal sources_got_inactve
+var sources_active: = false
+
+func update_active_status():
+	var active: bool = sources.all(func (s: HBaseSource): return s.active)
+	inactive_icon.visible = not active
+	sources_active = active
+	if active: 
+		sources_got_active.emit()
+	else:
+		sources_got_inactve.emit()
+		inactive_icon.tooltip_text = "Node cannot function properly because of inactive sources: %s" % ", ".join(sources.filter(func (s): return not s.active).map(func (s): return s.name))
+
+func add_source_by_name(_name: String):
+	var source = NodeManager.get_source_by_name(_name)
+	if not source in sources: sources.append(source)
+
 func _ready() -> void:
 	graph = get_parent()
 	
@@ -61,13 +83,22 @@ func _ready() -> void:
 	btn_collapse.toggled.connect(set_collapsed)
 	btn_collapse.toggled.connect(collapsed_changed.emit, CONNECT_DEFERRED)
 	
+	# Icon
 	if "_icon" in self:
 		var texture = TextureRect.new()
 		texture.texture = G.get_main_icon(self["_icon"], 24)
 		texture.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-		texture.modulate = G.get_node_color(self)
+		texture.modulate = NodeManager.get_node_color(self)
 		hbox.add_child(texture)
 		hbox.move_child(texture, 0)
+	
+	# Inactive source
+	inactive_icon = TextureRect.new()
+	inactive_icon.texture = G.get_main_icon("warning", 24)
+	inactive_icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	inactive_icon.modulate = Color.RED
+	hbox.add_child(inactive_icon)
+	hbox.move_child(inactive_icon, 0)
 	
 	hbox.add_child(btn_collapse)
 	
@@ -101,6 +132,17 @@ func setup():
 	error.visible = false
 	
 	port_clicked.connect(on_port_clicked)
+	
+	# Adds sources from static var
+	if "_sources" in self:
+		for s_name in self["_sources"]:
+			add_source_by_name(s_name)
+	
+	# Connects sources
+	for s in sources:
+		s.becomes_active.connect(update_active_status)
+		s.becomes_inactive.connect(update_active_status)
+	update_active_status()
 	
 	# Initial update
 	update()

@@ -38,6 +38,8 @@ signal access_tokens_received(access: String, refresh: String)
 signal tokens_changed
 signal user_changed
 signal token_refreshed (success: bool)
+signal connected
+signal disconnected
 
 func _init(_twitching: Twitching):
 	twitching = _twitching
@@ -172,8 +174,10 @@ func update_user():
 	var user_data = await twitching.request.GET("/users")
 	if user_data.response_code == 200:
 		user = TwitchingUser.new(user_data.response.data.front())
+		connected.emit()
 	else:
 		user = null
+		disconnected.emit()
 	user_changed.emit()
 
 func logout():

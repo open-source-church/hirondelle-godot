@@ -4,8 +4,9 @@ extends Popup
 @onready var lst_nodes: ItemList = %LstNodes
 @onready var lbl_description: RichTextLabel = %LblDescription
 @onready var texture_rect: TextureRect = %TextureRect
+@onready var btn_show_inactive_sources: Button = %BtnShowInactiveSources
 
-var node_list = G.NODES.duplicate()
+var node_list = NodeManager.nodes.duplicate()
 const VECTOR_WHITE_ICONS = preload("res://themes/kenney-game-icons/vector_whiteIcons.svg")
 
 
@@ -14,6 +15,7 @@ signal add_node(node_type : String)
 func _ready() -> void:
 	update_node_list()
 	txt_filter.text_changed.connect(update_node_list.unbind(1))
+	btn_show_inactive_sources.toggled.connect(update_node_list.unbind(1))
 	
 	node_list.sort_custom(func(a, b): return a._title.naturalnocasecmp_to(b._title) < 0)
 	node_list.sort_custom(func(a, b): return a._category.naturalnocasecmp_to(b._category) < 0)
@@ -26,12 +28,16 @@ func update_node_list() -> void:
 	
 	var _node_list = node_list.filter(func (_i): return filter(_i))
 	
+	if not btn_show_inactive_sources.button_pressed:
+		_node_list = _node_list.filter(func (n): return NodeManager.get_sources_active_for_node(n))
+	
 	var last_category = null
 	
 	var i = 0
 	for n in _node_list:
 		if n._category != last_category:
 			last_category = n._category
+			# Category header
 			lst_nodes.add_item(n._category, null, false)
 			lst_nodes.set_item_disabled(i, true)
 			i += 1
@@ -40,7 +46,12 @@ func update_node_list() -> void:
 		if "_icon" in n: icon = G.get_main_icon(n._icon, 20)
 		lst_nodes.add_item(n._title, icon)
 		lst_nodes.set_item_metadata(i, n._type)
-		lst_nodes.set_item_icon_modulate(i, G.get_node_color(n))
+		lst_nodes.set_item_icon_modulate(i, NodeManager.get_node_color(n))
+		# Sources
+		if "_sources" in n:
+			var sources_active = NodeManager.get_sources_active_for_node(n)
+			if not sources_active:
+				lst_nodes.set_item_custom_fg_color(i, Color.RED)
 		i += 1
 
 func get_icon(x := 0, y := 0) -> Texture2D:

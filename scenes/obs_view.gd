@@ -9,6 +9,8 @@ extends VBoxContainer
 @onready var WS: OBSWebSocket = $OBSWebSocket
 
 var info := {}
+## Auto reconnect time in seconds
+var auto_connect_time:float = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,7 +20,7 @@ func _ready() -> void:
 	btn_disconnect.pressed.connect(WS.disconnect_obs)
 	WS.authenticated.connect(get_info)
 	
-	WS.connected.connect(_on_connected)
+	WS.authenticated.connect(_on_connected)
 	WS.disconnected.connect(_on_disconnected)
 	
 	obs_connect()
@@ -30,6 +32,8 @@ func _on_connected() -> void:
 func _on_disconnected() -> void:
 	btn_connect.visible = true
 	btn_disconnect.visible = false
+	if auto_connect_time:
+		get_tree().create_timer(auto_connect_time).timeout.connect(obs_connect)
 
 func obs_connect() -> void:
 	WS.host = txt_host.text
@@ -51,10 +55,11 @@ func get_info():
 	for r in requests:
 		print("Requesting: ", r)
 		var d = await WS.send_request(r)
-		#print(d)
+		if not d: continue
 		for k in d:
 			info[k] = d[k]
-	info.ratio = info.baseWidth / info.baseHeight
+	if info.get("base_Height"):
+		info.ratio = info.baseWidth / info.baseHeight
 	
 	#print(JSON.stringify(data, " "))
 	

@@ -4,7 +4,7 @@ static var _title = "Channel message"
 static var _type = "twitch/channel_chat_message"
 static var _category = "Twitch"
 static var _icon = "twitch"
-
+static var _sources = ["twitch"]
 
 var new_message := HPortFlow.new(E.Side.OUTPUT)
 var user_id := HPortText.new(E.Side.OUTPUT)

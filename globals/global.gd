@@ -7,46 +7,6 @@ var window : HWindow
 var OBS : OBSWebSocket
 var twitch: Twitching
 
-const NODES = [
-	preload("res://scenes/nodes/core/node_test.gd"),
-	preload("res://scenes/nodes/core/node_test_2.gd"),
-	## Core
-	preload("res://scenes/nodes/core/node_operator_float.gd"),
-	preload("res://scenes/nodes/core/node_operator_int.gd"),
-	preload("res://scenes/nodes/core/node_random_number.gd"),
-	preload("res://scenes/nodes/core/node_core_time_wait.gd"),
-	preload("res://scenes/nodes/core/node_core_time_interval.gd"),
-	preload("res://scenes/nodes/core/node_core_utility_value_changed.gd"),
-	preload("res://scenes/nodes/core/node_operator_text.gd"),
-	preload("res://scenes/nodes/core/node_operator_array.gd"),
-	preload("res://scenes/nodes/core/node_operator_vec2.gd"),
-	preload("res://scenes/nodes/core/node_color.gd"),
-	preload("res://scenes/nodes/core/node_core_image.gd"),
-	preload("res://scenes/nodes/core/node_operator_bool.gd"),
-	preload("res://scenes/nodes/core/node_core_test.gd"),
-	## OBS
-	preload("res://scenes/nodes/OBS/node_obs_current_scene_changed.gd"),
-	preload("res://scenes/nodes/OBS/node_obs_studio_mode.gd"),
-	preload("res://scenes/nodes/OBS/node_obs_streaming.gd"),
-	preload("res://scenes/nodes/OBS/node_obs_set_current_scene.gd"),
-	preload("res://scenes/nodes/OBS/node_obs_scene_item_rect.gd"),
-	## WINDOW
-	preload("res://scenes/nodes/window/node_window_image.gd"),
-	preload("res://scenes/nodes/window/node_window_progressbar.gd"),
-	preload("res://scenes/nodes/window/node_window_play_sound.gd"),
-	preload("res://scenes/nodes/window/node_window_fireworks.gd"),
-	preload("res://scenes/nodes/window/node_window_confettis.gd"),
-	## TWITCH
-	preload("res://scenes/nodes/twitch/twitch_channel_follow.gd"),
-	preload("res://scenes/nodes/twitch/twitch_channel_chat_message.gd"),
-	preload("res://scenes/nodes/twitch/twitch_send_chat_message.gd"),
-	## SYSTEM
-	preload("res://scenes/nodes/system/node_system_directory_watcher.gd"),
-	preload("res://scenes/nodes/system/node_system_file_watcher.gd"),
-	## Discord
-	preload("res://scenes/nodes/discord/node_discord_webhook.gd"),
-]
-
 func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, icon_width : int) -> Texture2D:
 	var icon = AtlasTexture.new()
 	icon.atlas = atlas
@@ -83,21 +43,9 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "carret_left": p = Vector2i(6, 0)
 	if icon == "carret_up": p = Vector2i(7, 0)
 	if icon == "carret_down": p = Vector2i(8, 0)
+	if icon == "warning": p = Vector2i(11, 3)
 	
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
-
-func get_node_color(node):
-	if "text" in node._type:
-		return E.connection_colors[E.CONNECTION_TYPES.TEXT]
-	if "int" in node._type:
-		return E.connection_colors[E.CONNECTION_TYPES.INT]
-	if "vec2" in node._type:
-		return E.connection_colors[E.CONNECTION_TYPES.VEC2]
-	if "float" in node._type:
-		return E.connection_colors[E.CONNECTION_TYPES.FLOAT]
-	if "bool" in node._type:
-		return E.connection_colors[E.CONNECTION_TYPES.BOOL]
-	return Color.WHITE
 
 func reverse_icon(icon : Texture2D) -> Texture2D:
 	var img = icon.get_image()

@@ -16,7 +16,7 @@ enum EventSubscription {
 @export var host = "localhost"
 @export var port = 4455
 @export var password = "password"
-@export var logging = false
+@export var log_level = 1 # 0: none, 1: important, 2: all
 
 signal connected
 signal authenticated
@@ -34,9 +34,10 @@ func _ready() -> void:
 var _eventSubscriptions
 ## Connect to OBS. eventSubscriptions is a bitwise combination of EventSubscription
 func connect_obs(eventSubscriptions = EventSubscription.All):
+	if is_connected: return
 	var err = socket.connect_to_url("ws://%s:%s" % [host, port], TLSOptions.client())
 	if err != OK:
-		print("Impossible de se connecter au serveur WebSocket.")
+		log_("Impossible de se connecter au serveur WebSocket.")
 		return
 	_eventSubscriptions = eventSubscriptions
 	is_connected = true
@@ -45,9 +46,9 @@ func connect_obs(eventSubscriptions = EventSubscription.All):
 func disconnect_obs(code :int = 1000, reason := "" ):
 	socket.close(code, reason)
 
-func _log(data):
-	if logging:
-		print(data)
+func log_(data: String, level := 1):
+	if log_level >= level:
+		print_rich("[color=purple][OBSWebSocket] %s[/color]" % data)
 
 func _process(delta: float) -> void:
 	if is_connected:
@@ -64,12 +65,12 @@ func _process(delta: float) -> void:
 		elif state == WebSocketPeer.STATE_CLOSED:
 			var code = socket.get_close_code()
 			var reason = socket.get_close_reason()
-			print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
+			log_("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1], 1 if code != -1 else 2)
 			is_connected = false
 			disconnected.emit()
 
 func process_msg(msg : Variant) -> void:
-	_log("Processing message: %s \n" % msg)
+	log_("Processing message: %s \n" % msg, 2)
 	# HELLO WITH AUTH
 	if msg.get("op") == WebSocketOpCode.Hello:
 		if msg.d.get("authentication"):
@@ -105,7 +106,7 @@ func process_msg(msg : Variant) -> void:
 		requests[msg.d.requestId] = msg.d
 		
 func send_msg(op, msg : Dictionary) -> void:
-	_log("Sending message - OP %s : %s \n" % [op, msg])
+	log_("Sending message - OP %s : %s \n" % [op, msg], 2)
 	socket.send_text(JSON.stringify({
 		"op": op,
 		"d": msg
@@ -125,6 +126,12 @@ func send_request(type : String, data := {} ):
 		await get_tree().create_timer(0.01).timeout
 	var r = requests[requestID]
 	requests.erase(requestID)
+	
+	if r.has("requestStatus") and r.requestStatus.get("code") == 207:
+		# OBS is not ready to perform the request. Wait a bit.
+		await get_tree().create_timer(0.5).timeout
+		return await send_request(type, data)
+	
 	return r.get("responseData")
 
 func wait_for_request(requestID : String):

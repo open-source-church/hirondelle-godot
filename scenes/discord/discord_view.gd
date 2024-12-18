@@ -108,8 +108,6 @@ func _ready() -> void:
 
 func test_function() -> void:
 	print("TEST")
-	#var emojis = await client.GET("/guilds/772809551081897994/emojis")
-	#print(emojis)
 	
 	var url = "/channels/%s/messages/%s/reactions/%s/@me" % \
 		[1021148008101978202, 1318619156375142491, "🐧".uri_encode()]
@@ -200,7 +198,7 @@ func get_guild_list() -> void:
 		var icon: Texture2D
 		if img is Image:
 			icon = ImageTexture.create_from_image(img)
-		var i = list_guilds.add_item(g.name, icon)
+		var _i = list_guilds.add_item(g.name, icon)
 
 func save_token() -> void:
 	var secret_file = ConfigFile.new()

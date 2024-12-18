@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="2_qjebv"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="3_pfph6"]
 [ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="4_eihrd"]
-[ext_resource type="PackedScene" uid="uid://8hoo3fke86k1" path="res://scenes/twitch/twitch_view.tscn" id="4_o648v"]
+[ext_resource type="PackedScene" uid="uid://dcvur7e3q0vkc" path="res://scenes/twitch/twitch_view.tscn" id="4_o648v"]
 [ext_resource type="PackedScene" uid="uid://utm1df34dey4" path="res://scenes/discord/discord_view.tscn" id="5_x5kdt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dr2k0"]

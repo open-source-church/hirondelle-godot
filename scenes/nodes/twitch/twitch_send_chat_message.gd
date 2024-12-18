@@ -4,6 +4,7 @@ static var _title = "Send message"
 static var _type = "twitch/send_chat_message"
 static var _category = "Twitch"
 static var _icon = "twitch"
+static var _sources = ["twitch"]
 
 
 var send := HPortFlow.new(E.Side.INPUT)

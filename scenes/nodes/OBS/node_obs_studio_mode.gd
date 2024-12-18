@@ -4,6 +4,7 @@ static var _title = "OBS Studio mode"
 static var _type = "obs/studio_mode"
 static var _category = "OBS"
 static var _icon = "obs"
+static var _sources = ["obs"]
 
 
 var activate := HPortFlow.new(E.Side.INPUT)

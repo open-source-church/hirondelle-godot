@@ -4,6 +4,7 @@ static var _title = "Channel follow"
 static var _type = "twitch/channel_follow"
 static var _category = "Twitch"
 static var _icon = "twitch"
+static var _sources = ["twitch"]
 
 
 var new_follow := HPortFlow.new(E.Side.OUTPUT)

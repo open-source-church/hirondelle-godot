@@ -69,11 +69,11 @@ func get_nodes() -> Array[HBaseNode]:
 	return r
 
 func add_node(node_type: String) -> HBaseNode:
-	var resource = G.NODES.filter(func (r): return r._type == node_type)
+	var resource = NodeManager.get_node_by_type(node_type)
 	if not resource: 
-		print("Node_type invalid")
+		print("Node_type invalid: %s" % node_type)
 		return
-	var node = resource.front().new()
+	var node = resource.new()
 	add_child(node)
 	# At mouse position
 	#node.position_offset = (get_local_mouse_position() + scroll_offset) / zoom
