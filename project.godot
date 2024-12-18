@@ -39,6 +39,13 @@ window/vsync/vsync_mode=0
 theme/custom="res://themes/my_theme.tres"
 theme/default_font_multichannel_signed_distance_field=true
 
+[input]
+
+test={
+"deadzone": 0.5,
+"events": []
+}
+
 [rendering]
 
 environment/defaults/default_clear_color=Color(0.0705882, 0.0705882, 0.0705882, 1)

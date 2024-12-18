@@ -6,6 +6,7 @@ const PORTS_TEXTURE =  preload("res://themes/ports.svg")
 var window : HWindow
 var OBS : OBSWebSocket
 var twitch: Twitching
+var discord: HDiscordBot
 
 func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, icon_width : int) -> Texture2D:
 	var icon = AtlasTexture.new()
