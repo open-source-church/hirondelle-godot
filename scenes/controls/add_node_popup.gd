@@ -40,6 +40,7 @@ func update_node_list() -> void:
 			# Category header
 			lst_nodes.add_item(n._category, null, false)
 			lst_nodes.set_item_disabled(i, true)
+			lst_nodes.set_item_selectable(i, false)
 			i += 1
 		
 		var icon = null

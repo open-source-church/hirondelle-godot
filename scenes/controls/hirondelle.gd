@@ -93,7 +93,7 @@ func load_graphs() -> void:
 	
 	var _settings = content.get("settings", {})
 	var _current_graph_name = _settings.get("current_graph", "")
-	
+
 	# Load graphs
 	for g_data in content.graphs:
 		var g = add_graph()
