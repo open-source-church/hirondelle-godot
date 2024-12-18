@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dexh7evp6yjb0"]
+
+[ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="1_nyak7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_186mv"]
+atlas = ExtResource("1_nyak7")
+region = Rect2(384, 128, 64, 64)
+
+[node name="HBoxContainer" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Bot token"
+
+[node name="TxtToken" type="LineEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnShowToken" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+icon = SubResource("AtlasTexture_186mv")
+flat = true

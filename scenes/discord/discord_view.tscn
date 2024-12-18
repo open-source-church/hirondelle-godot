@@ -1,0 +1,147 @@
+[gd_scene load_steps=4 format=3 uid="uid://utm1df34dey4"]
+
+[ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="1_73iep"]
+[ext_resource type="Script" path="res://scenes/discord/discord_view.gd" id="1_hk7pw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_186mv"]
+atlas = ExtResource("1_73iep")
+region = Rect2(384, 128, 64, 64)
+
+[node name="VBoxContainer" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+script = ExtResource("1_hk7pw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ContainerToken" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LblToken" type="Label" parent="HBoxContainer/ContainerToken"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Bot token"
+
+[node name="TxtToken" type="LineEdit" parent="HBoxContainer/ContainerToken"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="LblInvalidToken" type="Label" parent="HBoxContainer/ContainerToken"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Invalid"
+
+[node name="ContainerBotUser" type="HBoxContainer" parent="HBoxContainer/ContainerToken"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Control" type="Control" parent="HBoxContainer/ContainerToken/ContainerBotUser"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UserIcon" type="TextureRect" parent="HBoxContainer/ContainerToken/ContainerBotUser"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="LblUserName" type="Label" parent="HBoxContainer/ContainerToken/ContainerBotUser"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "User name"
+
+[node name="BtnDisconnect" type="Button" parent="HBoxContainer/ContainerToken/ContainerBotUser"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Disconnect"
+
+[node name="BtnTest" type="Button" parent="HBoxContainer/ContainerToken/ContainerBotUser"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Test"
+
+[node name="Control2" type="Control" parent="HBoxContainer/ContainerToken/ContainerBotUser"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnShowToken" type="Button" parent="HBoxContainer/ContainerToken"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+toggle_mode = true
+icon = SubResource("AtlasTexture_186mv")
+flat = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer2/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2/PanelContainer2/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="HBoxContainer2/PanelContainer2/MarginContainer2/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54099, 0.54099, 0.54099, 1)
+theme_override_font_sizes/font_size = 16
+text = "Permissions"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ListPermissions" type="ItemList" parent="HBoxContainer2/PanelContainer2/MarginContainer2/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer2/PanelContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54099, 0.54099, 0.54099, 1)
+theme_override_font_sizes/font_size = 16
+text = "Guilds"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ListGuilds" type="ItemList" parent="HBoxContainer2/PanelContainer/MarginContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true

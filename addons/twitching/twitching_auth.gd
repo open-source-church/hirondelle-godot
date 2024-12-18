@@ -4,7 +4,6 @@ class_name TwitchingAuth
 
 var client : HTTPRequest
 var twitching : Twitching
-var downloader: HDownloader
 
 enum FlowStep { INITIALIZATION, WAITING_FOR_TOKEN, DONE, REFRESH }
 var step : FlowStep
@@ -47,9 +46,6 @@ func _ready() -> void:
 	client = HTTPRequest.new()
 	client.request_completed.connect(_on_request_completed)
 	add_child(client)
-	
-	downloader = HDownloader.new()
-	add_child(downloader)
 	
 	tokens_changed.connect(update_user)
 	
