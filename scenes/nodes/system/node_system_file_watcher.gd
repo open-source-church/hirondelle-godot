@@ -3,7 +3,7 @@ extends HBaseNode
 static var _title = "File watcher"
 static var _type = "system/file_watcher"
 static var _category = "System"
-static var _icon = "eye"
+static var _icon = "file"
 static var _description = "Notify when a file is modified."
 
 ## Interval to check, in seconds

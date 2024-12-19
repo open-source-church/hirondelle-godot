@@ -3,7 +3,7 @@ extends HBaseNode
 static var _title = "Keys pressed watcher"
 static var _type = "system/keys_pressed"
 static var _category = "System"
-static var _icon = ""
+static var _icon = "keyboard"
 static var _description = "Notify when keys are pressed."
 
 # Ports

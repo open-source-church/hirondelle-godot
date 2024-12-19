@@ -45,6 +45,10 @@ func get_main_icon(icon : String, width : int) -> Texture2D:
 	if icon == "carret_up": p = Vector2i(7, 0)
 	if icon == "carret_down": p = Vector2i(8, 0)
 	if icon == "warning": p = Vector2i(11, 3)
+	if icon == "file": p = Vector2i(12, 7)
+	if icon == "folder": p = Vector2i(13, 7)
+	if icon == "keyboard": p = Vector2i(14, 7)
+	if icon == "clipboard": p = Vector2i(15, 7)
 	
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 

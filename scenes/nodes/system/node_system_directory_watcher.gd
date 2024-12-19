@@ -3,7 +3,7 @@ extends HBaseNode
 static var _title = "Directory watcher"
 static var _type = "system/directory_watcher"
 static var _category = "System"
-static var _icon = "eye"
+static var _icon = "folder"
 static var _description = "Notify when files in a directory are created, modified or deleted. Ignores folders, and files in sub-folders."
 
 var watcher: DirectoryWatcher
