@@ -27,6 +27,7 @@ extends Control
 # Popup window
 const ADD_NODE_POPUP = preload("res://scenes/controls/add_node_popup.tscn")
 var popup_add_node : Window
+var _last_mouse_position: Vector2
 
 ## List of all the graphs
 @onready var graphs : Array[HGraphEdit] = []
@@ -110,7 +111,7 @@ func clear() -> void:
 	current_graph.clear()
 
 func add_node(node_type: String) -> void:
-	current_graph.add_node(node_type)
+	current_graph.add_node(node_type, _last_mouse_position)
 #endregion
 
 # MAIN MENU
@@ -129,6 +130,7 @@ func add_graph() -> HGraphEdit:
 	graphs.append(g)
 	graph_container.add_child(g)
 	g.name = "New graph"
+	g.double_clicked_at.connect(show_add_node_popup)
 	current_graph = g
 	update_graph_list()
 	current_graph.visible = true
@@ -188,8 +190,15 @@ func graph_tab_changed(idx : int):
 
 #region ADD NODE POPUP
 
-func show_add_node_popup() -> void:
+func show_add_node_popup(mouse_position := Vector2.INF) -> void:
 	popup_add_node.position = DisplayServer.window_get_position() + DisplayServer.window_get_size() / 2 - popup_add_node.size / 2
 	popup_add_node.show()
 	popup_add_node.focus_filter()
+	# If no mouse position is provided, we get the current mouse position
+	if mouse_position == Vector2.INF:
+		var _mouse_position = graph_container.get_local_mouse_position()
+		# but only if it is within the rect of graph_container
+		if graph_container.get_rect().has_point(_mouse_position):
+			mouse_position = _mouse_position
+	_last_mouse_position = mouse_position
 #endregion

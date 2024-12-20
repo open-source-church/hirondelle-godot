@@ -5,6 +5,8 @@ class_name HGraphEdit
 
 var connections : HGraphConnections
 
+signal double_clicked_at(pos: Vector2)
+
 func _ready() -> void:
 	# Setup valid connections
 	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT)
@@ -68,7 +70,7 @@ func get_nodes() -> Array[HBaseNode]:
 		r.append(c)
 	return r
 
-func add_node(node_type: String) -> HBaseNode:
+func add_node(node_type: String, pos := Vector2.INF) -> HBaseNode:
 	var resource = NodeManager.get_node_by_type(node_type)
 	if not resource: 
 		print("Node_type invalid: %s" % node_type)
@@ -77,8 +79,12 @@ func add_node(node_type: String) -> HBaseNode:
 	add_child(node)
 	# At mouse position
 	#node.position_offset = (get_local_mouse_position() + scroll_offset) / zoom
+	# At position
+	if pos != Vector2.INF:
+		node.position_offset = (pos + scroll_offset) / zoom
 	# At center
-	node.position_offset = (size / 2 + scroll_offset) / zoom
+	else:
+		node.position_offset = (size / 2 + scroll_offset) / zoom
 	return node
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -148,7 +154,10 @@ func _gui_input(event: InputEvent) -> void:
 			dragging = true
 	
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+		if event.double_click:
+			double_clicked_at.emit(event.position)
+			get_viewport().set_input_as_handled()
+		elif event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			# Port click
 			var hover_port = get_hover_port(event.position)
 			if not dragging and hover_port:

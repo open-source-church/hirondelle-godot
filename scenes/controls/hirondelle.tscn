@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=19 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/hirondelle.gd" id="1_lwrrq"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="2_qjebv"]
@@ -22,6 +22,15 @@ region = Rect2(128, 64, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ar7wv"]
 atlas = ExtResource("2_qjebv")
 region = Rect2(256, 128, 64, 64)
+
+[sub_resource type="InputEventKey" id="InputEventKey_4tujh"]
+device = -1
+shift_pressed = true
+keycode = 65
+unicode = 65
+
+[sub_resource type="Shortcut" id="Shortcut_od7vj"]
+events = [SubResource("InputEventKey_4tujh")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_miyoq"]
 atlas = ExtResource("2_qjebv")
@@ -111,6 +120,7 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ButtonFlat"
+shortcut = SubResource("Shortcut_od7vj")
 text = "Add node"
 icon = SubResource("AtlasTexture_miyoq")
 flat = true
