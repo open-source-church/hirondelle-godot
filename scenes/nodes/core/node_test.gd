@@ -33,7 +33,3 @@ func run(_port : HBasePort) -> void:
 
 func update(_last_changed: HBasePort = null) -> void:
 	return
-	if int_n.value == 14:
-		text_options.options = ["Albert", "Le vert"]
-	else:
-		text_options.options = []

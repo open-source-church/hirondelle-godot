@@ -298,3 +298,6 @@ func _on_duplicate_nodes_request() -> void:
 	_on_copy_nodes_request()
 	_on_paste_nodes_request()
 	DisplayServer.clipboard_set(clipboard)
+
+func select_all() -> void:
+	for n in get_nodes(): n.selected = true

@@ -7,6 +7,7 @@ extends Control
 @onready var btn_menu: Button = %BtnMenu
 @onready var btn_window: Button = %BtnWindow
 @onready var btn_add_node: Button = %BtnAddNode
+@onready var btn_nodes_popup_menu: MenuButton = %BtnNodesPopupMenu
 
 # Containers and stuff
 @onready var graph_container: TabContainer = %GraphContainer
@@ -36,12 +37,14 @@ var current_graph : HGraphEdit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Main bar
 	btn_save.pressed.connect(save)
 	btn_load.pressed.connect(load_graphs)
 	btn_clear.pressed.connect(clear)
 	btn_menu.toggled.connect(menu_panel.set_visible)
 	btn_window.toggled.connect(h_window.set_visible)
 	h_window.visibility_changed.connect(func (): btn_window.set_pressed_no_signal(h_window.visible))
+	btn_nodes_popup_menu.select_all.connect(func (): current_graph.select_all())
 	
 	# Left menu
 	btn_menu_nodes.pressed.connect(show_main_tab.bind(graph_container))

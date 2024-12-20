@@ -39,6 +39,7 @@ func cancel_update():
 	line.visible = false
 
 func update_label(new_text: String):
+	new_text = new_text.strip_edges()
 	text = new_text
 	line.visible = false
 	edited.emit(new_text)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://ify8n5m8sqwh"]
+[gd_scene load_steps=20 format=3 uid="uid://ify8n5m8sqwh"]
 
 [ext_resource type="Script" path="res://scenes/controls/hirondelle.gd" id="1_lwrrq"]
 [ext_resource type="Texture2D" uid="uid://c6mkw48hcb5hy" path="res://themes/kenney-game-icons/vector_whiteIcons.svg" id="2_qjebv"]
+[ext_resource type="PackedScene" uid="uid://ce6r5qdib0cwv" path="res://scenes/controls/btn_nodes_popup_menu.tscn" id="3_b12qm"]
 [ext_resource type="PackedScene" uid="uid://b2ohh7hvqfpk5" path="res://scenes/obs_view.tscn" id="3_pfph6"]
 [ext_resource type="PackedScene" uid="uid://0kw6fnk07v5x" path="res://scenes/window/h_window.tscn" id="4_eihrd"]
 [ext_resource type="PackedScene" uid="uid://dcvur7e3q0vkc" path="res://scenes/twitch/twitch_view.tscn" id="4_o648v"]
@@ -119,11 +120,13 @@ size_flags_horizontal = 3
 [node name="BtnAddNode" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_type_variation = &"ButtonFlat"
 shortcut = SubResource("Shortcut_od7vj")
 text = "Add node"
 icon = SubResource("AtlasTexture_miyoq")
-flat = true
+
+[node name="BtnNodesPopupMenu" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_b12qm")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="Control2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2

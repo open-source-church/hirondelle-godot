@@ -44,6 +44,7 @@ signal port_clicked(port: HBasePort)
 ## Emitted when the node collapse status has changed
 signal collapsed_changed(bool)
 
+# Whether the node is collapsed
 var collapsed := false
 func set_collapsed(val: bool):
 	collapsed = val
@@ -323,25 +324,44 @@ func save() -> Dictionary:
 	var s = {
 		"type": type,
 		"vals": {},
+		"ports": {},
 		"pos": { "x": position_offset.x, "y": position_offset.y },
-		"name": name
+		"name": name,
 	}
+	if collapsed: s.collapsed = true
 	for p in ports.list():
-		if p.value is Array or p.value is Dictionary:
-			# We don't save Arrays and Dictionnary because they are supposed to be fed by connections ?
-			# FIXME: is it always the case?
-			continue
-		if p.type == E.CONNECTION_TYPES.VEC2:
-			s.vals[p.name] = { "x": p.value.x, "y": p.value.y }
-		elif p.type == E.CONNECTION_TYPES.COLOR:
-			s.vals[p.name] = p.value.to_html()
-		elif p.type != E.CONNECTION_TYPES.FLOW:
-			s.vals[p.name] = p.value
+		# Save value
+		if p.side in [E.Side.INPUT, E.Side.BOTH, E.Side.NONE]:
+			var val
+			if p.value is Array or p.value is Dictionary:
+				# We don't save Arrays and Dictionnary because they are supposed to be fed by connections ?
+				# FIXME: is it always the case?
+				continue
+			if p.type == E.CONNECTION_TYPES.VEC2:
+				val = { "x": p.value.x, "y": p.value.y }
+			elif p.type == E.CONNECTION_TYPES.COLOR:
+				val = p.value.to_html()
+			elif p.type != E.CONNECTION_TYPES.FLOW:
+				val = p.value
+			
+			s.vals[p.name] = val
+		
+		# Save display name
+		if p.display_name != p.name:
+			s.ports[p.name] = { "display_name": p.display_name }
+	
+	if not s.ports: s.erase("ports")
 	
 	return s
 
 func load(data : Dictionary) -> void:
 	position_offset = Vector2(data.pos.x, data.pos.y)
+	
+	for _name in data.get("ports", {}):
+		var _port = port(_name)
+		var _display_name = data.ports[_name].get("display_name", "")
+		if _display_name: port(_name).display_name = _display_name
+	
 	for _name in data.vals:
 		var _port = port(_name)
 		if not _port: 
@@ -357,3 +377,5 @@ func load(data : Dictionary) -> void:
 			_port.value = data.vals[_name]
 		# Update the node with each value set to be sure it's properly displayed
 		update(_port)
+	
+	btn_collapse.button_pressed = data.get("collapsed", false)

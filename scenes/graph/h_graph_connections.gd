@@ -40,13 +40,14 @@ class Connection:
 		return r
 	
 	func to_names() -> Dictionary:
-		return {
+		var _s = {
 			"from_node": from_node.name,
 			"to_node": to_node.name,
 			"from_port": from_port.name,
 			"to_port": to_port.name,
-			"visible": visible
 		}
+		if not visible: _s.visible = false
+		return _s
 	
 	func connect_in_graph():
 		if not visible: return
