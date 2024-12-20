@@ -16,40 +16,27 @@ func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, i
 	icon.set_size_override(Vector2i(icon_width, icon_width))
 	return icon
 
+const ICON_NAMES = [
+	"empty,arrow-right,arrow-left,arrow-up,arrow-down,carret-right,carret-left,carret-up,carret-down,carret-up-down,carret-left-right,array,list,menu-horizontal,menu-vertical,pause,edit",
+	"float",
+	"int,,check,cross-no,reset,save,lock,unlock",
+	"color,tablet,phone,contrast,home,music,no-music,bin,bin-open,exclamation,question,warning,quit,download,upload,info",
+	"random,no-sound,sound,stop,forward,backward,next,previous,power,network-low,network-medium,network-high,movie,clip,exit,enter",
+	"text,gamepad,gamepad-1,gamepad-2,gamepad-3,gamepad-4",
+	"vector,button-a,button-b",
+	"eye,progressbar,time,hourglass,obs,nodes,image,twitch,fireworks,confettis,bool,discord,file,folder,keyboard,clipboard"
+]
+var icon_names: Dictionary
 func get_main_icon(icon : String, width : int) -> Texture2D:
-	var p = Vector2i(0, 0)
-	if icon == "array": p = Vector2i(11, 0)
-	if icon == "float": p = Vector2i(0, 1)
-	if icon == "int": p = Vector2i(0, 2)
-	if icon == "color": p = Vector2i(0, 3)
-	if icon == "random": p = Vector2i(0, 4)
-	if icon == "text": p = Vector2i(0, 5)
-	if icon == "vector": p = Vector2i(0, 6)
-	if icon == "eye": p = Vector2i(0, 7)
-	if icon == "progressbar": p = Vector2i(1, 7)
-	if icon == "time": p = Vector2i(2, 7)
-	if icon == "hourglass": p = Vector2i(3, 7)
-	if icon == "obs": p = Vector2i(4, 7)
-	if icon == "reset": p = Vector2i(4, 2)
-	if icon == "sound": p = Vector2i(2, 4)
-	if icon == "image": p = Vector2i(6, 7)
-	if icon == "check": p = Vector2i(2, 2)
-	if icon == "cross-no": p = Vector2i(3, 2)
-	if icon == "twitch": p = Vector2i(7, 7)
-	if icon == "fireworks": p = Vector2i(8, 7)
-	if icon == "confettis": p = Vector2i(9, 7)
-	if icon == "bool": p = Vector2i(10, 7)
-	if icon == "discord": p = Vector2i(11, 7)
-	if icon == "carret_right": p = Vector2i(5, 0)
-	if icon == "carret_left": p = Vector2i(6, 0)
-	if icon == "carret_up": p = Vector2i(7, 0)
-	if icon == "carret_down": p = Vector2i(8, 0)
-	if icon == "warning": p = Vector2i(11, 3)
-	if icon == "file": p = Vector2i(12, 7)
-	if icon == "folder": p = Vector2i(13, 7)
-	if icon == "keyboard": p = Vector2i(14, 7)
-	if icon == "clipboard": p = Vector2i(15, 7)
+	# Generate icon names
+	if not icon_names:
+		for i in range(ICON_NAMES.size()):
+			var row = ICON_NAMES[i].split(",")
+			for j in range(row.size()):
+				if row[j]:
+					icon_names[row[j]] = Vector2i(j, i)
 	
+	var p = icon_names.get(icon, Vector2i(0, 0))
 	return get_icon_from_atlas(VECTOR_WHITE_ICONS, p.x, p.y, 64, width)
 
 func reverse_icon(icon : Texture2D) -> Texture2D:

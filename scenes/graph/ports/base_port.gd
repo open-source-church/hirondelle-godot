@@ -74,6 +74,21 @@ func _set(prop : StringName, val: Variant) -> bool:
 		return true
 	return false
 
+## Display name. If not provided, [member name] is used.
+var display_name: String:
+	set(val):
+		if val != display_name:
+			display_name = val
+			update_view()
+	get():
+		if display_name != "": return display_name
+		return name
+		# Gives a warning: Values of the ternary operator are not mutually compatible.
+		#return display_name if display_name != "" else name
+## Whether [member display_name] is editable.[br]
+## By default, true for output ports that are not flow.
+var editable_name := false
+
 ## Whether the port is collapsed. In can be changed internally on a port basis.
 ## This is because in [GraphNode]s, [Control] cannot really be hidded, or it messes up the whole
 ## thing.[br]
@@ -114,7 +129,6 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	options_enum = opt.get("options_enum", {})
 	options_labels = opt.get("options_labels", [])
 	if options_enum and options_labels:
-		print("Setting option enum")
 		set_options_from_enum(options_enum, options_labels)
 	description = opt.get("description", "")
 	default = opt.get("default", null)
@@ -123,8 +137,12 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	is_multiple = opt.get("multiple", false)
 	custom_minimum_size = Vector2(0, 0)
 	value_changed.connect(_on_value_changed)
+	editable_name = opt.get("editable_name", side == E.Side.OUTPUT and not type == E.CONNECTION_TYPES.FLOW)
 	if opt.get("group"):
-		add_to_group(opt.group)
+		if opt.get("group") is String:
+			add_to_group(opt.group)
+		elif opt.get("group") is Array:
+			opt.get("group").map(func (g): add_to_group(g))
 	
 	add_theme_constant_override("margin_bottom", 3)
 	add_theme_constant_override("margin_top", 3)
@@ -304,13 +322,28 @@ func update_view():
 	main_vbox = HBoxContainer.new()
 	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_hbox.add_child(main_vbox)
+	
+	# Label
 	if not hide_label:
-		var lbl = Label.new()
-		lbl.text = "%s" % name.replace("_", " ").strip_edges()
+		var lbl = HEditableLabel.new(editable_name)
+		lbl.text = "%s" % display_name.replace("_", " ").strip_edges()
 		lbl.add_theme_font_size_override("font_size", 12)
 		lbl.add_theme_color_override("font_color", Color.GRAY)
 		lbl.tooltip_text = description
 		lbl.mouse_filter = Control.MOUSE_FILTER_PASS
+		lbl.edited.connect(func (t): display_name = t)
+		
+		# Btn edit display name
+		if editable_name:
+			var btn = Button.new()
+			btn.flat = true
+			btn.icon = G.get_main_icon("edit", 12)
+			btn.theme_type_variation = "ButtonSmall"
+			btn.modulate = Color(1, 1, 1, 0.1)
+			btn.pressed.connect(lbl.edit)
+			btn.tooltip_text = "Edit display name"
+			main_vbox.add_child(btn)
+	
 		main_vbox.add_child(lbl)
 	
 	# Custom component

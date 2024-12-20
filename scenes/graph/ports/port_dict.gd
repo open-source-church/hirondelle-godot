@@ -73,12 +73,12 @@ func update_from_connections(no_signal = false):
 	dict_types = {}
 	var keys = {}
 	for c in get_connections_to():
-		var key = keys.get_or_add(c.from_port.name, 0)
+		var key = keys.get_or_add(c.from_port.display_name, 0)
 		if key:
-			key = "%s_%s" % [c.from_port.name, key]
+			key = "%s_%s" % [c.from_port.display_name, key]
 		else:
-			key = c.from_port.name
-		keys[c.from_port.name] += 1
+			key = c.from_port.display_name
+		keys[c.from_port.display_name] += 1
 		dict[key] = c.from_port.value
 		dict_types[key] = c.from_port.type
 	
