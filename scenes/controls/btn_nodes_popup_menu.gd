@@ -13,10 +13,10 @@ func _init() -> void:
 	
 
 func add_item(title: String, action: Actions, keycode:Key = KEY_NONE, modifiers : Array[Key] = []) -> void:
-	var shortcut = Shortcut.new()
+	var _shortcut = Shortcut.new()
 	if keycode:
 		var key = InputEventKey.new()
-		shortcut.events.append(key)
+		_shortcut.events.append(key)
 		if KEY_CTRL in modifiers:
 			key.ctrl_pressed = true
 		if KEY_SHIFT in modifiers:
@@ -27,7 +27,7 @@ func add_item(title: String, action: Actions, keycode:Key = KEY_NONE, modifiers 
 			key.alt_pressed = true
 		key.keycode = keycode
 	get_popup().add_item(title, action)
-	get_popup().set_item_shortcut(get_popup().item_count - 1, shortcut, true)
+	get_popup().set_item_shortcut(get_popup().item_count - 1, _shortcut, true)
 
 func on_id_pressed(id: int) -> void:
 	if id == Actions.SelectAll: select_all.emit()

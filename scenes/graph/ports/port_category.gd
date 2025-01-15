@@ -13,11 +13,11 @@ var align
 var icon_open := G.get_main_icon("carret_down", 16)
 var icon_collapsed := G.get_main_icon("carret_right", 16)
 
-func _init(text: String, _opt := {}, _align := HORIZONTAL_ALIGNMENT_CENTER):
+func _init(text: String, opt := {}, _align := HORIZONTAL_ALIGNMENT_CENTER):
 	title = text
 	align = _align
-	_opt.hide_label = true
-	super(E.Side.NONE, E.CONNECTION_TYPES.TEXT, _opt)
+	opt.hide_label = true
+	super(E.Side.NONE, E.CONNECTION_TYPES.TEXT, opt)
 
 func get_component(_params) -> Control:
 	#var label := Label.new()

@@ -45,6 +45,7 @@ func _ready() -> void:
 	btn_window.toggled.connect(h_window.set_visible)
 	h_window.visibility_changed.connect(func (): btn_window.set_pressed_no_signal(h_window.visible))
 	btn_nodes_popup_menu.select_all.connect(func (): current_graph.select_all())
+	btn_nodes_popup_menu.group.connect(func (): current_graph.groups.create())
 	
 	# Left menu
 	btn_menu_nodes.pressed.connect(show_main_tab.bind(graph_container))

@@ -121,6 +121,9 @@ func _reset_size() -> void:
 	reset_size()
 	node.reset_size()
 
+## Keep a memory of that, to use when duplicating port
+var _opt: Dictionary
+
 func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) -> void:
 	side = _side
 	type = _type
@@ -146,6 +149,8 @@ func _init(_side : E.Side, _type : E.CONNECTION_TYPES, opt : Dictionary = {}) ->
 	
 	add_theme_constant_override("margin_bottom", 3)
 	add_theme_constant_override("margin_top", 3)
+	
+	_opt = opt
 
 func _ready() -> void:
 	node = get_parent()

@@ -7,7 +7,7 @@ func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.FLOAT)
 	super(_side, _type, opt)
 
-func get_component(_params) -> Control:
+func get_component(_params : Dictionary) -> Control:
 	line = LineEdit.new()
 	line.custom_minimum_size = Vector2(200, 0)
 	line.text_changed.connect(value_changed.emit.unbind(1))

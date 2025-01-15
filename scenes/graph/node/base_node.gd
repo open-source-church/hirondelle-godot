@@ -75,7 +75,8 @@ func _ready() -> void:
 	graph = get_parent()
 	
 	ports = HPortsManager.new(self)
-	add_child(ports, false, Node.INTERNAL_MODE_FRONT)
+	ports.find_and_add_ports()
+	#add_child(ports, false, Node.INTERNAL_MODE_FRONT)
 	
 	# Title box
 	var hbox = get_titlebar_hbox()

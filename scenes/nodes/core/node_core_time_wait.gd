@@ -34,6 +34,7 @@ func _init() -> void:
 
 func run(_port : HBasePort) -> void:
 	if _port == start:
+		print("Start")
 		timer.start(time.value / 1000.0)
 		started.emit()
 

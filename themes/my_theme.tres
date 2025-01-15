@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=35 format=3 uid="uid://ytq3vmqj18ky"]
+[gd_resource type="Theme" load_steps=39 format=3 uid="uid://ytq3vmqj18ky"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru3g6"]
 content_margin_left = 8.0
@@ -88,12 +88,12 @@ bg_color = Color(0.133196, 0.133196, 0.133196, 1)
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujicm"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_loaf3"]
 content_margin_left = 6.0
 content_margin_top = 6.0
 content_margin_right = 6.0
 content_margin_bottom = 6.0
-bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+bg_color = Color(0.104518, 0.141182, 0.145573, 1)
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
@@ -117,6 +117,42 @@ content_margin_top = 6.0
 content_margin_right = 6.0
 content_margin_bottom = 6.0
 bg_color = Color(0.00532045, 0.321241, 0.32123, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_voxrs"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.155166, 0.133122, 0.0375689, 1)
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4rw36"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.165578, 0.130267, 2.40654e-08, 1)
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3soxi"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.386932, 0.35654, 0.230733, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3v5a"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.340437, 0.269516, 0, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 
@@ -285,10 +321,15 @@ ButtonSmall/styles/pressed = SubResource("StyleBoxFlat_wpaic")
 CheckButton/constants/icon_max_width = 0
 GraphNode/constants/port_h_offset = -2
 GraphNode/styles/panel = SubResource("StyleBoxFlat_tyui3")
-GraphNode/styles/panel_selected = SubResource("StyleBoxFlat_ujicm")
+GraphNode/styles/panel_selected = SubResource("StyleBoxFlat_loaf3")
 GraphNode/styles/slot = SubResource("StyleBoxFlat_qirvc")
 GraphNode/styles/titlebar = SubResource("StyleBoxFlat_rf3lm")
 GraphNode/styles/titlebar_selected = SubResource("StyleBoxFlat_xffgj")
+GraphNodeGroup/base_type = &"GraphNode"
+GraphNodeGroup/styles/panel = SubResource("StyleBoxFlat_voxrs")
+GraphNodeGroup/styles/panel_selected = SubResource("StyleBoxFlat_4rw36")
+GraphNodeGroup/styles/titlebar = SubResource("StyleBoxFlat_3soxi")
+GraphNodeGroup/styles/titlebar_selected = SubResource("StyleBoxFlat_l3v5a")
 ItemList/constants/v_separation = 12
 ItemList/styles/focus = SubResource("StyleBoxEmpty_ctyt6")
 ItemList/styles/hovered = SubResource("StyleBoxFlat_86fyv")

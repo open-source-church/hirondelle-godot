@@ -1,4 +1,5 @@
 extends HBaseNode
+class_name HParameterNode
 
 static var _title = "Input/Output parameter"
 static var _type = "core/parameter"
@@ -8,7 +9,10 @@ static var _icon = ""
 enum ParamSide { INPUT, OUTPUT }
 var ParamSideLabels := [ "Input", "Output" ]
 
+# Signals
 
+
+# Ports
 var side_ := HPortIntSpin.new(E.Side.NONE, { "options_enum": ParamSide, "options_labels": ParamSideLabels })
 var type_ := HPortIntSpin.new(E.Side.NONE, { "options_enum": E.CONNECTION_TYPES, "options_labels": E.CONNECTION_TYPES.keys().map(func (k: String): return k.capitalize() ) })
 
@@ -47,3 +51,9 @@ func update(_last_changed: HBasePort = null) -> void:
 			n.collapsed = n.collapsed or side_.value == E.Side.OUTPUT
 			n.side = E.Side.INPUT
 		update_slots()
+
+func get_current_parameter_port() -> HBasePort:
+	for n in get_ports_in_group("port"):
+		if not n.is_in_group("default") and not n.collapsed:
+			return n
+	return null

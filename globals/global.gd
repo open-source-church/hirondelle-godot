@@ -18,7 +18,7 @@ func get_icon_from_atlas(atlas : Resource, x : int, y : int, atlas_size : int, i
 
 const ICON_NAMES = [
 	"empty,arrow-right,arrow-left,arrow-up,arrow-down,carret-right,carret-left,carret-up,carret-down,carret-up-down,carret-left-right,array,list,menu-horizontal,menu-vertical,pause,edit",
-	"float",
+	"float,arrow-up-left,arrow-up-right,arrow-down-right,arrow-down-left,reduce,expand,minus,plus,magnify-minus,magnify-plus,magnify-equal,magnify,person,people,group",
 	"int,,check,cross-no,reset,save,lock,unlock",
 	"color,tablet,phone,contrast,home,music,no-music,bin,bin-open,exclamation,question,warning,quit,download,upload,info",
 	"random,no-sound,sound,stop,forward,backward,next,previous,power,network-low,network-medium,network-high,movie,clip,exit,enter",

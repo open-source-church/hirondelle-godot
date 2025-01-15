@@ -75,6 +75,7 @@ class Connection:
 		connect_in_graph()
 	
 	func animate():
+		if not visible: return
 		var n = 3 if from_port.type == E.CONNECTION_TYPES.FLOW else 2
 		for i in range(n):
 			do_animation()
@@ -126,15 +127,15 @@ class Connection:
 		#tween2.tween_property(img, "scale", Vector2.ONE * 1.0, duration / 2).from(Vector2.ONE * 0.8)
 		await tween1.finished
 		path.queue_free()
-		
-		
-		
 
 ## The list of [member Connections]
 @onready var connections : Array[Connection] = []
 
 ## A reference to the [HGraphEdit] those connections belong to.
 var graph : HGraphEdit
+
+func _init(_graph: HGraphEdit) -> void:
+	graph = _graph
 
 func list() -> Array[Connection]:
 	return connections
@@ -159,6 +160,9 @@ func list_to_port(port : HBasePort) -> Array[Connection]:
 
 func list_to_and_from_port(port : HBasePort) -> Array[Connection]:
 	return connections.filter( func(c): return c.to_port == port or c.from_port == port)
+
+func list_to_and_from_nodes(_nodes : Array[HBaseNode]) -> Array[Connection]:
+	return connections.filter( func(c: Connection): return c.from_node in _nodes or c.to_node in _nodes)
 
 # CREATE CONNECTIONS
 
@@ -235,6 +239,13 @@ func remove_connections_to_hidden_slots(node : HBaseNode):
 		for c in list_to_and_from_port(port):
 			if port.collapsed:
 				remove_connection(c, true)
+
+func update_connections_based_on_nodes_visibility() -> void:
+	for c in connections:
+		if c.from_node.visible and c.to_node.visible:
+			c.show()
+		else:
+			c.hide()
 
 # LOAD AND SAVE
 

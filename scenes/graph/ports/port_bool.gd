@@ -7,7 +7,7 @@ func _init(_side : E.Side, opt : Dictionary = {}):
 	var _type = opt.get("type", E.CONNECTION_TYPES.BOOL)
 	super(_side, _type, opt)
 
-func get_component(_params) -> Control:
+func get_component(_params : Dictionary, bind_to: HBasePort = self) -> Control:
 	toggle = CheckButton.new()
 	toggle.flat = true
 	toggle.pressed.connect(value_changed.emit)

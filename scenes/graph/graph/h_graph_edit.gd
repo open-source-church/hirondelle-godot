@@ -3,11 +3,13 @@ class_name HGraphEdit
 
 @onready var selection_rect: TextureRect # = $PortSelectionRect
 
-var connections : HGraphConnections
+var connections: HGraphConnections
+var groups: HGraphGroups
 
 signal double_clicked_at(pos: Vector2)
 
 func _ready() -> void:
+	
 	# Setup valid connections
 	add_valid_connection_type(E.CONNECTION_TYPES.INT, E.CONNECTION_TYPES.FLOAT)
 	add_valid_connection_type(E.CONNECTION_TYPES.TEXT, E.CONNECTION_TYPES.FLOAT)
@@ -29,15 +31,18 @@ func _ready() -> void:
 	show_menu = false
 	
 	# Setup connections
-	connections = HGraphConnections.new()
-	connections.graph = self
+	connections = HGraphConnections.new(self)
+	
+	# Setup groups
+	groups = HGraphGroups.new(self)
+	#add_child(groups, true, Node.INTERNAL_MODE_BACK)
 	
 	# Setup selection rect
 	selection_rect = TextureRect.new()
 	selection_rect.texture = G.get_icon_from_atlas(G.PORTS_TEXTURE, 0, 1, 32, 32)
 	selection_rect.z_index = 0
 	selection_rect.visible = false
-	add_child(selection_rect)
+	add_child(selection_rect, true, Node.INTERNAL_MODE_FRONT)
 	
 	# Setup signals
 	child_entered_tree.connect(_on_child_enter_tree)
@@ -47,6 +52,8 @@ func _ready() -> void:
 	disconnection_request.connect(_on_disconnection_request)
 	duplicate_nodes_request.connect(_on_duplicate_nodes_request)
 	paste_nodes_request.connect(_on_paste_nodes_request)
+	
+	groups.switch_to(groups.main_id)
 
 func _process(_delta: float) -> void:
 	# Makes grid lighter when zooming out (otherwise the screen is saturated)
@@ -64,10 +71,18 @@ func get_unique_name(node : HBaseNode) -> String:
 	return "%s-%d" % [node.type, n]
 
 ## Returns all nodes in this graph
-func get_nodes() -> Array[HBaseNode]:
+func get_nodes(current_group_only := false) -> Array[HBaseNode]:
 	var r : Array[HBaseNode] = []
-	for c in get_children().filter(func (n): return n is HBaseNode):
+	for c: HBaseNode in get_children().filter(func (n): return n is HBaseNode):
+		if current_group_only and not c.is_in_group(groups.current_group_id): continue
 		r.append(c)
+	return r
+
+func get_nodes_in_group(group: String) -> Array[HBaseNode]:
+	var r: Array[HBaseNode] = []
+	for n in get_tree().get_nodes_in_group(group):
+		if n is HBaseNode and is_ancestor_of(n):
+			r.append(n)
 	return r
 
 func add_node(node_type: String, pos := Vector2.INF) -> HBaseNode:
@@ -75,8 +90,10 @@ func add_node(node_type: String, pos := Vector2.INF) -> HBaseNode:
 	if not resource: 
 		print("Node_type invalid: %s" % node_type)
 		return
-	var node = resource.new()
+	var node: HBaseNode = resource.new()
 	add_child(node)
+	node.add_to_group(groups.current_group_id)
+	
 	# At mouse position
 	#node.position_offset = (get_local_mouse_position() + scroll_offset) / zoom
 	# At position
@@ -114,8 +131,8 @@ func _on_connection_request(from_node: StringName, from_port: int, to_node: Stri
 	# Make connection
 	connections.add_connection_godot(from_node, from_port, to_node, to_port)
 
-func get_node_by_id(id: String) -> HBaseNode:
-	return get_node(NodePath(id))
+func get_node_by_id(node_id: String) -> HBaseNode:
+	return get_node(NodePath(node_id))
 
 func _on_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print("Disconnection request FROM %s at %d TO %s at %d" % [from_node, from_port, to_node, to_port])
@@ -124,9 +141,9 @@ func _on_disconnection_request(from_node: StringName, from_port: int, to_node: S
 ## Removes all nodes and connections.
 func clear():
 	connections.clear()
-	for c in get_children():
-		if c is HBaseNode:
-			c.queue_free()
+	for n in get_nodes():
+		n.queue_free()
+	groups.switch_to(groups.main_id)
 
 ## Clickable ports
 var dragging := false
@@ -186,17 +203,21 @@ func get_hover_port(pos : Vector2) -> Dictionary:
 
 
 func _on_delete_nodes_request(nodes: Array[StringName]) -> void:
-	print("Delete node request: ", nodes)
-	
 	for n in nodes:
-		var _n = get_node(NodePath(n))
-		# Remove connections
-		connections.disconnect_node(_n)
-		# Remove node
-		_n.queue_free()
+		var _n: HBaseNode = get_node(NodePath(n))
+		remove_node(_n)
 
-func get_selected_nodes() -> Array[Node]:
-	return get_children().filter(func (c): return c is HBaseNode and c.selected)
+func remove_nodes(_nodes: Array[HBaseNode]) -> void:
+	_nodes.map(func (n): remove_node(n))
+
+func remove_node(_node: HBaseNode) -> void:
+	# Remove connections
+	connections.disconnect_node(_node)
+	# Remove node
+	_node.queue_free()
+
+func get_selected_nodes() -> Array[HBaseNode]:
+	return get_nodes(true).filter(func (c): return c.selected)
 
 func get_mouse_position() -> Vector2:
 	return (get_local_mouse_position() + scroll_offset) / zoom
@@ -217,9 +238,8 @@ func save() -> Dictionary:
 		}
 	}
 	
-	for n in get_children():
-		if n.has_method("save"):
-			to_save.nodes.append(n.save())
+	for n in get_nodes():
+		to_save.nodes.append(n.save())
 	
 	to_save.connections = connections.save()
 	
@@ -247,17 +267,7 @@ func load(data : Dictionary):
 		scroll_offset.y = data.settings.scroll_offset_y
 
 func _on_copy_nodes_request() -> void:
-	var to_copy = {
-		"nodes": [],
-		"connections": [],
-	}
-	var selected = get_selected_nodes()
-	
-	for n in selected:
-		to_copy.nodes.append(n.save())
-	
-	to_copy.connections = connections.save(true)
-	
+	var to_copy := save_selected_nodes()
 	DisplayServer.clipboard_set(JSON.stringify(to_copy, "  "))
 
 func _on_paste_nodes_request() -> void:
@@ -269,35 +279,56 @@ func _on_paste_nodes_request() -> void:
 		print("Paste: invalid content")
 		return
 	
+	load_nodes(to_paste)
+
+func save_selected_nodes() -> Dictionary:
+	var to_save = {
+		"nodes": [],
+		"connections": [],
+	}
+	var selected = get_selected_nodes()
+	
+	for n in selected:
+		to_save.nodes.append(n.save())
+	
+	to_save.connections = connections.save(true)
+	
+	return to_save
+
+func load_nodes(data: Dictionary) -> void:
 	set_selected(null)
 	
 	# Get center of nodes, and mouse position, to position pasted nodes relatively
 	var center := Vector2()
-	for n in to_paste.nodes:
+	for n in data.nodes:
 		center += Vector2(n.pos.x, n.pos.y)
-	center = center / to_paste.nodes.size()
+	center = center / data.nodes.size()
 	var delta_pos := get_mouse_position() - center
 	
 	# Node need to get new names (uniques), so we keep them in a map in order to
 	# update connections accordingly.
 	var name_map = {}
-	for n in to_paste.nodes:
+	for n in data.nodes:
 		var node := add_node(n.type)
 		name_map[n.name] = node.name
 		node.load(n)
 		node.position_offset += delta_pos
 		node.selected = true
 	
-	for c in to_paste.connections:
+	for c in data.connections:
 		c.from_node = name_map.get(c.from_node, c.from_node)
 		c.to_node = name_map.get(c.to_node, c.to_node)
 		connections.add_connection_names(c.from_node, c.from_port, c.to_node, c.to_port, c.get("visible", true))
 
 func _on_duplicate_nodes_request() -> void:
-	var clipboard = DisplayServer.clipboard_get()
-	_on_copy_nodes_request()
-	_on_paste_nodes_request()
-	DisplayServer.clipboard_set(clipboard)
+	var _data = save_selected_nodes()
+	load_nodes(_data)
 
 func select_all() -> void:
-	for n in get_nodes(): n.selected = true
+	for n in get_nodes(true): n.selected = true
+
+func get_nodes_median_position(_nodes : Array[HBaseNode]) -> Vector2:
+	var p = Vector2()
+	for n in _nodes:
+		p += n.position_offset
+	return p / len(_nodes)

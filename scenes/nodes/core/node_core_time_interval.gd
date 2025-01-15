@@ -25,6 +25,7 @@ func _init() -> void:
 	add_child(timer, false, Node.INTERNAL_MODE_BACK)
 	timer.one_shot = false
 	timer.timeout.connect(ping.emit)
+	timer.timeout.connect(func (): print("Ping"))
 
 func run(_port : HBasePort) -> void:
 	if _port == start:
